@@ -1,7 +1,9 @@
-package in.pecfest.www.pecfest;
+package in.pecfest.www.pecfest.Activites;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import in.pecfest.www.pecfest.R;
 
 public class mainPage extends AppCompatActivity {
 
