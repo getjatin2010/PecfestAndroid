@@ -2,27 +2,36 @@ package in.pecfest.www.pecfest.Activites;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.text.Html;
+import android.graphics.Color;
+import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.R;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ViewPager mViewPager;
+    private LinearLayout dotsLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mViewPager = (ViewPager) findViewById(R.id.home_pager);
+        dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -42,6 +51,8 @@ public class HomeScreen extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        addHomePager();
     }
 
     @Override
@@ -99,5 +110,48 @@ public class HomeScreen extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void addHomePager(){
+        final int[] mResources = {
+                R.drawable.download1,
+                R.drawable.download2,
+                R.drawable.download3
+        };
+
+        mViewPager.setAdapter(new HomePagerAdapter(this, mResources));
+        addBottomDots(0, mResources.length);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+            @Override
+            public void onPageSelected(int position) {
+                addBottomDots(position, mResources.length);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+
+            }
+        });
+    }
+
+    private void addBottomDots(int currentPage, int length) {
+        TextView []dots = new TextView[length];
+
+        dotsLayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(this);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(Color.CYAN);
+            dotsLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(Color.BLUE);
     }
 }
