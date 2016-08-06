@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.text.Html;
 import android.graphics.Color;
+import android.content.Intent;
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.R;
 
@@ -95,6 +96,8 @@ public class HomeScreen extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            Intent in = new Intent(this, Events.class);
+            startActivity(in);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
