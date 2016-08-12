@@ -13,16 +13,30 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.text.Html;
 import android.graphics.Color;
+import android.widget.Toast;
+
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
+import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.R;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    GridView grid;
+    String[] text={"Events",
+            "Shows","Lecture",
+            "Register"};
+    int[] imageId={
+            R.drawable.test,
+            R.drawable.test,
+            R.drawable.test,
+            R.drawable.test
+    };
     ViewPager mViewPager;
     private LinearLayout dotsLayout;
     @Override
@@ -42,6 +56,21 @@ public class HomeScreen extends AppCompatActivity
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+
+//------------HOMEPAGE GRID------------------------------------------------
+
+        HomeScreenGridAdapter adapter= new HomeScreenGridAdapter(HomeScreen.this,text,imageId);
+        grid=(GridView)findViewById(R.id.gridViewHomePage);
+        grid.setAdapter(adapter);
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(HomeScreen.this,"you clicked "+text[position],Toast.LENGTH_SHORT).show();
+            }
+        });
+//------------HOMEPAGE GRID ENDS-------------------------------------------
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
