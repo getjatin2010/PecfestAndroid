@@ -7,25 +7,51 @@ import android.view.View;
 import android.view.LayoutInflater;
 import in.pecfest.www.pecfest.R;
 import java.util.ArrayList;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import android.content.Context;
+import android.util.Log;
+import android.view.animation.AlphaAnimation;
 /**
  * Created by Abhi on 07-08-2016.
  */
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     private ArrayList<EventsData> eventsList;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private static Context context;
+    public static int regBtnId;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
-        public TextView titleText;
+        public TextView eventName;
+        public TextView clubName;
         public TextView descText;
-        public ViewHolder(View view) {
+        public TextView date;
+        public ImageButton regBtn;
+        public ViewHolder(final View view) {
             super(view);
-            titleText=(TextView)view.findViewById(R.id.title);
+            eventName=(TextView)view.findViewById(R.id.title);
+            clubName= (TextView)view.findViewById(R.id.sub_title);
             descText=(TextView)view.findViewById(R.id.description);
+            date= (TextView)view.findViewById(R.id.date);
+            regBtn= (ImageButton)view.findViewById(R.id.registerBtn);
+            view.setOnClickListener(this);
+            regBtn.setOnClickListener(this);
+            regBtnId=regBtn.getId();
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.v("Id",""+v.getId());
+            if (v.getId() == regBtn.getId()){
+                Toast.makeText(context, "ITEM PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    public EventsAdapter(ArrayList<EventsData> eventsList){
+    public EventsAdapter(ArrayList<EventsData> eventsList, Context context){
         this.eventsList= eventsList;
+        this.context= context;
     }
 
     @Override
@@ -45,9 +71,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+
         EventsData event= eventsList.get(position);
-        holder.titleText.setText(event.title);
+        holder.eventName.setText(event.eventName);
+        holder.clubName.setText(event.clubName);
         holder.descText.setText(event.description);
+        holder.date.setText(event.date);
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -57,12 +87,22 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     }
 
     public static class EventsData{
-        String title;
+        String eventId;
+        public String eventName;
+        public String clubName;
         String description;
+        String date;
 
-        public EventsData(String t, String d){
-            title= t;
-            description=d;
+        public EventsData(String i, String e, String c, String d, String dt){
+            eventId= i;
+            eventName= e;
+            clubName= c;
+            description= d;
+            date= dt;
+        }
+
+        public String getEventId(){
+            return eventId;
         }
     }
 }
