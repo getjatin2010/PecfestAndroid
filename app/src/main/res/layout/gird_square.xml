@@ -3,15 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="0.5dp"
-    android:paddingRight="0.5dp"
-    android:paddingTop="0.5dp"
-    android:paddingBottom="0.5dp">
-    <ImageView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:src="@drawable/bg"
-    android:background="#159489"/>
+    android:background="#159489">
+
     <ImageView
         android:id="@+id/grid_square_image"
         android:layout_gravity="center"
