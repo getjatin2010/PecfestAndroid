@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/notification_actionbar_menu"
+        android:icon="@drawable/test"
+        android:title="notification"
+        app:showAsAction="always"/>
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/dotdot_actionbar_menu"
+        android:title="something in the dotdot"
+        android:icon="@drawable/test"
+        app:showAsAction="never"/>
+
+</menu>

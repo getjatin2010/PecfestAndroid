@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="in.pecfest.www.pecfest.Activites.HomeScreen">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -46,14 +42,12 @@
                         android:id="@+id/actionbar_notificationTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15"
                         android:minWidth="16dp"
                         android:textSize="12sp"
                         android:textColor="#FFF"
                         android:gravity="center"
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
-                        android:background="#ff0000"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -62,5 +56,5 @@
 
     <include layout="@layout/content_home_screen" />
 
-</LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>
