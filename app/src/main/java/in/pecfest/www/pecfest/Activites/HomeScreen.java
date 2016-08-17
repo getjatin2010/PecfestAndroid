@@ -46,9 +46,8 @@ public class HomeScreen extends AppCompatActivity
     Runnable marquee=new Runnable() {
         @Override
         public void run() {
-            int y=Math.abs((x % 8)-4);//sawwave equation taken from wikipedia
-            x+=1;
-            x%=7;
+            int y=Math.abs(x-4);
+            x=(x+1)%8;
             mViewPager.setCurrentItem(y,true);
             handler.postDelayed(this,DELAY);
         }
