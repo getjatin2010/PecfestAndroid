@@ -1,11 +1,9 @@
 package in.pecfest.www.pecfest.Activites;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,16 +20,14 @@ import android.widget.TextView;
 import android.text.Html;
 import android.graphics.Color;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.R;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static int notifications=5;
+    private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
+    Handler handler;//for runnable
     GridView grid;
     String[] text={"Events",
             "Shows","Lecture",
@@ -46,6 +41,29 @@ public class HomeScreen extends AppCompatActivity
     ViewPager mViewPager;
     private LinearLayout dotsLayout,notificationLayout;
     private TextView notification_digit;
+
+
+    Runnable marquee=new Runnable() {
+        @Override
+        public void run() {
+            int y=Math.abs((x % 8)-4);//sawwave equation taken from wikipedia
+            x+=1;
+            x%=7;
+            mViewPager.setCurrentItem(y,true);
+            handler.postDelayed(this,DELAY);
+        }
+    };
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(marquee, DELAY);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(marquee);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +72,7 @@ public class HomeScreen extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
+
 
         //notification button--------------------------------------------------
 
@@ -65,10 +84,12 @@ public class HomeScreen extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                notifications=0;
-                notifCol();
+
                 Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
+                intent.putExtra("newNotificationNumber",notifications);
+                notifications=0;
+                notifCol();
                 startActivity(intent);
 
             }
@@ -88,6 +109,9 @@ public class HomeScreen extends AppCompatActivity
         });
 //------------HOMEPAGE GRID ENDS-------------------------------------------
 
+        //testscroll------------------
+        handler=new Handler();
+        //testscroll------------------
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -100,18 +124,19 @@ public class HomeScreen extends AppCompatActivity
 
         addHomePager();
     }
-void notifCol(){
-    if(notifications>0){
 
-        notification_digit.setText(String.valueOf(notifications));
-        notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
+    void notifCol(){
+        if(notifications>0){
 
-    }else{
-        notification_digit.setBackgroundResource(0);
-        notification_digit.setText("");
+            notification_digit.setText(String.valueOf(notifications));
+            notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
+
+        }else{
+            notification_digit.setBackgroundResource(0);
+            notification_digit.setText("");
+        }
+
     }
-
-}
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -162,22 +187,8 @@ void notifCol(){
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Toast.makeText(HomeScreen.this,"You clicked "+ item.getTitle(),Toast.LENGTH_SHORT).show();
 
-        switch(item.getItemId()){
-            case R.id.action_settings:
-                Toast.makeText(HomeScreen.this,"You clicked Login",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_Regevent:
-                Toast.makeText(HomeScreen.this,"You clicked Register event",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_gallery:
-
-                Toast.makeText(HomeScreen.this,"You clicked Pecfest gallery",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_selfieChamp:
-                Toast.makeText(HomeScreen.this,"You clicked Selfie camp",Toast.LENGTH_SHORT).show();
-                break;
-        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -226,4 +237,6 @@ void notifCol(){
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.BLUE);
     }
+
+
 }

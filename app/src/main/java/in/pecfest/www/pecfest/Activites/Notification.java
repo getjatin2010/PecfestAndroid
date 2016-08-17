@@ -2,8 +2,6 @@ package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +17,7 @@ public class Notification extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager linearLayoutManager;
     private TextView pecfestText_notification;
+    private int newNotificationNumber;
 
     private String[] bodyText={"RoboWars is postponed from 3:00 pm to 5:00 pm ",
             "CodeWars is preponed from 5:00 pm to 3:00 pm",
@@ -35,12 +34,13 @@ public class Notification extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.notification_toolbar);
         setSupportActionBar(toolbar);
 
+        newNotificationNumber=getIntent().getIntExtra("newNotificationNumber",0);
 
 //recycleview-------------------------------------------------------------------
         recyclerView=(RecyclerView)findViewById(R.id.notification_recycle_layout);
         linearLayoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter=new Notification_Adapter(Notification.this,titleText,bodyText);
+        adapter=new Notification_Adapter(Notification.this,titleText,bodyText,newNotificationNumber);
         recyclerView.setAdapter(adapter);
 //recycleView-------------------------------------------------------------------
 
@@ -52,7 +52,6 @@ public class Notification extends AppCompatActivity {
                 finish();
             }
         });
-
 //for returning to homescreen form notification---------------------------------
 
     }

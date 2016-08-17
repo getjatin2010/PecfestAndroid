@@ -18,29 +18,27 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp">
                 <TextView
                     android:id="@+id/pefcestText_notification"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PECFEST"
-                    android:gravity="left"
+                    android:text="@string/pecfestTitle"
+                    android:layout_alignParentLeft="true"
                     android:textSize="30sp"
                     android:textColor="@android:color/tab_indicator_text"
-                    android:clickable="true"
-                    android:layout_weight="3"/>
+                    android:clickable="true" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NOTICE"
+                    android:text="@string/notice"
                     android:textSize="30sp"
                     android:textColor="@android:color/tab_indicator_text"
-                    android:gravity="right"/>
-            </LinearLayout>
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
     <include layout="@layout/content_notification"/>
 
