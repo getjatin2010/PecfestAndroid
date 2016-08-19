@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.pecfest.www.pecfest" >
+    package="in.pecfest.www.pecfest">
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".Activites.HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,12 +20,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Notifications.MyFirebaseMessagingService" >
+        <service android:name=".Notifications.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Notifications.MyFirebaseInstanceIDService" >
+        <service android:name=".Notifications.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -34,8 +34,8 @@
         <activity
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Activites.register"></activity>
     </application>
 
 </manifest>

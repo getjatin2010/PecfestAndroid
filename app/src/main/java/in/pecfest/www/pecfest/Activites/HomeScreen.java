@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class HomeScreen extends AppCompatActivity
     private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
     Handler handler;//for runnable
     GridView grid;
+    EditText e;
     String[] text={"Events",
             "Shows","Lecture",
             "Register"};
@@ -67,10 +69,12 @@ public class HomeScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
+
 
 
         //notification button--------------------------------------------------
@@ -103,7 +107,14 @@ public class HomeScreen extends AppCompatActivity
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(HomeScreen.this,"you clicked "+text[position],Toast.LENGTH_SHORT).show();
+
+
+
+                if(text[position]=="Register")
+                {
+                Intent i= new Intent(getApplicationContext(),register.class);
+                    startActivity(i);
+                }
             }
         });
 //------------HOMEPAGE GRID ENDS-------------------------------------------
@@ -119,7 +130,9 @@ public class HomeScreen extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
+
 
         addHomePager();
     }
