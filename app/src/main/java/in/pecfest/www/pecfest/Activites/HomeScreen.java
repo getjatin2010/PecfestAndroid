@@ -23,10 +23,16 @@ import android.graphics.Color;
 import android.widget.Toast;
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
+import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
+import in.pecfest.www.pecfest.Model.Common.Constants;
+import in.pecfest.www.pecfest.Model.Common.Request;
+import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class HomeScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
     private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
     Handler handler;//for runnable
     GridView grid;
@@ -45,6 +51,8 @@ public class HomeScreen extends AppCompatActivity
     private TextView notification_digit;
 
 
+
+
     Runnable marquee=new Runnable() {
         @Override
         public void run() {
@@ -53,7 +61,38 @@ public class HomeScreen extends AppCompatActivity
             mViewPager.setCurrentItem(y,true);
             handler.postDelayed(this,DELAY);
         }
+
+
+
     };
+
+    private void loadSponsors()
+    {
+        Request rr=  new Request();
+
+        rr.method = Constants.METHOD.SPONSOR_REQUEST;
+        rr.showPleaseWaitAtStart = false;
+        rr.hidePleaseWaitAtEnd = false;
+        rr.heading = null;
+        rr.requestData = null;
+
+        Utility.SendRequestToServer(this,rr);
+    }
+
+    @Override
+    public void onRequestCompleted(String method, Response rr) {
+        if(rr.isSuccess==false)
+        {
+            Toast.makeText(this,rr.errorMessage,Toast.LENGTH_LONG).show();
+        }
+        if(method.equals(Constants.METHOD.SPONSOR_REQUEST));
+        {
+            SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
+            Toast.makeText(HomeScreen.this,String.valueOf(sponsorResponse.count),Toast.LENGTH_LONG).show();
+
+        }
+           }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -69,16 +108,11 @@ public class HomeScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
-
-
-
         //notification button--------------------------------------------------
-
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();
 
@@ -133,7 +167,7 @@ public class HomeScreen extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        loadSponsors();
         addHomePager();
     }
 
@@ -249,6 +283,9 @@ public class HomeScreen extends AppCompatActivity
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.BLUE);
     }
+
+
+
 
 
 }
