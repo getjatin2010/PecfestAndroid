@@ -74,5 +74,5 @@ public class Utility {
 
     public SharedPreferences.Editor getSharedPreferencesEditor(Context context){
         return context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE).edit();
-    }
+    } 
 }
