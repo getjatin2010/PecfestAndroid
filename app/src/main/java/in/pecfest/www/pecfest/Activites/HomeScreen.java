@@ -36,6 +36,7 @@ public class HomeScreen extends AppCompatActivity
     private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
     Handler handler;//for runnable
     GridView grid;
+    TextView t;
     EditText e;
     String[] text={"Events",
             "Shows","Lecture",
@@ -113,6 +114,12 @@ public class HomeScreen extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
+//   t= (TextView) findViewById(R.id.t1);
+//        Intent intent=getIntent();
+//      String id=  intent.getStringExtra("id");
+//        t.setText(id);
+
+
         //notification button--------------------------------------------------
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();

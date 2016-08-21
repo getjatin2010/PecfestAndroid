@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,8 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     Editable phone;
     Button l;
     EditText e1,e2,e3,e4;
+    AutoCompleteTextView text;
+    String[] colleges={"IIT Delhi ","PEC University Of Technology","IIT Bombay","UIET","Chitkara University","IIT Roorkee","IIT Mandi","IIT Ropar","Thapar University"};
     EditText e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +44,13 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         setContentView(R.layout.activity_register);
     l= (Button) findViewById(R.id.btn_signup);
         e1= (EditText) findViewById(R.id.input_name);
-        e2= (EditText) findViewById(R.id.input_College);
+        text= (AutoCompleteTextView) findViewById(R.id.input_college);
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,colleges);
+
         e3= (EditText) findViewById(R.id.input_email);
         e4= (EditText) findViewById(R.id.input_phone);
+        text.setAdapter(adapter);
+        text.setThreshold(1);
         t= (TextView) findViewById(R.id.link_login);
 //       e= (EditText) findViewById(R.id.t1);
         l.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +106,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
 public void sendrequest()
 {
     name=e1.getText();
-    college=e2.getText();
+    college=text.getText();
     email=e3.getText();
     phone=e4.getText();
     String name1,college1,email1,phone1;
