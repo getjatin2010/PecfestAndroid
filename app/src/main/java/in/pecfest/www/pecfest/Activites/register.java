@@ -43,23 +43,25 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
     l= (Button) findViewById(R.id.btn_signup);
-        e1= (EditText) findViewById(R.id.input_name);
-        text= (AutoCompleteTextView) findViewById(R.id.input_college);
-        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,colleges);
-
-        e3= (EditText) findViewById(R.id.input_email);
-        e4= (EditText) findViewById(R.id.input_phone);
-        text.setAdapter(adapter);
-        text.setThreshold(1);
-        t= (TextView) findViewById(R.id.link_login);
-//       e= (EditText) findViewById(R.id.t1);
         l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 r();
             }
         });
+        e1= (EditText) findViewById(R.id.input_name);
+        text= (AutoCompleteTextView) findViewById(R.id.input_college);
+String college=String.valueOf(text);
 
+        e3= (EditText) findViewById(R.id.input_email);
+        e4= (EditText) findViewById(R.id.input_phone);
+
+        t= (TextView) findViewById(R.id.link_login);
+//       e= (EditText) findViewById(R.id.t1);
+
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,colleges);
+        text.setAdapter(adapter);
+        text.setThreshold(1);
     }
 
     public void a(View v)
@@ -72,17 +74,15 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     }
     public void r()
     {
-
-
+       // AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Your details are: \n" + "1.Name : \t "+ e1.getText()+ "\n"+ "2.College :\t"+ e2.getText()+"\n"+"3.Email :\t"
-        +e3.getText()+"\n"+"4.Phone:\t"+e4.getText()+"\n"+"Are you Sure you want to continue?");
+        alertDialogBuilder.setMessage("Your details are:\n"+"Name:\t"+e1.getText()+"\n"+"College:\t"+college+"\n"
+        +"Email\t"+e3.getText()+"\n"+"Phone:\t"+e4.getText()+"\n"+"Register?");
 
         alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-            sendrequest();
-
+                sendrequest();
             }
         });
 
@@ -91,12 +91,11 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             public void onClick(DialogInterface dialog, int which) {
 
             }
-
-
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
 
 
 
