@@ -1,6 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
@@ -24,6 +28,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     Editable name;
     Editable college;
     Editable email;
+    TextView t;
     Editable phone;
     Button l;
     EditText e1,e2,e3,e4;
@@ -32,15 +37,29 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        l= (Button) findViewById(R.id.button3);
+    l= (Button) findViewById(R.id.btn_signup);
         e1= (EditText) findViewById(R.id.input_name);
         e2= (EditText) findViewById(R.id.input_College);
-        e3= (EditText) findViewById(R.id.input_Email);
+        e3= (EditText) findViewById(R.id.input_email);
         e4= (EditText) findViewById(R.id.input_phone);
-       e= (EditText) findViewById(R.id.t1);
+        t= (TextView) findViewById(R.id.link_login);
+//       e= (EditText) findViewById(R.id.t1);
+        l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                r();
+            }
+        });
 
     }
-    public void r(View v)
+
+    public void a(View v)
+    {
+        Intent i= new Intent(getApplicationContext(),login.class);
+        startActivity(i);
+
+    }
+    public void r()
     {
 
 
@@ -52,6 +71,8 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
             sendrequest();
+                Intent i= new Intent(getApplicationContext(),login.class);
+                startActivity(i);
             }
         });
 
