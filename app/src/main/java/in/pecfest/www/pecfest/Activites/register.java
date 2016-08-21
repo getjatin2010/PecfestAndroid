@@ -51,7 +51,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-sendrequest();
+            sendrequest();
             }
         });
 
@@ -84,12 +84,21 @@ public void sendrequest()
     email1=email.toString();
     phone1=phone.toString();
 
+    RegistrationRequest registrationRequest = new RegistrationRequest();
+    registrationRequest.name = name1;
+    registrationRequest.college = college1;
+    registrationRequest.phone = phone1;
+    registrationRequest.email = email1;
+    registrationRequest.accomodation = 1;
+    registrationRequest.gender = "male";
+
+
     Request rr= new Request();
     rr.method= Constants.METHOD.RESGISTRATION;
-    rr.showPleaseWaitAtStart = false;
-    rr.hidePleaseWaitAtEnd = false;
+    rr.showPleaseWaitAtStart = true;
+    rr.hidePleaseWaitAtEnd = true;
     rr.heading = null;
-   rr.requestData= name1+email1+college1+phone1;
+     rr.requestData= Utility.GetJsonObject(registrationRequest);
     Utility.SendRequestToServer(this,rr);
 
 }
@@ -103,8 +112,7 @@ public void sendrequest()
         {
 
           RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
-
-               Toast t=Toast.makeText(getApplicationContext(),String.valueOf(respone.response),Toast.LENGTH_SHORT);
+            Toast t=Toast.makeText(getApplicationContext(),String.valueOf(rr.JsonResponse),Toast.LENGTH_SHORT);
             t.show();
         }
     }
