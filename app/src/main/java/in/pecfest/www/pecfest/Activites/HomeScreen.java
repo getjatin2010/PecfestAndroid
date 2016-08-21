@@ -88,7 +88,8 @@ public class HomeScreen extends AppCompatActivity
         if(method.equals(Constants.METHOD.SPONSOR_REQUEST));
         {
             SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
-            Toast.makeText(HomeScreen.this,String.valueOf(sponsorResponse.count),Toast.LENGTH_LONG).show();
+           if(sponsorResponse!=null)
+             Toast.makeText(HomeScreen.this,String.valueOf(sponsorResponse.count),Toast.LENGTH_LONG).show();
 
         }
            }

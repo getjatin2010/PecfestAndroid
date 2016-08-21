@@ -56,7 +56,9 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     public void a(View v)
     {
         Intent i= new Intent(getApplicationContext(),login.class);
+        finish();
         startActivity(i);
+
 
     }
     public void r()
@@ -71,8 +73,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
             sendrequest();
-                Intent i= new Intent(getApplicationContext(),login.class);
-                startActivity(i);
+
             }
         });
 
@@ -129,12 +130,22 @@ public void sendrequest()
         if(rr.isSuccess==false) {
             Toast.makeText(this, "Error", Toast.LENGTH_LONG).show();
         }
+
         if(method.equals(Constants.METHOD.RESGISTRATION))
         {
+
+
 
           RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
             Toast t=Toast.makeText(getApplicationContext(),String.valueOf(rr.JsonResponse),Toast.LENGTH_SHORT);
             t.show();
+
+            Intent i= new Intent(getApplicationContext(),login.class);
+            finish();
+            startActivity(i);
+
+
+
         }
     }
 }
