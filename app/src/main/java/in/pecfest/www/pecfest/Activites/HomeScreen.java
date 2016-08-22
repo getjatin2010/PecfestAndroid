@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import android.graphics.Color;
 import android.widget.Toast;
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
+import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
@@ -45,7 +47,8 @@ public class HomeScreen extends AppCompatActivity
     Button a;
     TextView t;
     LinearLayout sponsorBanner;
-
+    ImageView sp1,sp2,sp3,sp4,sp5;
+    SponsorResponse sponsorResponse;
 
 
     EditText e;
@@ -137,12 +140,30 @@ public class HomeScreen extends AppCompatActivity
         }
         if(method.equals(Constants.METHOD.SPONSOR_REQUEST));
         {
-            SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
+            sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
            if(sponsorResponse!=null)
-             Toast.makeText(HomeScreen.this,String.valueOf(sponsorResponse.count),Toast.LENGTH_LONG).show();
+           processSponsors();
 
         }
-           }
+    }
+
+    private void processSponsors()
+    {
+        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[0].sponsorUrl,sp1,1,false);
+        i1.execute();
+
+        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[1].sponsorUrl,sp2,1,false);
+        i2.execute();
+
+        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[2].sponsorUrl,sp3,1,false);
+        i3.execute();
+
+        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[3].sponsorUrl,sp4,1,false);
+        i4.execute();
+
+        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[4].sponsorUrl,sp5,1,false);
+        i5.execute();
+    }
 
     @Override
     protected void onResume() {
@@ -220,6 +241,13 @@ public class HomeScreen extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        sp1 = (ImageView)findViewById(R.id.sp1);
+        sp2 = (ImageView)findViewById(R.id.sp2);
+        sp3 = (ImageView)findViewById(R.id.sp3);
+        sp4 = (ImageView)findViewById(R.id.sp4);
+        sp5 = (ImageView)findViewById(R.id.sp5);
 
         loadSponsors();
         addHomePager();
