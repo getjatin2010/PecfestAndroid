@@ -10,14 +10,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.text.Html;
 import android.graphics.Color;
@@ -41,6 +44,10 @@ public class HomeScreen extends AppCompatActivity
     GridView grid;
     Button a;
     TextView t;
+    LinearLayout sponsorBanner;
+
+
+
     EditText e;
     String[] text={"Events",
             "Shows","Lecture",
@@ -70,6 +77,44 @@ public class HomeScreen extends AppCompatActivity
 
 
     };
+
+
+    void positionEverything()
+    {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        float w = dm.widthPixels/dm.xdpi;
+        float h = dm.heightPixels/dm.ydpi;
+        float textSize = h*5;
+        float width = dm.widthPixels;
+        float height = dm.heightPixels;
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) ((0));
+        mViewPager.setLayoutParams(params);
+
+
+//        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        params.leftMargin = (int) ((width/5));
+//        params.topMargin = (int) ((1.2*height/3));
+//        dotsLayout.setLayoutParams(params);
+
+
+        params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) ((1.27*height/3));
+        grid.setLayoutParams(params);
+
+
+        params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) ((1.18*2*height/3));
+        sponsorBanner.setLayoutParams(params);
+
+    }
+
 
     private void loadSponsors()
     {
@@ -120,8 +165,8 @@ public class HomeScreen extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
-
+        //SPONSOR BANNER
+        sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
         //notification button--------------------------------------------------
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();
@@ -178,6 +223,7 @@ public class HomeScreen extends AppCompatActivity
 
         loadSponsors();
         addHomePager();
+        positionEverything();
     }
 
     void notifCol(){
@@ -253,7 +299,6 @@ public class HomeScreen extends AppCompatActivity
 
     private void addHomePager(){
         final int[] mResources = {
-                R.drawable.banner,
                 R.drawable.download1,
                 R.drawable.download2,
                 R.drawable.download3

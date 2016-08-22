@@ -43,6 +43,7 @@ public class SponsorAdaptor extends BaseAdapter {
         LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(convertView==null){
             grid=new View(context);
+
             grid=inflater.inflate(R.layout.gird_square,null);
             TextView textView=(TextView)grid.findViewById(R.id.grid_square_text);
             ImageView imageView=(ImageView)grid.findViewById(R.id.grid_square_image);
