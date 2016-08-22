@@ -148,7 +148,7 @@ public void sendrequest()
             Toast t=Toast.makeText(getApplicationContext(),String.valueOf(rr.JsonResponse),Toast.LENGTH_SHORT);
             t.show();
 
-            Intent i= new Intent(getApplicationContext(),login.class);
+            Intent i= new Intent(getApplicationContext(),verify.class);
             finish();
             startActivity(i);
 

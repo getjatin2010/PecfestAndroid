@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -28,6 +29,7 @@ import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
+import in.pecfest.www.pecfest.Model.navheader;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
@@ -35,7 +37,9 @@ public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
     private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
     Handler handler;//for runnable
+    public String as;
     GridView grid;
+    Button a;
     TextView t;
     EditText e;
     String[] text={"Events",
@@ -114,10 +118,8 @@ public class HomeScreen extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
-//   t= (TextView) findViewById(R.id.t1);
-//        Intent intent=getIntent();
-//      String id=  intent.getStringExtra("id");
-//        t.setText(id);
+
+
 
 
         //notification button--------------------------------------------------
@@ -164,7 +166,6 @@ public class HomeScreen extends AppCompatActivity
         //testscroll------------------
         handler=new Handler();
         //testscroll------------------
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -241,10 +242,12 @@ public class HomeScreen extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Toast.makeText(HomeScreen.this,"You clicked "+ item.getTitle(),Toast.LENGTH_SHORT).show();
+   if(item.getItemId()==R.id.nav_contact)
+   {
+    Intent i=new Intent(getApplicationContext(),contactus.class);
+       startActivity(i);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+   }
         return true;
     }
 

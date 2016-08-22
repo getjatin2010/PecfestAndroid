@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/a">
 
     <LinearLayout
         android:orientation="vertical"
@@ -24,12 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#FFFFFF">
             <EditText android:id="@+id/input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Name" />
+                android:hint="Name"
+               />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Email Label -->
@@ -37,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#FFFFFF">
             <AutoCompleteTextView
                 android:id="@+id/input_college"
                 android:layout_width="match_parent"
@@ -54,7 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#FFFFFF">
             <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#FFFFFF">
             <EditText android:id="@+id/input_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,7 +90,8 @@
                 android:text="Accomodation"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textColor="#FFFFFF"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,14 +116,16 @@
                     android:layout_height="wrap_content"
                     android:text="Yes"
                     android:textSize="14dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:textColor="#FFFFFF"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
                     android:textSize="14dp"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="#FFFFFF"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -131,7 +140,8 @@
                 android:text="Gender"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="18dp"/>
+                android:textSize="18dp"
+                android:textColor="#FFFFFF"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -156,14 +166,16 @@
                     android:layout_height="wrap_content"
                     android:text="Male"
                     android:textSize="14dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:textColor="#FFFFFF"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Female"
                     android:textSize="14dp"
-                    android:layout_marginTop="15dp"/>
+                    android:layout_marginTop="15dp"
+                    android:textColor="#FFFFFF"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -176,6 +188,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:text="Register"
+            android:textColor="#FFFFFF"
 
             />
 
@@ -186,6 +199,7 @@
             android:text="Already a member? Login"
             android:gravity="center"
             android:textSize="16dip"
+            android:textColor="#FFFFFF"
             android:onClick="a"/>
 
     </LinearLayout>

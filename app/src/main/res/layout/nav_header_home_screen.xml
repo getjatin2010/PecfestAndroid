@@ -19,20 +19,33 @@
         android:src="@drawable/logo" />
 
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Hello, Devansh (15103021)"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:id="@+id/t1"/>
-
-    <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:text="@string/pecfestTitle"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:text="" />
+        android:id="@+id/t1"
+        android:textSize="22dp"/>
+
+    <Button
+        android:id ="@+id/push_button"
+        android:layout_marginLeft="80dp"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:text="LOGIN"
+        android:background="@layout/roundbtn"
+        android:padding="15dp"
+
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>
+
+
+
 
 </LinearLayout>
