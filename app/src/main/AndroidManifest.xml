@@ -40,7 +40,7 @@
         <activity android:name=".Activites.register" />
         <activity android:name=".Activites.login" />
         <activity android:name=".Activites.contactus" />
-        <activity android:name=".Activites.verify"></activity>
+        <activity android:name=".Activites.verify" />
     </application>
 
 </manifest>
