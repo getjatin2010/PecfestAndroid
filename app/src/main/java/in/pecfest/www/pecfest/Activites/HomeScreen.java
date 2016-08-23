@@ -1,6 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,9 +25,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.text.Html;
-import android.graphics.Color;
 import android.widget.Toast;
+
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Communication.ImageLoader;
@@ -34,7 +35,6 @@ import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
-import in.pecfest.www.pecfest.Model.navheader;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
@@ -223,7 +223,7 @@ public class HomeScreen extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if(text[position].equals("Events")){
-                    startActivity(new Intent(getApplicationContext(), contactus.class));
+                    startActivity(new Intent(getApplicationContext(), Events.class));
                 }
                 if(text[position]=="Register")
                 {
@@ -325,6 +325,8 @@ public class HomeScreen extends AppCompatActivity
    {
     Intent i=new Intent(getApplicationContext(),contactus.class);
        startActivity(i);
+            Intent in = new Intent(this, Events.class);
+            startActivity(in);
 
    }
         return true;
