@@ -3,6 +3,7 @@
     package="in.pecfest.www.pecfest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,8 +36,11 @@
         <activity
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Activites.register"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activites.register" />
+        <activity android:name=".Activites.login" />
+        <activity android:name=".Activites.contactus" />
+        <activity android:name=".Activites.verify" />
     </application>
 
 </manifest>

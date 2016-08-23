@@ -10,24 +10,31 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.text.Html;
 import android.graphics.Color;
 import android.widget.Toast;
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
+import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
+import in.pecfest.www.pecfest.Model.navheader;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
@@ -35,7 +42,15 @@ public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
     private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
     Handler handler;//for runnable
+    public String as;
     GridView grid;
+    Button a;
+    TextView t;
+    LinearLayout sponsorBanner;
+    ImageView sp1,sp2,sp3,sp4,sp5;
+    SponsorResponse sponsorResponse;
+
+
     EditText e;
     String[] text={"Events",
             "Shows","Lecture",
@@ -66,6 +81,44 @@ public class HomeScreen extends AppCompatActivity
 
     };
 
+
+    void positionEverything()
+    {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        float w = dm.widthPixels/dm.xdpi;
+        float h = dm.heightPixels/dm.ydpi;
+        float textSize = h*5;
+        float width = dm.widthPixels;
+        float height = dm.heightPixels;
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) ((0));
+        mViewPager.setLayoutParams(params);
+
+
+//        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        params.leftMargin = (int) ((width/5));
+//        params.topMargin = (int) ((1.2*height/3));
+//        dotsLayout.setLayoutParams(params);
+
+
+        params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) ((1.27*height/3));
+        grid.setLayoutParams(params);
+
+
+        params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) ((1.18*2*height/3));
+        sponsorBanner.setLayoutParams(params);
+
+    }
+
+
     private void loadSponsors()
     {
         Request rr=  new Request();
@@ -87,11 +140,30 @@ public class HomeScreen extends AppCompatActivity
         }
         if(method.equals(Constants.METHOD.SPONSOR_REQUEST));
         {
-            SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
-            Toast.makeText(HomeScreen.this,String.valueOf(sponsorResponse.count),Toast.LENGTH_LONG).show();
+            sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
+           if(sponsorResponse!=null)
+           processSponsors();
 
         }
-           }
+    }
+
+    private void processSponsors()
+    {
+        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[0].sponsorUrl,sp1,1,false);
+        i1.execute();
+
+        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[1].sponsorUrl,sp2,1,false);
+        i2.execute();
+
+        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[2].sponsorUrl,sp3,1,false);
+        i3.execute();
+
+        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[3].sponsorUrl,sp4,1,false);
+        i4.execute();
+
+        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[4].sponsorUrl,sp5,1,false);
+        i5.execute();
+    }
 
     @Override
     protected void onResume() {
@@ -112,6 +184,10 @@ public class HomeScreen extends AppCompatActivity
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
+
+
+        //SPONSOR BANNER
+        sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
         //notification button--------------------------------------------------
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();
@@ -156,7 +232,6 @@ public class HomeScreen extends AppCompatActivity
         //testscroll------------------
         handler=new Handler();
         //testscroll------------------
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -167,8 +242,16 @@ public class HomeScreen extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        sp1 = (ImageView)findViewById(R.id.sp1);
+        sp2 = (ImageView)findViewById(R.id.sp2);
+        sp3 = (ImageView)findViewById(R.id.sp3);
+        sp4 = (ImageView)findViewById(R.id.sp4);
+        sp5 = (ImageView)findViewById(R.id.sp5);
+
         loadSponsors();
         addHomePager();
+        positionEverything();
     }
 
     void notifCol(){
@@ -233,16 +316,17 @@ public class HomeScreen extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Toast.makeText(HomeScreen.this,"You clicked "+ item.getTitle(),Toast.LENGTH_SHORT).show();
+   if(item.getItemId()==R.id.nav_contact)
+   {
+    Intent i=new Intent(getApplicationContext(),contactus.class);
+       startActivity(i);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+   }
         return true;
     }
 
     private void addHomePager(){
         final int[] mResources = {
-                R.drawable.banner,
                 R.drawable.download1,
                 R.drawable.download2,
                 R.drawable.download3

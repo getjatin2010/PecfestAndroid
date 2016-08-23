@@ -89,6 +89,7 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
+        if(mImageIndeterminateProgressBar!=null)
         mImageIndeterminateProgressBar.setVisibility(View.INVISIBLE);
         //imageView.setBackground(null);
 

@@ -7,7 +7,7 @@ public class Constants {
 
     public static class METHOD
     {
-        public static final String RESGISTRATION = "resgistration";
+        public static final String RESGISTRATION = "registration";
         public static final String SPONSOR_REQUEST = "sponsorlist";
         // We can add method name here
 

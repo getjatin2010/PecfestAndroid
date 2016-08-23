@@ -81,7 +81,7 @@ public class ExecuteRequest extends AsyncTask<Void,Void,Response> {
         RequestC requestC = new RequestC();
 
         requestC.method = request.method;
-        requestC.requestData = request.requestData;
+        requestC.request = request.requestData;
         String requestJson = Utility.GetJsonObject(requestC);
 
         try {

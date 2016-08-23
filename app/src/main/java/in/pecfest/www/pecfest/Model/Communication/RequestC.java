@@ -5,5 +5,5 @@ package in.pecfest.www.pecfest.Model.Communication;
  */
 public class RequestC {
     public String method;
-    public String requestData;
+    public String request;
 }
