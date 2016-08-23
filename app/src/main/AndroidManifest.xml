@@ -37,7 +37,9 @@
         <activity
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            </activity>
+        <activity
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
             android:theme="@style/AppTheme.NoActionBar"></activity>

@@ -60,11 +60,13 @@ public class Utility {
         return baseUrl;
     }
 
-    public static String getUsername(Context context){
-        if(userName == null || userName.isEmpty()){
-            userName= context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE).getString("pecfest_user_name", "");
+    public static String getUsername(Context context) {
+        if (userName == null || userName.isEmpty()) {
+            userName = context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE).getString("pecfest_user_name", "");
         }
         return userName;
+    }
+
     public static void saveId(String id,Context context)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences",Context.MODE_PRIVATE);
