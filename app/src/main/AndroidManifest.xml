@@ -42,7 +42,7 @@
         <activity
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/EventsTheme"></activity>
         <activity android:name=".Activites.register" />
         <activity android:name=".Activites.login" />
         <activity android:name=".Activites.contactus" />
