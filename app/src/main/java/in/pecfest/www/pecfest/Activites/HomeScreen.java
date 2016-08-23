@@ -138,12 +138,16 @@ public class HomeScreen extends AppCompatActivity
         {
             Toast.makeText(this,rr.errorMessage,Toast.LENGTH_LONG).show();
         }
-        if(method.equals(Constants.METHOD.SPONSOR_REQUEST));
+        if(method.equals(Constants.METHOD.SPONSOR_REQUEST))
         {
-            sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
-           if(sponsorResponse!=null)
-           processSponsors();
-
+           try {
+               sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
+               if (sponsorResponse != null)
+                   processSponsors();
+           }
+           catch(Exception e){
+               Toast.makeText(this, "Invalid response!", Toast.LENGTH_LONG).show();
+           }
         }
     }
 
@@ -218,8 +222,9 @@ public class HomeScreen extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-
+                if(text[position].equals("Events")){
+                    startActivity(new Intent(getApplicationContext(), contactus.class));
+                }
                 if(text[position]=="Register")
                 {
                 Intent i= new Intent(getApplicationContext(),register.class);
