@@ -9,4 +9,7 @@
     <string name="title_activity_events">Events</string>
 
     <string name="base_url">http://192.168.1.106/pecfest/</string>
+    <string name="title_activity_notification">Notification</string>
+    <string name="pecfestTitle">PECFEST</string>
+    <string name="notice">NOTICE</string>
 </resources>

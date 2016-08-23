@@ -16,6 +16,8 @@ import java.net.URL;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Communication.RequestC;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 
 /**
@@ -27,7 +29,7 @@ public class ExecuteRequest extends AsyncTask<Void,Void,Response> {
     Request request;
 
     static ProgressDialog pbDialog;
-    String baseURL = "http://www.pecfest.in/";
+    String baseURL = "http://pecfest.in/appPHP2016/receive.php";
     CommunicationInterface listener;
 
 
@@ -51,7 +53,7 @@ public class ExecuteRequest extends AsyncTask<Void,Void,Response> {
 
     private HttpURLConnection getConnection() throws Exception
     {
-        String urlString = baseURL + request.method;
+        String urlString = baseURL;
         URL url = new URL(urlString);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -76,11 +78,17 @@ public class ExecuteRequest extends AsyncTask<Void,Void,Response> {
 
         Response rr = new Response();
 
+        RequestC requestC = new RequestC();
+
+        requestC.method = request.method;
+        requestC.request = request.requestData;
+        String requestJson = Utility.GetJsonObject(requestC);
+
         try {
             HttpURLConnection conn = getConnection();
             conn.connect();
             OutputStream os = new BufferedOutputStream(conn.getOutputStream());
-            os.write(request.requestData.getBytes());
+            os.write(requestJson.getBytes());
             os.flush();
 
             InputStream is = conn.getInputStream();
@@ -119,6 +127,5 @@ public class ExecuteRequest extends AsyncTask<Void,Void,Response> {
         }
         listener.onRequestCompleted(request.method, rr);
     }
-
 }
 

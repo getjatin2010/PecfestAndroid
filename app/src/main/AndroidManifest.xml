@@ -9,11 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
 
         <activity
             android:name=".Activites.HomeScreen"
             android:label="@string/title_activity_home_screen"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,9 +35,16 @@
         </service>
 
         <activity
+            android:name=".Activites.Notification"
+            android:label="@string/title_activity_notification"
+            android:theme="@style/AppTheme.NoActionBar" />
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Activites.register" />
+        <activity android:name=".Activites.login" />
+        <activity android:name=".Activites.contactus" />
+        <activity android:name=".Activites.verify" />
     </application>
 
 </manifest>

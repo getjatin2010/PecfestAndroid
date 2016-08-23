@@ -2,7 +2,7 @@ package in.pecfest.www.pecfest.Model.Common;
 
 
 /**
- * Created by Pradeep on 19-01-2016.
+ * Created by Jatin on 19-01-2016.
  */
 public class Request {
     public String method = "";

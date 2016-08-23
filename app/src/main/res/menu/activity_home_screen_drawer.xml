@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
+    <group android:title="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_Regevent"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Events" />
+            android:title="Registered events" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Pecfest Gallery" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_selfieChamp"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Selfie Champ" />
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Help">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_acco"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Accomodation" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_map"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Map" />
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Contact Us" />
+
         </menu>
     </item>
 
