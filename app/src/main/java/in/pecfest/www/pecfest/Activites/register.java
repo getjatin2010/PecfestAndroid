@@ -42,7 +42,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-    l= (Button) findViewById(R.id.btn_signup);
+        l= (Button) findViewById(R.id.btn_signup);
         l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         });
         e1= (EditText) findViewById(R.id.input_name);
         text= (AutoCompleteTextView) findViewById(R.id.input_college);
-String college=String.valueOf(text);
+        String college=String.valueOf(text);
 
         e3= (EditText) findViewById(R.id.input_email);
         e4= (EditText) findViewById(R.id.input_phone);
@@ -74,10 +74,10 @@ String college=String.valueOf(text);
     }
     public void r()
     {
-       // AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Your details are:\n"+"Name:\t"+e1.getText()+"\n"+"College:\t"+college+"\n"
-        +"Email\t"+e3.getText()+"\n"+"Phone:\t"+e4.getText()+"\n"+"Register?");
+                +"Email\t"+e3.getText()+"\n"+"Phone:\t"+e4.getText()+"\n"+"Register?");
 
         alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
@@ -102,36 +102,36 @@ String college=String.valueOf(text);
     }
 
 
-public void sendrequest()
-{
-    name=e1.getText();
-    college=text.getText();
-    email=e3.getText();
-    phone=e4.getText();
-    String name1,college1,email1,phone1;
-    name1=name.toString();
-    college1=college.toString();
-    email1=email.toString();
-    phone1=phone.toString();
+    public void sendrequest()
+    {
+        name=e1.getText();
+        college=text.getText();
+        email=e3.getText();
+        phone=e4.getText();
+        String name1,college1,email1,phone1;
+        name1=name.toString();
+        college1=college.toString();
+        email1=email.toString();
+        phone1=phone.toString();
 
-    RegistrationRequest registrationRequest = new RegistrationRequest();
-    registrationRequest.name = name1;
-    registrationRequest.college = college1;
-    registrationRequest.phone = phone1;
-    registrationRequest.email = email1;
-    registrationRequest.accomodation = 1;
-    registrationRequest.gender = "male";
+        RegistrationRequest registrationRequest = new RegistrationRequest();
+        registrationRequest.name = name1;
+        registrationRequest.college = college1;
+        registrationRequest.phone = phone1;
+        registrationRequest.email = email1;
+        registrationRequest.accomodation = 1;
+        registrationRequest.gender = "male";
 
 
-    Request rr= new Request();
-    rr.method= Constants.METHOD.RESGISTRATION;
-    rr.showPleaseWaitAtStart = true;
-    rr.hidePleaseWaitAtEnd = true;
-    rr.heading = null;
-     rr.requestData= Utility.GetJsonObject(registrationRequest);
-    Utility.SendRequestToServer(this,rr);
+        Request rr= new Request();
+        rr.method= Constants.METHOD.RESGISTRATION;
+        rr.showPleaseWaitAtStart = true;
+        rr.hidePleaseWaitAtEnd = true;
+        rr.heading = null;
+        rr.requestData= Utility.GetJsonObject(registrationRequest);
+        Utility.SendRequestToServer(this,rr);
 
-}
+    }
 
     @Override
     public void onRequestCompleted(String method, Response rr) {
@@ -144,16 +144,13 @@ public void sendrequest()
 
 
 
-          RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
+            RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
             Toast t=Toast.makeText(getApplicationContext(),String.valueOf(rr.JsonResponse),Toast.LENGTH_SHORT);
             t.show();
 
             Intent i= new Intent(getApplicationContext(),verify.class);
             finish();
             startActivity(i);
-
-
-
         }
     }
 }

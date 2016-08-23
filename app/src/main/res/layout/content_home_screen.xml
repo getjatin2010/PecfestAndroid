@@ -29,7 +29,8 @@
                 android:layout_height="30dp"
                 android:layout_alignBottom="@id/home_pager"
                 android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:gravity="center">
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
