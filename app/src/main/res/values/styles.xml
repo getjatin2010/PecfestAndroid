@@ -19,5 +19,9 @@
     <style name="AppTheme.NoActionBar.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="EventsTheme" parent="AppTheme.NoActionBar">
+        <item name="colorPrimary">@color/eventsNav</item>
+        <item name="colorPrimaryDark">@color/nav_header_bck</item>
+    </style>
 
 </resources>
