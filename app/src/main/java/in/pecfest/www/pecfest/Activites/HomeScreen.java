@@ -190,6 +190,11 @@ public class HomeScreen extends AppCompatActivity
 
                    sponsorResponse.randomizeList();  //randomize sponsor list
                    //processSponsors();
+
+                   //SponsorImage array test decleration-----------------------------------
+                   sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length];
+                   //----------------------------------------------------------------------
+
                    loadDownloadedImage();
                    setSponsorImage();
                }
@@ -258,9 +263,6 @@ public class HomeScreen extends AppCompatActivity
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
-        //SponsorImage array test decleration-----------------------------------
-        sponsorImage=new Bitmap[12];
-        //----------------------------------------------------------------------
 
 
 
