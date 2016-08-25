@@ -82,6 +82,7 @@
         android:verticalSpacing="1dp"
         android:horizontalSpacing="1dp"
         android:stretchMode="columnWidth"
+
         android:padding="1dp"
         android:numColumns="auto_fit"
         android:gravity="center"

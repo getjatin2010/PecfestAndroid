@@ -1,6 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Communication.ImageLoader;
@@ -34,21 +37,44 @@ import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
+/*Changes Done
+    made sponsor image array so that image doesnot have to be downloaded everytime
+    sponsor list is random
+    made randomizer function in sponsorResponse
+    made changes in ImageLoader - new constructor, minor change in OnPostExecute
+    made changes to homescreen grid view- random colour filter from colour set
+    made changes in HomeScreenGridAdapter- each grid layout is not in sized according to the screen height and width
+    the function ProcessSponsor is not needed now
+  */
+
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
-    private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
+    private static int notifications=3,sponsorInt=0,x=4,DELAY=3000;//DELAY is in milliseconds
+    public static Bitmap sponsorImage[];
+    public static int spon=0;
     Handler handler;//for runnable
+
     public String as;
     GridView grid;
+    //GridView tint colour list---------------------------------------
+    int[] colour={android.R.color.holo_red_dark,
+            android.R.color.holo_green_dark,
+            android.R.color.holo_purple,
+            android.R.color.holo_orange_dark,
+            android.R.color.holo_blue_dark,
+            android.R.color.secondary_text_dark_nodisable
+    };
+    //----------------------------------------------------------------
     Button a;
     TextView t;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
-    SponsorResponse sponsorResponse;
+    static SponsorResponse sponsorResponse;  //made static so that the value stays even when activity is changed
 
 
     EditText e;
@@ -56,31 +82,56 @@ public class HomeScreen extends AppCompatActivity
             "Shows","Lecture",
             "Register"};
     int[] imageId={
-            R.drawable.test,
-            R.drawable.test,
-            R.drawable.test,
-            R.drawable.test
+            R.drawable.events,     //event
+            R.drawable.shows,      //shows
+            R.drawable.classroom,  //lecture
+            R.drawable.lectures    //register
     };
     ViewPager mViewPager;
     private LinearLayout dotsLayout,notificationLayout;
     private TextView notification_digit;
 
+//Randomaize Colour and Sponsor array for gridView--------------------------
+    void randomizeArray(int[] array){
 
+        Random r=new Random();
+        for(int i=0;i<(array.length/2);i++){
+            int x= r.nextInt(array.length);
+            int y= r.nextInt(array.length);
+            if(y==x){
+                y=(y+1)%array.length;
+            }
 
+            int temp = array[x];
+            array[x]=array[y];
+            array[y]=temp;
+        }
+    }
+//--------------------------------------------------------------------------
 
     Runnable marquee=new Runnable() {
         @Override
         public void run() {
-            int y=Math.abs(x-4);
-            x=(x+1)%8;
-            mViewPager.setCurrentItem(y,true);
+            marqueeBanner();
+
+            if(sponsorImage!=null){
+                setSponsorImage();
+            }
+            //if(sponsorResponse!=null&&sponsorResponse.sponsorlist!=null){
+
+                //processSponsors();
+            //}
             handler.postDelayed(this,DELAY);
         }
 
 
 
     };
-
+    void marqueeBanner(){
+        int y=Math.abs(x-4);
+        x=(x+1)%8;
+        mViewPager.setCurrentItem(y,true);
+    }
 
     void positionEverything()
     {
@@ -98,16 +149,9 @@ public class HomeScreen extends AppCompatActivity
         params.topMargin = (int) ((0));
         mViewPager.setLayoutParams(params);
 
-
-//        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        params.leftMargin = (int) ((width/5));
-//        params.topMargin = (int) ((1.2*height/3));
-//        dotsLayout.setLayoutParams(params);
-
-
         params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) ((1.27*height/3));
+        params.topMargin=(int)(1.285*height/3);
         grid.setLayoutParams(params);
 
 
@@ -142,8 +186,13 @@ public class HomeScreen extends AppCompatActivity
         {
            try {
                sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
-               if (sponsorResponse != null)
-                   processSponsors();
+               if (sponsorResponse != null){
+
+                   sponsorResponse.randomizeList();  //randomize sponsor list
+                   //processSponsors();
+                   loadDownloadedImage();
+                   setSponsorImage();
+               }
            }
            catch(Exception e){
                Toast.makeText(this, "Invalid response!", Toast.LENGTH_LONG).show();
@@ -151,24 +200,44 @@ public class HomeScreen extends AppCompatActivity
         }
     }
 
-    private void processSponsors()
+    //set downloaded image to imageView--------------------------------------------------------------------
+    private void setSponsorImage(){
+        sp1.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
+        sp2.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
+        sp3.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
+        sp4.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
+        sp5.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
+        //sponsorResponse.sponsorlist.length
+    }
+    //-----------------------------------------------------------------------------------------------------
+    //loadImages ------------------------------------------------------------------------------------------
+    void loadDownloadedImage(){
+        ImageView img=new ImageView(this);
+        for(int i=0;i<sponsorResponse.sponsorlist.length;i++){
+            ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[i].sponsorUrl,1,false,true);
+            i1.execute();
+        }
+
+    }
+    //-----------------------------------------------------------------------------------------------------
+    /*private void processSponsors()
     {
-        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[0].sponsorUrl,sp1,1,false);
+        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp1,1,false);
         i1.execute();
 
-        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[1].sponsorUrl,sp2,1,false);
+        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp2,1,false);
         i2.execute();
 
-        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[2].sponsorUrl,sp3,1,false);
+        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp3,1,false);
         i3.execute();
 
-        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[3].sponsorUrl,sp4,1,false);
+        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp4,1,false);
         i4.execute();
 
-        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[4].sponsorUrl,sp5,1,false);
+        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp5,1,false);
         i5.execute();
     }
-
+*/
     @Override
     protected void onResume() {
         super.onResume();
@@ -189,9 +258,12 @@ public class HomeScreen extends AppCompatActivity
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
+        //SponsorImage array test decleration-----------------------------------
+        sponsorImage=new Bitmap[12];
+        //----------------------------------------------------------------------
 
-        //SPONSOR BANNER
-        sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
+
+
         //notification button--------------------------------------------------
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();
@@ -214,8 +286,9 @@ public class HomeScreen extends AppCompatActivity
         //notification button---------------------------------------------------
 
 //------------HOMEPAGE GRID------------------------------------------------
+        randomizeArray(colour);//Randomize colours array before passing
 
-        HomeScreenGridAdapter adapter= new HomeScreenGridAdapter(HomeScreen.this,text,imageId);
+        HomeScreenGridAdapter adapter= new HomeScreenGridAdapter(HomeScreen.this,text,imageId,colour,getWindowManager().getDefaultDisplay());
         grid=(GridView)findViewById(R.id.gridViewHomePage);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -248,13 +321,19 @@ public class HomeScreen extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
+        //Sponsor-----------------------------------------------------------------------
+        //SPONSOR BANNER
+        sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
+        //sponsorResponse.randomizeList();
+
         sp1 = (ImageView)findViewById(R.id.sp1);
         sp2 = (ImageView)findViewById(R.id.sp2);
         sp3 = (ImageView)findViewById(R.id.sp3);
         sp4 = (ImageView)findViewById(R.id.sp4);
         sp5 = (ImageView)findViewById(R.id.sp5);
-
         loadSponsors();
+        //------------------------------------------------------------------------------
         addHomePager();
         positionEverything();
     }
@@ -323,17 +402,15 @@ public class HomeScreen extends AppCompatActivity
         // Handle navigation view item clicks here.
    if(item.getItemId()==R.id.nav_contact)
    {
-    Intent i=new Intent(getApplicationContext(),contactus.class);
-       startActivity(i);
-            Intent in = new Intent(this, Events.class);
-            startActivity(in);
-
+        Intent i=new Intent(getApplicationContext(),contactus.class);
+        startActivity(i);
    }
         return true;
     }
 
     private void addHomePager(){
         final int[] mResources = {
+                R.drawable.banner,
                 R.drawable.download1,
                 R.drawable.download2,
                 R.drawable.download3

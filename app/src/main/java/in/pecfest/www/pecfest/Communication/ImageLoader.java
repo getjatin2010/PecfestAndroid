@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import in.pecfest.www.pecfest.Activites.HomeScreen;
 import in.pecfest.www.pecfest.R;
 
 
@@ -27,7 +28,16 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
     private ProgressBar mImageIndeterminateProgressBar;
     private boolean roundImage;
     private float ratio;
-
+    private boolean isSopnsor;
+    //for loading sponsors to localVariable--------------------------------------------------------------
+    public ImageLoader(String url,  float ratio,boolean roundImage,boolean isSopnsor) {
+        this.url = url;
+        this.imageView = imageView;
+        this.ratio = ratio;
+        this.roundImage = roundImage;
+        this.isSopnsor=isSopnsor;
+    }
+    //---------------------------------------------------------------------------------------------------
     public ImageLoader(String url, ImageView imageView,  float ratio,boolean roundImage) {
         this.url = url;
         this.imageView = imageView;
@@ -78,7 +88,6 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
             connection.connect();
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-
             return myBitmap;
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,12 +106,18 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
         {
             if(roundImage==true)
             result = getRoundedShape(result);
-
-            imageView.setImageBitmap(result);
+            if(isSopnsor){//if is a sponsor image add to sponsor array
+                HomeScreen.sponsorImage[HomeScreen.spon++]=result;
+            }else{
+                imageView.setImageBitmap(result);
+            }
         }
         else
         {
-            imageView.setImageResource(R.drawable.no_image);
+            if(!isSopnsor)
+                imageView.setImageResource(R.drawable.no_image);
         }
     }
+
+
 }
