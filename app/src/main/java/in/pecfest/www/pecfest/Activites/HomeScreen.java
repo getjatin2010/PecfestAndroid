@@ -1,8 +1,11 @@
 package in.pecfest.www.pecfest.Activites;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -16,6 +19,7 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -40,6 +44,7 @@ import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
 /*Changes Done
@@ -58,7 +63,13 @@ public class HomeScreen extends AppCompatActivity
     public static Bitmap sponsorImage[];
     public static int spon=0;
     Handler handler;//for runnable
-
+    private ImageViewAnimatedChange  imageViewAnimatedChange;
+    Button a;
+    TextView t;
+    LinearLayout sponsorBanner;
+    ImageView sp1,sp2,sp3,sp4,sp5;
+    static SponsorResponse sponsorResponse;  //made static so that the value stays even when activity is changed
+    EditText e;
     public String as;
     GridView grid;
     //GridView tint colour list---------------------------------------
@@ -70,22 +81,22 @@ public class HomeScreen extends AppCompatActivity
             android.R.color.secondary_text_dark_nodisable
     };
     //----------------------------------------------------------------
-    Button a;
-    TextView t;
-    LinearLayout sponsorBanner;
-    ImageView sp1,sp2,sp3,sp4,sp5;
-    static SponsorResponse sponsorResponse;  //made static so that the value stays even when activity is changed
-
-
-    EditText e;
+//for homescreen page viewer----------------------------------------------
+    final int[] mResources = {
+            R.drawable.banner1,
+            R.drawable.banner2,
+            R.drawable.banner3,
+            R.drawable.banner4
+    };
+    //---------------------------------------------------------------------
     String[] text={"Events",
             "Shows","Lecture",
             "Register"};
     int[] imageId={
-            R.drawable.events,     //event
-            R.drawable.shows,      //shows
-            R.drawable.classroom,  //lecture
-            R.drawable.lectures    //register
+            R.drawable.events1,     //event
+            R.drawable.shows4,      //shows
+            R.drawable.lectures1,  //lecture
+            R.drawable.register    //register
     };
     ViewPager mViewPager;
     private LinearLayout dotsLayout,notificationLayout;
@@ -117,15 +128,8 @@ public class HomeScreen extends AppCompatActivity
             if(sponsorImage!=null){
                 setSponsorImage();
             }
-            //if(sponsorResponse!=null&&sponsorResponse.sponsorlist!=null){
-
-                //processSponsors();
-            //}
             handler.postDelayed(this,DELAY);
         }
-
-
-
     };
     void marqueeBanner(){
         int y=Math.abs(x-4);
@@ -161,8 +165,6 @@ public class HomeScreen extends AppCompatActivity
         sponsorBanner.setLayoutParams(params);
 
     }
-
-
     private void loadSponsors()
     {
         Request rr=  new Request();
@@ -207,12 +209,11 @@ public class HomeScreen extends AppCompatActivity
 
     //set downloaded image to imageView--------------------------------------------------------------------
     private void setSponsorImage(){
-        sp1.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
-        sp2.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
-        sp3.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
-        sp4.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
-        sp5.setImageBitmap(sponsorImage[(sponsorInt++)% spon]);
-        //sponsorResponse.sponsorlist.length
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp4,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp5,sponsorImage[(sponsorInt++)% spon]);
     }
     //-----------------------------------------------------------------------------------------------------
     //loadImages ------------------------------------------------------------------------------------------
@@ -254,6 +255,7 @@ public class HomeScreen extends AppCompatActivity
         handler.removeCallbacks(marquee);
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -263,7 +265,8 @@ public class HomeScreen extends AppCompatActivity
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
-
+        //animation changer initialize
+        imageViewAnimatedChange=new ImageViewAnimatedChange();
 
 
         //notification button--------------------------------------------------
@@ -274,7 +277,6 @@ public class HomeScreen extends AppCompatActivity
         notificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
@@ -294,19 +296,27 @@ public class HomeScreen extends AppCompatActivity
         grid=(GridView)findViewById(R.id.gridViewHomePage);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(text[position]){
+                    case "Events":
+                        startActivity(new Intent(getApplicationContext(), Events.class));
+                        break;
+                    case "Shows":
 
-                if(text[position].equals("Events")){
-                    startActivity(new Intent(getApplicationContext(), Events.class));
-                }
-                if(text[position]=="Register")
-                {
-                Intent i= new Intent(getApplicationContext(),register.class);
-                    startActivity(i);
+                        break;
+                    case "Lectures":
+
+                        break;
+                    case "Register":
+                        Intent i= new Intent(getApplicationContext(),register.class);
+                        startActivity(i);
+                        break;
                 }
             }
         });
+
 //------------HOMEPAGE GRID ENDS-------------------------------------------
 
         //testscroll------------------
@@ -373,7 +383,7 @@ public class HomeScreen extends AppCompatActivity
         return true;
     }
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -397,7 +407,7 @@ public class HomeScreen extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -411,12 +421,6 @@ public class HomeScreen extends AppCompatActivity
     }
 
     private void addHomePager(){
-        final int[] mResources = {
-                R.drawable.banner,
-                R.drawable.download1,
-                R.drawable.download2,
-                R.drawable.download3
-        };
 
         mViewPager.setAdapter(new HomePagerAdapter(this, mResources));
         addBottomDots(0, mResources.length);
