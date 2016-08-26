@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="Event name"
+        android:padding="10dp"
+        android:id="@+id/event_name"
+        android:background="@color/eventsNav"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="Club name"
+        android:padding="2dp"
+        android:id="@+id/club_name"
+        android:layout_below="@id/event_name" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:id="@+id/event_image"
+        android:src="@drawable/download1"
+        android:layout_below="@id/club_name" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_details"
+        android:layout_below="@id/event_image"
+        android:padding="5dp"
+        android:text="Some description for the event. this is an important event. All of you must participate." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_label"
+        android:textSize="16sp"
+        android:padding="5dp"
+        android:text="Registrants List"
+        android:layout_below="@id/event_details" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_event_submit"
+        android:layout_alignTop="@id/register_label"
+        android:layout_alignParentRight="true"
+        android:text="Register" />
+
+</RelativeLayout>

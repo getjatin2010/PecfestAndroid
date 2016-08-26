@@ -24,4 +24,7 @@
         <item name="colorPrimaryDark">@color/nav_header_bck</item>
     </style>
 
+    <style name="EventsRegisterTheme" parent="Theme.AppCompat.Light.Dialog.MinWidth">
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
