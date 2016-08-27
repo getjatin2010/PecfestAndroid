@@ -52,8 +52,9 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         Toolbar toolbar=(Toolbar)findViewById(R.id.notification_toolbar);
         setSupportActionBar(toolbar);
         //change colour of notification bar (status bar)------------------------------
-        Window window=getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        //Giving error in API 19 so removing the bottom lines
+     //   Window window=getWindow();
+      //  window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         //----------------------------------------------------------------------------
         //ReturnTOHomeScreen----------------------------------------------------------
         TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
