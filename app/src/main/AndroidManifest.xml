@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.pecfest.www.pecfest">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
         <activity
             android:name=".Activites.HomeScreen"
             android:label="@string/title_activity_home_screen"
@@ -37,16 +36,16 @@
         <activity
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar">
-            </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
-            android:theme="@style/EventsTheme"></activity>
+            android:theme="@style/EventsTheme" />
         <activity android:name=".Activites.register" />
         <activity android:name=".Activites.login" />
         <activity android:name=".Activites.contactus" />
         <activity android:name=".Activites.verify" />
+        <activity android:name=".Activites.navverify"></activity>
     </application>
 
 </manifest>

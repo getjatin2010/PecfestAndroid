@@ -25,6 +25,10 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Accomodation" />
             <item
+                android:id="@+id/nav_verify"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Verify Id" />
+            <item
                 android:id="@+id/nav_map"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Map" />

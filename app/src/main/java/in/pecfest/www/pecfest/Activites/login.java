@@ -28,4 +28,12 @@ public class login extends AppCompatActivity {
         finish();
         startActivity(i);
     }
+    public void j(View view)
+    {
+
+        Intent i=new Intent(getApplicationContext(),login.class);
+        startActivity(i);
+
+
+    }
 }

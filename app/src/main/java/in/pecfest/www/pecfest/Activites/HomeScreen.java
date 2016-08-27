@@ -417,6 +417,12 @@ public class HomeScreen extends AppCompatActivity
         Intent i=new Intent(getApplicationContext(),contactus.class);
         startActivity(i);
    }
+        if(item.getItemId()==R.id.nav_verify)
+        {
+
+            Intent i= new Intent(getApplicationContext(),navverify.class);
+            startActivity(i);
+        }
         return true;
     }
 
