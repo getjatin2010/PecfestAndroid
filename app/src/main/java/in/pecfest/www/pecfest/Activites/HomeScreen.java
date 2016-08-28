@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -100,7 +99,9 @@ public class HomeScreen extends AppCompatActivity
     };
     ViewPager mViewPager;
     private LinearLayout dotsLayout,notificationLayout;
-    private TextView notification_digit;
+
+    private TextView notification_digit,navBarHeaderText;
+    private NavigationView nav_view;
 
 //Randomaize Colour and Sponsor array for gridView--------------------------
     void randomizeArray(int[] array){
@@ -339,6 +340,10 @@ public class HomeScreen extends AppCompatActivity
         sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
         //sponsorResponse.randomizeList();
 
+        //Getting Navigational Header Text
+        View headerLayout = navigationView.getHeaderView(0);
+        navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
+        
         sp1 = (ImageView)findViewById(R.id.sp1);
         sp2 = (ImageView)findViewById(R.id.sp2);
         sp3 = (ImageView)findViewById(R.id.sp3);
@@ -382,6 +387,25 @@ public class HomeScreen extends AppCompatActivity
             getMenuInflater().inflate(R.menu.home_screen, menu);
         return true;
     }
+
+    public void loginIn(View view)
+    {
+        Intent i=new Intent(getApplicationContext(),login.class);
+        startActivityForResult(i, 5);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5) {
+            if (resultCode == RESULT_OK) {
+                String pecfestId  = Utility.getsaveId(this);
+                navBarHeaderText.setText("Hello " +pecfestId+" !");
+                navBarHeaderText.setClickable(false);
+
+            }
+        }
+    }
+
 
    /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
