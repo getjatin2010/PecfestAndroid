@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:background="@android:color/white">
+        android:background="@android:drawable/screen_background_light_transparent">
         <TextView
             android:id="@+id/notification_new_Text"
             android:layout_width="wrap_content"
@@ -35,6 +35,7 @@
             android:text="title"
             android:textSize="20sp"
             android:textColor="@android:color/black"
+
             android:textStyle="bold"/>
 
     </RelativeLayout>
