@@ -28,7 +28,7 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
     private ProgressBar mImageIndeterminateProgressBar;
     private boolean roundImage;
     private float ratio;
-    private boolean isSopnsor;
+    private boolean isSopnsor = false;
     //for loading sponsors to localVariable--------------------------------------------------------------
     public ImageLoader(String url,  float ratio,boolean roundImage,boolean isSopnsor) {
         this.url = url;
