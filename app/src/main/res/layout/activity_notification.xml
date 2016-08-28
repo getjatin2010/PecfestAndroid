@@ -6,40 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="in.pecfest.www.pecfest.Activites.Notification">
+    tools:context="in.pecfest.www.pecfest.Activites.Notification"
+    android:background="@drawable/background">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/notification_toolbar"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/notification_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:drawable/screen_background_dark_transparent"
+        android:elevation="4dp"
+
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp">
+            <TextView
+                android:id="@+id/pefcestText_notification"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp">
-                <TextView
-                    android:id="@+id/pefcestText_notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pecfestTitle"
-                    android:layout_alignParentLeft="true"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/tab_indicator_text"
-                    android:clickable="true" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/notice"
-                    android:textSize="30sp"
-                    android:textColor="@android:color/tab_indicator_text"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-        </android.support.v7.widget.Toolbar>
+                android:text="@string/pecfestTitle"
+                android:layout_alignParentLeft="true"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:clickable="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notice"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
     <include layout="@layout/content_notification"/>
 
 

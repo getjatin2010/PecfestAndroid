@@ -59,7 +59,8 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
-    private static int notifications=3,sponsorInt=0,x=4,DELAY=3000;//DELAY is in milliseconds
+    private static int notifications=3,sponsorInt=0,x=4;
+    public static final int DELAY=3000;//DELAY is in milliseconds
     public static Bitmap sponsorImage[];
     public static int spon=0;
     Handler handler;//for runnable
@@ -150,12 +151,12 @@ public class HomeScreen extends AppCompatActivity
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) ((0));
+        params.topMargin = (int) ((height*0.00125));
         mViewPager.setLayoutParams(params);
 
         params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
         params.leftMargin = (int) ((0));
-        params.topMargin=(int)(1.285*height/3);
+        params.topMargin=(int)(1.3*height/3);
         grid.setLayoutParams(params);
 
 
@@ -281,6 +282,7 @@ public class HomeScreen extends AppCompatActivity
                 Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
                 intent.putExtra("newNotificationNumber",notifications);
+                intent.putExtra("sponsorCurrentIndex",sponsorInt);
                 notifications=0;
                 notifCol();
                 startActivity(intent);

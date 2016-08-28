@@ -6,15 +6,18 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="in.pecfest.www.pecfest.Activites.HomeScreen">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@android:drawable/screen_background_dark_transparent"
+
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:textColor="@color/white"
             android:elevation="4dp"
 
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
@@ -60,7 +63,7 @@
         </android.support.v7.widget.Toolbar>
 
 
-    <include layout="@layout/content_home_screen" />
+        <include layout="@layout/content_home_screen" />
 
-</LinearLayout>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
