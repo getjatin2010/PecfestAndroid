@@ -2,6 +2,9 @@ package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +64,16 @@ public class Notification extends AppCompatActivity {
         sp3 = (ImageView)findViewById(R.id.sp3);
         sp4 = (ImageView)findViewById(R.id.sp4);
         sp5 = (ImageView)findViewById(R.id.sp5);
+        // mask actionbar title with bitmap------------------------------------
+        TextView actionBarTitle=(TextView)findViewById(R.id.pefcestText_notification);
+        TextView actionBarNotice=(TextView)findViewById(R.id.noticeText_notification);
+        Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
+        Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        actionBarTitle.getPaint().setShader(shader);
+        shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        actionBarNotice.getPaint().setShader(shader);
+        //---------------------------------------------------------------------
+
 //recycleview-------------------------------------------------------------------
         recyclerView=(RecyclerView)findViewById(R.id.notification_recycle_layout);
         linearLayoutManager =new LinearLayoutManager(this);

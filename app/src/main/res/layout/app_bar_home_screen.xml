@@ -28,7 +28,7 @@
                 android:layout_marginRight="16dp"
                 >
                 <TextView
-
+                    android:id="@+id/action_bar_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="PECFEST"
@@ -39,9 +39,9 @@
                     android:layout_width="50dp"
                     android:layout_height="30.5dp"
                     android:orientation="horizontal"
-                    android:background="@drawable/notification"
+                    android:background="@drawable/noti_new"
                     android:layout_weight="1"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:clickable="true"
                     android:id="@+id/notification_Layout"
                     >
@@ -49,14 +49,13 @@
                         android:id="@+id/actionbar_notificationTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15"
+                        android:text="20"
                         android:minWidth="16dp"
                         android:textSize="12sp"
                         android:textColor="#FFF"
-                        android:gravity="center"
+                        android:gravity="top"
                         android:paddingLeft="2dp"
                         android:paddingRight="2dp"
-                        android:background="#ff0000"
                         />
                 </LinearLayout>
             </LinearLayout>

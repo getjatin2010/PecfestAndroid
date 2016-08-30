@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="in.pecfest.www.pecfest.Activites.Notification"
-    android:background="@drawable/background">
+    android:background="@drawable/banner">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/notification_toolbar"
@@ -33,6 +33,7 @@
                 android:textColor="@color/white"
                 android:clickable="true" />
             <TextView
+                android:id="@+id/noticeText_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notice"

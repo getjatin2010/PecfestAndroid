@@ -3,7 +3,10 @@ package in.pecfest.www.pecfest.Activites;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Color;
+import android.graphics.Shader;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +33,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -64,6 +69,7 @@ public class HomeScreen extends AppCompatActivity
     public static int spon=0;
     Handler handler;//for runnable
     private ImageViewAnimatedChange  imageViewAnimatedChange;
+
     Button a;
     TextView t;
     LinearLayout sponsorBanner;
@@ -157,7 +163,7 @@ public class HomeScreen extends AppCompatActivity
 
         params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
         params.leftMargin = (int) ((0));
-        params.topMargin=(int)(1.3*height/3);
+        params.topMargin=(int)(1.29*height/3);
         grid.setLayoutParams(params);
 
 
@@ -196,7 +202,7 @@ public class HomeScreen extends AppCompatActivity
                    //processSponsors();
 
                    //SponsorImage array test decleration-----------------------------------
-                   sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length];
+                   sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
                    //----------------------------------------------------------------------
 
                    loadDownloadedImage();
@@ -270,12 +276,18 @@ public class HomeScreen extends AppCompatActivity
         //animation changer initialize
         imageViewAnimatedChange=new ImageViewAnimatedChange();
 
+        // mask actionbar title with bitmap------------------------------------
+        TextView actionBarTitle=(TextView)findViewById(R.id.action_bar_title);
+        Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
+        Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        actionBarTitle.getPaint().setShader(shader);
+        //---------------------------------------------------------------------
 
         //notification button--------------------------------------------------
+        notificationLayout=(LinearLayout) findViewById(R.id.notification_Layout);
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();
 
-        notificationLayout=(LinearLayout) findViewById(R.id.notification_Layout);
         notificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,6 +298,7 @@ public class HomeScreen extends AppCompatActivity
                 intent.putExtra("sponsorCurrentIndex",sponsorInt);
                 notifications=0;
                 notifCol();
+                //notif.setImageResource(R.drawable.notiDefault);
                 startActivity(intent);
 
             }
@@ -359,12 +372,13 @@ public class HomeScreen extends AppCompatActivity
 
     void notifCol(){
         if(notifications>0){
-
+            notificationLayout.setBackgroundResource(R.drawable.noti_new);
             notification_digit.setText(String.valueOf(notifications));
-            notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
+            //notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
 
         }else{
-            notification_digit.setBackgroundResource(0);
+            notificationLayout.setBackgroundResource(R.drawable.noti_default);
+            //notification_digit.setBackgroundResource(0);
             notification_digit.setText("");
         }
 

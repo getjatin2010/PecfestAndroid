@@ -23,7 +23,7 @@
             android:layout_marginRight="16dp"
             >
             <TextView
-
+                android:id="@+id/action_bar_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pecfestTitle"
@@ -35,21 +35,23 @@
                 android:layout_width="40dp"
                 android:layout_height="30.5dp"
                 android:orientation="horizontal"
-                android:background="@drawable/notification"
+                android:background="@drawable/noti_new"
                 android:layout_weight="1"
                 android:layout_alignParentRight="true"
                 android:clickable="true"
                 android:id="@+id/notification_Layout"
-                android:gravity="right"
+                android:gravity="center"
                 >
                 <TextView
                     android:id="@+id/actionbar_notificationTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minWidth="16dp"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:textColor="#FFF"
+                    android:text="12"
                     android:gravity="center"
+                    android:paddingBottom="2dp"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     />
