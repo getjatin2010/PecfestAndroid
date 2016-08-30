@@ -1,7 +1,13 @@
 package in.pecfest.www.pecfest.Activites;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
 import android.graphics.Color;
+import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -15,6 +21,7 @@ import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -27,6 +34,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.util.Random;
+
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Communication.ImageLoader;
@@ -34,53 +45,105 @@ import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
 import in.pecfest.www.pecfest.Utilites.Utility;
+
+/*Changes Done
+    made sponsor image array so that image doesnot have to be downloaded everytime
+    sponsor list is random
+    made randomizer function in sponsorResponse
+    made changes in ImageLoader - new constructor, minor change in OnPostExecute
+    made changes to homescreen grid view- random colour filter from colour set
+    made changes in HomeScreenGridAdapter- each grid layout is not in sized according to the screen height and width
+    the function ProcessSponsor is not needed now
+  */
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
-    private static int notifications=3,x=0,DELAY=5000;//DELAY is in milliseconds
+    private static int notifications=3,sponsorInt=0,x=4;
+    public static final int DELAY=3000;//DELAY is in milliseconds
+    public static Bitmap sponsorImage[];
+    public static int spon=0;
     Handler handler;//for runnable
-    public String as;
-    GridView grid;
+    private ImageViewAnimatedChange  imageViewAnimatedChange;
+
     Button a;
     TextView t;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
-    SponsorResponse sponsorResponse;
-
-
+    static SponsorResponse sponsorResponse;  //made static so that the value stays even when activity is changed
     EditText e;
+    public String as;
+    GridView grid;
+    //GridView tint colour list---------------------------------------
+    int[] colour={android.R.color.holo_red_dark,
+            android.R.color.holo_green_dark,
+            android.R.color.holo_purple,
+            android.R.color.holo_orange_dark,
+            android.R.color.holo_blue_dark,
+            android.R.color.secondary_text_dark_nodisable
+    };
+    //----------------------------------------------------------------
+//for homescreen page viewer----------------------------------------------
+    final int[] mResources = {
+            R.drawable.banner1,
+            R.drawable.banner2,
+            R.drawable.banner3,
+            R.drawable.banner4
+    };
+    //---------------------------------------------------------------------
     String[] text={"Events",
             "Shows","Lecture",
             "Register"};
     int[] imageId={
-            R.drawable.test,
-            R.drawable.test,
-            R.drawable.test,
-            R.drawable.test
+            R.drawable.events1,     //event
+            R.drawable.shows4,      //shows
+            R.drawable.lectures1,  //lecture
+            R.drawable.register    //register
     };
     ViewPager mViewPager;
     private LinearLayout dotsLayout,notificationLayout;
-    private TextView notification_digit;
 
+    private TextView notification_digit,navBarHeaderText;
+    private NavigationView nav_view;
 
+//Randomaize Colour and Sponsor array for gridView--------------------------
+    void randomizeArray(int[] array){
 
+        Random r=new Random();
+        for(int i=0;i<(array.length/2);i++){
+            int x= r.nextInt(array.length);
+            int y= r.nextInt(array.length);
+            if(y==x){
+                y=(y+1)%array.length;
+            }
+
+            int temp = array[x];
+            array[x]=array[y];
+            array[y]=temp;
+        }
+    }
+//--------------------------------------------------------------------------
 
     Runnable marquee=new Runnable() {
         @Override
         public void run() {
-            int y=Math.abs(x-4);
-            x=(x+1)%8;
-            mViewPager.setCurrentItem(y,true);
+            marqueeBanner();
+
+            if(sponsorImage!=null){
+                setSponsorImage();
+            }
             handler.postDelayed(this,DELAY);
         }
-
-
-
     };
-
+    void marqueeBanner(){
+        int y=Math.abs(x-4);
+        x=(x+1)%8;
+        mViewPager.setCurrentItem(y,true);
+    }
 
     void positionEverything()
     {
@@ -95,19 +158,12 @@ public class HomeScreen extends AppCompatActivity
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) ((0));
+        params.topMargin = (int) ((height*0.00125));
         mViewPager.setLayoutParams(params);
-
-
-//        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        params.leftMargin = (int) ((width/5));
-//        params.topMargin = (int) ((1.2*height/3));
-//        dotsLayout.setLayoutParams(params);
-
 
         params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) ((1.27*height/3));
+        params.topMargin=(int)(1.29*height/3);
         grid.setLayoutParams(params);
 
 
@@ -117,8 +173,6 @@ public class HomeScreen extends AppCompatActivity
         sponsorBanner.setLayoutParams(params);
 
     }
-
-
     private void loadSponsors()
     {
         Request rr=  new Request();
@@ -142,8 +196,18 @@ public class HomeScreen extends AppCompatActivity
         {
            try {
                sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
-               if (sponsorResponse != null)
-                   processSponsors();
+               if (sponsorResponse != null){
+
+                   sponsorResponse.randomizeList();  //randomize sponsor list
+                   //processSponsors();
+
+                   //SponsorImage array test decleration-----------------------------------
+                   sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
+                   //----------------------------------------------------------------------
+
+                   loadDownloadedImage();
+                   setSponsorImage();
+               }
            }
            catch(Exception e){
                Toast.makeText(this, "Invalid response!", Toast.LENGTH_LONG).show();
@@ -151,24 +215,43 @@ public class HomeScreen extends AppCompatActivity
         }
     }
 
-    private void processSponsors()
+    //set downloaded image to imageView--------------------------------------------------------------------
+    private void setSponsorImage(){
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp4,sponsorImage[(sponsorInt++)% spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp5,sponsorImage[(sponsorInt++)% spon]);
+    }
+    //-----------------------------------------------------------------------------------------------------
+    //loadImages ------------------------------------------------------------------------------------------
+    void loadDownloadedImage(){
+        ImageView img=new ImageView(this);
+        for(int i=0;i<sponsorResponse.sponsorlist.length;i++){
+            ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[i].sponsorUrl,1,false,true);
+            i1.execute();
+        }
+
+    }
+    //-----------------------------------------------------------------------------------------------------
+    /*private void processSponsors()
     {
-        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[0].sponsorUrl,sp1,1,false);
+        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp1,1,false);
         i1.execute();
 
-        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[1].sponsorUrl,sp2,1,false);
+        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp2,1,false);
         i2.execute();
 
-        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[2].sponsorUrl,sp3,1,false);
+        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp3,1,false);
         i3.execute();
 
-        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[3].sponsorUrl,sp4,1,false);
+        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp4,1,false);
         i4.execute();
 
-        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[4].sponsorUrl,sp5,1,false);
+        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp5,1,false);
         i5.execute();
     }
-
+*/
     @Override
     protected void onResume() {
         super.onResume();
@@ -180,6 +263,7 @@ public class HomeScreen extends AppCompatActivity
         handler.removeCallbacks(marquee);
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -189,24 +273,32 @@ public class HomeScreen extends AppCompatActivity
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
+        //animation changer initialize
+        imageViewAnimatedChange=new ImageViewAnimatedChange();
 
-        //SPONSOR BANNER
-        sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
+        // mask actionbar title with bitmap------------------------------------
+        TextView actionBarTitle=(TextView)findViewById(R.id.action_bar_title);
+        Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
+        Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        actionBarTitle.getPaint().setShader(shader);
+        //---------------------------------------------------------------------
+
         //notification button--------------------------------------------------
+        notificationLayout=(LinearLayout) findViewById(R.id.notification_Layout);
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
         notifCol();
 
-        notificationLayout=(LinearLayout) findViewById(R.id.notification_Layout);
         notificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
                 Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
                 intent.putExtra("newNotificationNumber",notifications);
+                intent.putExtra("sponsorCurrentIndex",sponsorInt);
                 notifications=0;
                 notifCol();
+                //notif.setImageResource(R.drawable.notiDefault);
                 startActivity(intent);
 
             }
@@ -214,24 +306,33 @@ public class HomeScreen extends AppCompatActivity
         //notification button---------------------------------------------------
 
 //------------HOMEPAGE GRID------------------------------------------------
+        randomizeArray(colour);//Randomize colours array before passing
 
-        HomeScreenGridAdapter adapter= new HomeScreenGridAdapter(HomeScreen.this,text,imageId);
+        HomeScreenGridAdapter adapter= new HomeScreenGridAdapter(HomeScreen.this,text,imageId,colour,getWindowManager().getDefaultDisplay());
         grid=(GridView)findViewById(R.id.gridViewHomePage);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch(text[position]){
+                    case "Events":
+                        startActivity(new Intent(getApplicationContext(), Events.class));
+                        break;
+                    case "Shows":
 
-                if(text[position].equals("Events")){
-                    startActivity(new Intent(getApplicationContext(), Events.class));
-                }
-                if(text[position]=="Register")
-                {
-                Intent i= new Intent(getApplicationContext(),register.class);
-                    startActivity(i);
+                        break;
+                    case "Lectures":
+
+                        break;
+                    case "Register":
+                        Intent i= new Intent(getApplicationContext(),register.class);
+                        startActivity(i);
+                        break;
                 }
             }
         });
+
 //------------HOMEPAGE GRID ENDS-------------------------------------------
 
         //testscroll------------------
@@ -248,25 +349,36 @@ public class HomeScreen extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
+        //Sponsor-----------------------------------------------------------------------
+        //SPONSOR BANNER
+        sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
+        //sponsorResponse.randomizeList();
+
+        //Getting Navigational Header Text
+        View headerLayout = navigationView.getHeaderView(0);
+        navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
+        
         sp1 = (ImageView)findViewById(R.id.sp1);
         sp2 = (ImageView)findViewById(R.id.sp2);
         sp3 = (ImageView)findViewById(R.id.sp3);
         sp4 = (ImageView)findViewById(R.id.sp4);
         sp5 = (ImageView)findViewById(R.id.sp5);
-
         loadSponsors();
+        //------------------------------------------------------------------------------
         addHomePager();
         positionEverything();
     }
 
     void notifCol(){
         if(notifications>0){
-
+            notificationLayout.setBackgroundResource(R.drawable.noti_new);
             notification_digit.setText(String.valueOf(notifications));
-            notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
+            //notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
 
         }else{
-            notification_digit.setBackgroundResource(0);
+            notificationLayout.setBackgroundResource(R.drawable.noti_default);
+            //notification_digit.setBackgroundResource(0);
             notification_digit.setText("");
         }
 
@@ -292,7 +404,26 @@ public class HomeScreen extends AppCompatActivity
         return true;
     }
 
+    public void loginIn(View view)
+    {
+        Intent i=new Intent(getApplicationContext(),login.class);
+        startActivityForResult(i, 5);
+    }
+
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5) {
+            if (resultCode == RESULT_OK) {
+                String pecfestId  = Utility.getsaveId(this);
+                navBarHeaderText.setText("Hello " +pecfestId+" !");
+                navBarHeaderText.setClickable(false);
+
+            }
+        }
+    }
+
+
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -316,28 +447,26 @@ public class HomeScreen extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
    if(item.getItemId()==R.id.nav_contact)
    {
-    Intent i=new Intent(getApplicationContext(),contactus.class);
-       startActivity(i);
-            Intent in = new Intent(this, Events.class);
-            startActivity(in);
-
+        Intent i=new Intent(getApplicationContext(),contactus.class);
+        startActivity(i);
    }
+        if(item.getItemId()==R.id.nav_verify)
+        {
+
+            Intent i= new Intent(getApplicationContext(),navverify.class);
+            startActivity(i);
+        }
         return true;
     }
 
     private void addHomePager(){
-        final int[] mResources = {
-                R.drawable.download1,
-                R.drawable.download2,
-                R.drawable.download3
-        };
 
         mViewPager.setAdapter(new HomePagerAdapter(this, mResources));
         addBottomDots(0, mResources.length);

@@ -48,6 +48,7 @@
         <activity android:name=".Activites.EventDetails"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/EventsRegisterTheme"></activity>
+            <activity android:name=".Activites.navverify"></activity>
     </application>
 
 </manifest>

@@ -1,13 +1,18 @@
 package in.pecfest.www.pecfest.Activites;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -38,10 +43,28 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     AutoCompleteTextView text;
     String[] colleges={"IIT Delhi ","PEC University Of Technology","IIT Bombay","UIET","Chitkara University","IIT Roorkee","IIT Mandi","IIT Ropar","Thapar University"};
     EditText e;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Toolbar toolbar=(Toolbar)findViewById(R.id.notification_toolbar);
+        setSupportActionBar(toolbar);
+        //change colour of notification bar (status bar)------------------------------
+        //Giving error in API 19 so removing the bottom lines
+     //   Window window=getWindow();
+      //  window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        //----------------------------------------------------------------------------
+        //ReturnTOHomeScreen----------------------------------------------------------
+        TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
+        returnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        //----------------------------------------------------------------------------
         l= (Button) findViewById(R.id.btn_signup);
         l.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,10 +118,6 @@ public class register extends AppCompatActivity implements CommunicationInterfac
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
-
-
-
     }
 
 
@@ -153,4 +172,5 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             startActivity(i);
         }
     }
+
 }
