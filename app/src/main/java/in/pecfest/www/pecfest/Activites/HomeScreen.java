@@ -43,6 +43,7 @@ import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
+import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
@@ -61,20 +62,16 @@ import in.pecfest.www.pecfest.Utilites.Utility;
     the function ProcessSponsor is not needed now
   */
 
-public class HomeScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
+public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
     private static int notifications=3,sponsorInt=0,x=4;
-    public static final int DELAY=3000;//DELAY is in milliseconds
-    public static Bitmap sponsorImage[];
-    public static int spon=0;
+    public static final int DELAY=3000;
     Handler handler;//for runnable
     private ImageViewAnimatedChange  imageViewAnimatedChange;
-
     Button a;
     TextView t;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
-    static SponsorResponse sponsorResponse;  //made static so that the value stays even when activity is changed
+    SponsorResponse sponsorResponse;
     EditText e;
     public String as;
     GridView grid;
@@ -133,7 +130,7 @@ public class HomeScreen extends AppCompatActivity
         public void run() {
             marqueeBanner();
 
-            if(sponsorImage!=null){
+            if(DataHolder.getInstance().sponsorImage!=null){
                 setSponsorImage();
             }
             handler.postDelayed(this,DELAY);
@@ -188,6 +185,7 @@ public class HomeScreen extends AppCompatActivity
 
     @Override
     public void onRequestCompleted(String method, Response rr) {
+
         if(rr.isSuccess==false)
         {
             Toast.makeText(this,rr.errorMessage,Toast.LENGTH_LONG).show();
@@ -198,15 +196,12 @@ public class HomeScreen extends AppCompatActivity
                sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
                if (sponsorResponse != null){
 
-                   sponsorResponse.randomizeList();  //randomize sponsor list
-                   //processSponsors();
-
-                   //SponsorImage array test decleration-----------------------------------
-                   sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
-                   //----------------------------------------------------------------------
+                   sponsorResponse.randomizeList();
+                   DataHolder.getInstance().sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
 
                    loadDownloadedImage();
                    setSponsorImage();
+
                }
            }
            catch(Exception e){
@@ -217,41 +212,24 @@ public class HomeScreen extends AppCompatActivity
 
     //set downloaded image to imageView--------------------------------------------------------------------
     private void setSponsorImage(){
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,sponsorImage[(sponsorInt++)% spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,sponsorImage[(sponsorInt++)% spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,sponsorImage[(sponsorInt++)% spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp4,sponsorImage[(sponsorInt++)% spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp5,sponsorImage[(sponsorInt++)% spon]);
+
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp4,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp5,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+
     }
     //-----------------------------------------------------------------------------------------------------
     //loadImages ------------------------------------------------------------------------------------------
-    void loadDownloadedImage(){
-        ImageView img=new ImageView(this);
-        for(int i=0;i<sponsorResponse.sponsorlist.length;i++){
-            ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[i].sponsorUrl,1,false,true);
+    void loadDownloadedImage() {
+
+        for (int i = 0; i < sponsorResponse.sponsorlist.length; i++) {
+            ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[i].sponsorUrl, 1, false, true);
             i1.execute();
         }
 
     }
-    //-----------------------------------------------------------------------------------------------------
-    /*private void processSponsors()
-    {
-        ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp1,1,false);
-        i1.execute();
-
-        ImageLoader i2 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp2,1,false);
-        i2.execute();
-
-        ImageLoader i3 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp3,1,false);
-        i3.execute();
-
-        ImageLoader i4 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp4,1,false);
-        i4.execute();
-
-        ImageLoader i5 = new ImageLoader(sponsorResponse.sponsorlist[(sponsorInt++)% sponsorResponse.sponsorlist.length].sponsorUrl,sp5,1,false);
-        i5.execute();
-    }
-*/
     @Override
     protected void onResume() {
         super.onResume();

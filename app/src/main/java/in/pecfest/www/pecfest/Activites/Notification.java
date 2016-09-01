@@ -7,6 +7,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import in.pecfest.www.pecfest.Adapters.Notification_Adapter;
+import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
 
@@ -41,7 +43,7 @@ public class Notification extends AppCompatActivity {
     Runnable marquee=new Runnable() {
         @Override
         public void run() {
-            if(HomeScreen.sponsorImage!=null){
+            if(DataHolder.getInstance().sponsorImage!=null){
                 setSponsorImage();
             }
             handler.postDelayed(this,HomeScreen.DELAY);
@@ -99,11 +101,11 @@ public class Notification extends AppCompatActivity {
 
     }
     private void setSponsorImage(){
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp1,HomeScreen.sponsorImage[(sponsorInt++)% HomeScreen.spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp2,HomeScreen.sponsorImage[(sponsorInt++)% HomeScreen.spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp3,HomeScreen.sponsorImage[(sponsorInt++)% HomeScreen.spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp4,HomeScreen.sponsorImage[(sponsorInt++)% HomeScreen.spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp5,HomeScreen.sponsorImage[(sponsorInt++)% HomeScreen.spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp4,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp5,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
     }
 
 }

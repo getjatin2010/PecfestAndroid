@@ -12,6 +12,7 @@ public class SponsorResponse {
     public Sponsor sponsorlist[];
 
     public void randomizeList(){
+
         Random r=new Random();
         for(int i=0;i<(sponsorlist.length/2);i++){
             int x= r.nextInt(sponsorlist.length);
@@ -22,6 +23,7 @@ public class SponsorResponse {
             Sponsor temp=sponsorlist[x];
             sponsorlist[x]=sponsorlist[y];
             sponsorlist[y]=temp;
+
         }
     }
 }
