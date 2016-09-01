@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBar;
 import android.text.InputType;
 import android.widget.EditText;
@@ -17,9 +19,6 @@ import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.R;
 
 
-/**
- * Created by Pradeep on 19-01-2016.
- */
 public class Utility {
 
     private static String baseUrl= "";
@@ -94,7 +93,7 @@ public class Utility {
         return context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE).edit();
     } 
 
-    private void showDialogForPecfestID(final Context context)
+    public static  void showDialogForPecfestID(final Context context)
     {
         final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         final EditText input = new EditText(context);
@@ -116,6 +115,13 @@ public class Utility {
         });
         alertDialog.show();
 
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

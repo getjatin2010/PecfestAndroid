@@ -48,32 +48,27 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/no_image"
             android:layout_weight="1"
             android:id="@+id/sp1"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/no_image"
             android:id="@+id/sp2"
             android:layout_weight="1"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/no_image"
             android:id="@+id/sp3"
             android:layout_weight="1"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/no_image"
             android:id="@+id/sp4"
             android:layout_weight="1"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/no_image"
             android:id="@+id/sp5"
             android:layout_weight="1"/>
 

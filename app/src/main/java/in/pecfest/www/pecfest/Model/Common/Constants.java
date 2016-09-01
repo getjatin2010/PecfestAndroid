@@ -5,10 +5,13 @@ package in.pecfest.www.pecfest.Model.Common;
  */
 public class Constants {
 
+    public static int SPLASH_SCREEN_WAIT = 3000;
+
     public static class METHOD
     {
         public static final String RESGISTRATION = "registration";
         public static final String SPONSOR_REQUEST = "sponsorlist";
+        public static final String LOAD_SPONSER = "loadSponsor";
         // We can add method name here
 
     }
@@ -18,5 +21,4 @@ public class Constants {
         public static final String HOMEWORK_FILE_NAME = "Homework_File";
        // We can add other Constants by making static classes
     }
-
 }

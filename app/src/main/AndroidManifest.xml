@@ -15,11 +15,7 @@
             android:label="@string/title_activity_home_screen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service android:name=".Notifications.MyFirebaseMessagingService">
@@ -36,7 +32,7 @@
         <activity
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
@@ -45,10 +41,17 @@
         <activity android:name=".Activites.login" />
         <activity android:name=".Activites.contactus" />
         <activity android:name=".Activites.verify" />
-        <activity android:name=".Activites.EventDetails"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/EventsRegisterTheme"></activity>
-            <activity android:name=".Activites.navverify"></activity>
+        <activity
+            android:name=".Activites.EventDetails"
+            android:theme="@style/EventsRegisterTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Activites.navverify" />
+        <activity android:name=".Activites.SplashsScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -19,9 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -52,18 +52,11 @@ import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
-/*Changes Done
-    made sponsor image array so that image doesnot have to be downloaded everytime
-    sponsor list is random
-    made randomizer function in sponsorResponse
-    made changes in ImageLoader - new constructor, minor change in OnPostExecute
-    made changes to homescreen grid view- random colour filter from colour set
-    made changes in HomeScreenGridAdapter- each grid layout is not in sized according to the screen height and width
-    the function ProcessSponsor is not needed now
-  */
 
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
-    private static int notifications=3,sponsorInt=0,x=4;
+    private static int notifications=3,x=4;
+    public int sponsorInt=0;
+
     public static final int DELAY=3000;
     Handler handler;//for runnable
     private ImageViewAnimatedChange  imageViewAnimatedChange;
@@ -71,11 +64,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     TextView t;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
-    SponsorResponse sponsorResponse;
     EditText e;
     public String as;
     GridView grid;
     //GridView tint colour list---------------------------------------
+
     int[] colour={android.R.color.holo_red_dark,
             android.R.color.holo_green_dark,
             android.R.color.holo_purple,
@@ -170,18 +163,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         sponsorBanner.setLayoutParams(params);
 
     }
-    private void loadSponsors()
-    {
-        Request rr=  new Request();
-
-        rr.method = Constants.METHOD.SPONSOR_REQUEST;
-        rr.showPleaseWaitAtStart = false;
-        rr.hidePleaseWaitAtEnd = false;
-        rr.heading = null;
-        rr.requestData = null;
-
-        Utility.SendRequestToServer(this,rr);
-    }
 
     @Override
     public void onRequestCompleted(String method, Response rr) {
@@ -190,29 +171,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this,rr.errorMessage,Toast.LENGTH_LONG).show();
         }
-        if(method.equals(Constants.METHOD.SPONSOR_REQUEST))
-        {
-           try {
-               sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
-               if (sponsorResponse != null){
-
-                   sponsorResponse.randomizeList();
-                   DataHolder.getInstance().sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
-
-                   loadDownloadedImage();
-                   setSponsorImage();
-
-               }
-           }
-           catch(Exception e){
-               Toast.makeText(this, "Invalid response!", Toast.LENGTH_LONG).show();
-           }
-        }
     }
 
     //set downloaded image to imageView--------------------------------------------------------------------
     private void setSponsorImage(){
 
+        Log.e("pecfest",String.valueOf(DataHolder.getInstance().spon));
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
@@ -222,14 +186,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     }
     //-----------------------------------------------------------------------------------------------------
     //loadImages ------------------------------------------------------------------------------------------
-    void loadDownloadedImage() {
-
-        for (int i = 0; i < sponsorResponse.sponsorlist.length; i++) {
-            ImageLoader i1 = new ImageLoader(sponsorResponse.sponsorlist[i].sponsorUrl, 1, false, true);
-            i1.execute();
-        }
-
-    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -342,10 +298,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         sp3 = (ImageView)findViewById(R.id.sp3);
         sp4 = (ImageView)findViewById(R.id.sp4);
         sp5 = (ImageView)findViewById(R.id.sp5);
-        loadSponsors();
         //------------------------------------------------------------------------------
         addHomePager();
         positionEverything();
+        setSponsorImage();
     }
 
     void notifCol(){
