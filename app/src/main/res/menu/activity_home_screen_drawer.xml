@@ -20,10 +20,7 @@
 
     <item android:title="Help">
         <menu>
-            <item
-                android:id="@+id/nav_acco"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Accomodation" />
+
             <item
                 android:id="@+id/nav_verify"
                 android:icon="@drawable/ic_menu_share"
@@ -36,6 +33,10 @@
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Contact Us" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Logout" />
 
         </menu>
     </item>
