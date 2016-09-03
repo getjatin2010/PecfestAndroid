@@ -9,19 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
@@ -36,11 +34,15 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     Editable name;
     Editable college;
     Editable email;
-    TextView t;
+    TextView loginLink;
     Editable phone;
-    Button l;
-    EditText e1,e2,e3,e4;
-    AutoCompleteTextView text;
+    RadioButton male,female,AccoYes,AccoNo;
+    String gender = "";
+    String acco = "";
+
+    Button signUpButton;
+    EditText fullName,e2, emailEditText,phoneNumber;
+    AutoCompleteTextView collegeName;
     String[] colleges={"IIT Delhi ","PEC University Of Technology","IIT Bombay","UIET","Chitkara University","IIT Roorkee","IIT Mandi","IIT Ropar","Thapar University"};
     EditText e;
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -48,15 +50,9 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         Toolbar toolbar=(Toolbar)findViewById(R.id.notification_toolbar);
         setSupportActionBar(toolbar);
-        //change colour of notification bar (status bar)------------------------------
-        //Giving error in API 19 so removing the bottom lines
-     //   Window window=getWindow();
-      //  window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
-        //----------------------------------------------------------------------------
-        //ReturnTOHomeScreen----------------------------------------------------------
+
         TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,26 +61,33 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             }
         });
         //----------------------------------------------------------------------------
-        l= (Button) findViewById(R.id.btn_signup);
-        l.setOnClickListener(new View.OnClickListener() {
+        signUpButton = (Button) findViewById(R.id.btn_signup);
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                r();
+                register();
             }
         });
-        e1= (EditText) findViewById(R.id.input_name);
-        text= (AutoCompleteTextView) findViewById(R.id.input_college);
-        String college=String.valueOf(text);
+        fullName = (EditText) findViewById(R.id.input_name);
+        collegeName = (AutoCompleteTextView) findViewById(R.id.input_college);
 
-        e3= (EditText) findViewById(R.id.input_email);
-        e4= (EditText) findViewById(R.id.input_phone);
 
-        t= (TextView) findViewById(R.id.link_login);
-//       e= (EditText) findViewById(R.id.t1);
+        male = (RadioButton)findViewById(R.id.Male);
+        female = (RadioButton)findViewById(R.id.Female);
+
+        AccoYes = (RadioButton)findViewById(R.id.YesAccomodation);
+        AccoNo = (RadioButton)findViewById(R.id.NoAccomodation);
+
+
+
+        emailEditText = (EditText) findViewById(R.id.input_email);
+        phoneNumber= (EditText) findViewById(R.id.input_phone);
+
+        loginLink = (TextView) findViewById(R.id.link_login);
 
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,colleges);
-        text.setAdapter(adapter);
-        text.setThreshold(1);
+        collegeName.setAdapter(adapter);
+        collegeName.setThreshold(1);
     }
 
     public void a(View v)
@@ -95,13 +98,150 @@ public class register extends AppCompatActivity implements CommunicationInterfac
 
 
     }
-    public void r()
-    {
-        // AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Your details are:\n"+"Name:\t"+e1.getText()+"\n"+"College:\t"+college+"\n"
-                +"Email\t"+e3.getText()+"\n"+"Phone:\t"+e4.getText()+"\n"+"Register?");
+    public  boolean validateLetters(String name) {
 
+        if(name==null)
+            return false;
+
+        if(name.length()<3)
+            return false;
+
+        for (int i = 0; i < name.length(); i++)
+            if ( !( ((int) name.charAt(i) >= 65 && (int) name.charAt(i) <= 90) || ((int) name.charAt(i) >= 97 && (int) name.charAt(i) <= 122) || (name.charAt(i) == ' ' && i>=3)))
+                return false;
+
+        return true;
+    }
+
+    public boolean validateEmailID(String emailStr) {
+
+        if(emailStr==null || emailStr.length()<3)
+            return false;
+
+
+        Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        //public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
+    public boolean validateCollege(String emailStr) {
+
+        if(emailStr==null || emailStr.length()<3)
+            return false;
+
+        Pattern VALID_EMAIL_ADDRESS_REGEX =
+                Pattern.compile("^[a-zA-Z](?=.{2,})[^;:+=_*^%$#@!]*$", Pattern.CASE_INSENSITIVE);
+        //public static boolean validate(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
+    }
+
+    public boolean validatePhone(String phone) {
+        try{
+            String value = "";
+            if(phone.length()!=10)
+                return false;
+            for(int i = 0 ; i<10 ; i++) {
+                value = phone.substring(i,i+1);
+                Integer.parseInt(value);
+            }
+            return true;
+        }
+        catch(Exception e)
+        {
+            return false;
+        }
+    }
+
+    public void showProblemDialog(String message)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+
+            }
+        });
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
+    private boolean setGender()
+    {
+        if(male.isChecked())
+        {
+            gender = "male";
+            return true;
+        }
+        if(female.isChecked())
+        {
+            gender = "female";
+            return true;
+        }
+        return false;
+    }
+
+    private boolean setAcco()
+    {
+        if(AccoYes.isChecked())
+        {
+            acco = "1";
+            return true;
+        }
+        if(AccoNo.isChecked())
+        {
+            acco = "0";
+            return true;
+        }
+        return false;
+    }
+
+    public void register()
+    {
+        String fullNameText = fullName.getText().toString();
+        if(!validateLetters(fullNameText))
+        {
+            showProblemDialog("Please enter correct name");
+            return;
+        }
+        String collegeText =  collegeName.getText().toString();
+        if(!validateCollege(collegeText))
+        {
+            showProblemDialog("Please enter correct college name");
+            return;
+        }
+
+        String phoneNumberText  =phoneNumber.getText().toString();
+        if(!validatePhone(phoneNumberText))
+        {
+            showProblemDialog("Please enter correct phone number");
+            return;
+        }
+        String emailTextString = emailEditText.getText().toString();
+            if(!validateEmailID(emailTextString))
+            {
+                showProblemDialog("Please enter correct Email");
+                return;
+            }
+        if(!setGender())
+        {
+            showProblemDialog("Please select gender");
+            return;
+        }
+        if(!setAcco())
+        {
+            showProblemDialog("Please select Accomodation");
+            return;
+        }
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Your details are:\n"+"Name:\t"+ fullNameText+"\n"+"College:\t"+collegeText+"\n"
+                +"Email\t"+ emailTextString+"\n"+"Phone:\t"+phoneNumberText+"\n"+"Register?");
         alertDialogBuilder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -109,7 +249,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             }
         });
 
-        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -121,13 +261,17 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     }
 
 
+
+
     public void sendrequest()
     {
-        name=e1.getText();
-        college=text.getText();
-        email=e3.getText();
-        phone=e4.getText();
+        name= fullName.getText();
+        college= collegeName.getText();
+        email= emailEditText.getText();
+        phone=phoneNumber.getText();
+
         String name1,college1,email1,phone1;
+
         name1=name.toString();
         college1=college.toString();
         email1=email.toString();
@@ -138,9 +282,8 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         registrationRequest.college = college1;
         registrationRequest.phone = phone1;
         registrationRequest.email = email1;
-        registrationRequest.accomodation = 1;
-        registrationRequest.gender = "male";
-
+        registrationRequest.accomodation = Integer.valueOf(acco);
+        registrationRequest.gender = gender;
 
         Request rr= new Request();
         rr.method= Constants.METHOD.RESGISTRATION;
@@ -149,7 +292,6 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         rr.heading = null;
         rr.requestData= Utility.GetJsonObject(registrationRequest);
         Utility.SendRequestToServer(this,rr);
-
     }
 
     @Override
@@ -161,12 +303,9 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         if(method.equals(Constants.METHOD.RESGISTRATION))
         {
 
-
-
             RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
             Toast t=Toast.makeText(getApplicationContext(),String.valueOf(rr.JsonResponse),Toast.LENGTH_SHORT);
             t.show();
-
             Intent i= new Intent(getApplicationContext(),verify.class);
             finish();
             startActivity(i);

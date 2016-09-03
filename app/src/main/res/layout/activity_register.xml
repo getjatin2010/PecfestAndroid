@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapWords"
-                android:hint="Name"
+                android:hint="Full Name"
                />
         </android.support.design.widget.TextInputLayout>
 
@@ -134,9 +134,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60dp">
                     <RadioButton
+                        android:id="@+id/Male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/Female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RadioGroup>
@@ -188,8 +190,11 @@
                     android:layout_marginLeft="60dp">
                     <RadioButton
                         android:layout_width="wrap_content"
+                        android:id="@+id/YesAccomodation"
                         android:layout_height="wrap_content" />
                     <RadioButton
+
+                        android:id="@+id/NoAccomodation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </RadioGroup>
