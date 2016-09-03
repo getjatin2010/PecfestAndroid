@@ -397,6 +397,21 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             Intent i= new Intent(getApplicationContext(),navverify.class);
             startActivity(i);
         }
+
+
+        if(item.getItemId()==R.id.nav_logout)
+        {
+            Utility.saveId(null,getApplicationContext());
+            Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
+            navBarHeaderText.setText("LOGIN ");
+            navBarHeaderText.setClickable(true);
+
+
+
+
+
+
+        }
         return true;
     }
 
