@@ -302,8 +302,20 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         addHomePager();
         positionEverything();
         setSponsorImage();
+        checkLogin();
+
     }
 
+
+    public void checkLogin()
+    {
+        String login = Utility.getsaveId(this);
+        if(!(login==null||login==""))
+        {
+            navBarHeaderText.setText("Hello " +login+" !");
+            navBarHeaderText.setClickable(false);
+        }
+    }
     void notifCol(){
         if(notifications>0){
             notificationLayout.setBackgroundResource(R.drawable.noti_new);
@@ -395,6 +407,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         {
 
             Intent i= new Intent(getApplicationContext(),navverify.class);
+            i.putExtra("fromNav",true);
             startActivity(i);
         }
 

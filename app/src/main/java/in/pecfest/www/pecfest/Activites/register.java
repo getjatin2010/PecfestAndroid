@@ -303,12 +303,31 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         if(method.equals(Constants.METHOD.RESGISTRATION))
         {
 
-            RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
-            Toast t=Toast.makeText(getApplicationContext(),String.valueOf(rr.JsonResponse),Toast.LENGTH_SHORT);
-            t.show();
-            Intent i= new Intent(getApplicationContext(),verify.class);
-            finish();
-            startActivity(i);
+            final RegistrationResponse respone= (RegistrationResponse) Utility.getObjectFromJson(rr.JsonResponse, RegistrationResponse.class);
+            if(respone.registered ==false)
+            {
+                showProblemDialog(respone.response);
+            }
+            else
+            {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+                alertDialogBuilder.setMessage("You have been registered. Please Enter OTP on next page to verify your pecfestID send to your mobile number"+respone.response);
+                alertDialogBuilder.setPositiveButton("yayy!!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Intent i = new Intent(getApplicationContext(), navverify.class);
+                        i.putExtra("pecfestId", respone.response);
+                        i.putExtra("mobile",phone.toString() );
+                        i.putExtra("fromNav",false);
+                        finish();
+                        startActivity(i);
+                    }
+                });
+
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
         }
     }
 
