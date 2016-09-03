@@ -38,10 +38,7 @@
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
             android:theme="@style/EventsTheme">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
+
         </activity>
 
         <activity android:name=".Activites.register" />
@@ -54,7 +51,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activites.navverify" />
         <activity android:name=".Activites.SplashsScreen">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

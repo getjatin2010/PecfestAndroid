@@ -128,6 +128,9 @@ public class DaysFragment extends Fragment {
 
     public void addAllModed(){
 
+        if(eventsList==null)
+            eventsList=new ArrayList<EventsAdapter.EventsData>();
+
         eventsList.clear();
         for(int i=0; i<Events.globalEventsList.size();i++){
             Event ev= Events.globalEventsList.get(i);
