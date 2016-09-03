@@ -5,7 +5,7 @@ package in.pecfest.www.pecfest.Model.Common;
  */
 public class Constants {
 
-    public static int SPLASH_SCREEN_WAIT = 3000;
+    public static int SPLASH_SCREEN_WAIT = 1000;
 
     public static class METHOD
     {

@@ -5,23 +5,23 @@ package in.pecfest.www.pecfest.Model.EventDetails;
  */
 public class Event {
 
-    int eventId;
-    String eventName;
-    String heads;
-    String location;
-    int day;
-    String time;
-    String prize;
-    int minSize;
-    int maxSize;
-    int eventTypeId;
-    String eventTypeName;
-    int eventCategory;
-    int clubId;
-    String clubName;
-    String clubHead;
-    int clubType;
-    String eventDetails;
-    String imageUrl;
-    String instructions;
+    public int eventId;
+    public String eventName;
+    public String heads;
+    public String location;
+    public int day;
+    public String time;
+    public String prize;
+    public int minSize;
+    public int maxSize;
+    public int eventTypeId;
+    public String eventTypeName;
+    public int eventCategory;
+    public int clubId;
+    public String clubName;
+    public String clubHead;
+    public int clubType;
+    public String eventDetails;
+    public String imageUrl;
+    public String instructions;
 }

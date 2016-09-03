@@ -1,6 +1,6 @@
 package in.pecfest.www.pecfest.Activites;
 
-import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,22 +10,27 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.GestureDetector;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.pecfest.www.pecfest.Communication.HttpConnection;
+import in.pecfest.www.pecfest.Model.Common.Constants;
+import in.pecfest.www.pecfest.Model.EventDetails.Event;
+import in.pecfest.www.pecfest.Model.EventDetails.EventResponse;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.Results;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class Events extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public static ArrayList<Event> globalEventsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +48,7 @@ public class Events extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-//        VolleyBase vbreq= VolleyBase.getInstance(this);
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, Utility.getBaseUrl(this)+"events.php",
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // Display the first 500 characters of the response string.
-//                       Log.v("Response", response);
-//                        new ProcessEventsJson().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,response);
-//                    }
-//                }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.v("Response", error.getMessage());
-//            }
-//        });
-//
-//        vbreq.addToRequestQueue(stringRequest);
+        globalEventsList= new ArrayList<Event>();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +58,8 @@ public class Events extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        new getEventsList(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -81,46 +72,6 @@ public class Events extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.events, menu);
-//        final MenuItem item = menu.findItem(R.id.action_search);
-//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                if(query.isEmpty()){
-//                    eventsListTemp.clear();
-//                    eventsListTemp.addAll(eventsList);
-//                    return false;
-//                }
-//
-//                eventsListTemp.clear();
-//                query = query.toLowerCase();
-//                for(EventsData item: eventsList){
-//                    if(item.eventName.toLowerCase().contains(query) || item.clubName.toLowerCase().contains(query)){
-//                        eventsListTemp.add(item);
-//                    }
-//                }
-//                mAdapter.notifyDataSetChanged();
-//                return false;
-//             }
-//
-//            @Override
-//            public boolean onQueryTextChange(String query) {
-//                if(query.isEmpty()){
-//                    eventsListTemp.clear();
-//                    eventsListTemp.addAll(eventsList);
-//                    mAdapter.notifyDataSetChanged();
-//                }
-//
-//                return false;
-//            }
-//        });
-//        return true;
-//    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -159,82 +110,66 @@ public class Events extends AppCompatActivity {
         }
     }
 
-//    private class ProcessEventsJson extends AsyncTask<String, Void, String>{
-//        protected String doInBackground(String...qs){
-//            String res= qs[0];
-//            try {
-//                JSONObject jo = new JSONObject(res);
-//                if(Boolean.parseBoolean(jo.getString("valid"))){
-//                    int size= Integer.parseInt(jo.getString("count"));
-//                    JSONArray ja= jo.optJSONArray("events");
-//                    for(int i=0; i<size;i++){
-//                        JSONObject job= ja.getJSONObject(i);
-//                        eventsList.add(i,new EventsData(job.getString("id"), job.getString("event"), job.getString("club"), job.getString("desc"), job.getString("date")));
-//                    }
-//                }
-//                eventsListTemp.clear();
-//                eventsListTemp.addAll(eventsList);
-//                return "done";
-//            }
-//            catch(Exception e){
-//                Log.v("Json error:", e.getMessage());
-//            }
-//            return "error";
-//        }
-//        protected void onPostExecute(String s){
-//            if(s.equals("done"))
-//                mAdapter.notifyDataSetChanged();
-//        }
-//    }
+    class getEventsList extends AsyncTask<Void, Void, Void>{
 
-
-    public interface ClickListener {
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-    }
-
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private Events.ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final Events.ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
+        AppCompatActivity context;
+        Results results;
+        boolean force;
+        getEventsList(AppCompatActivity context){
+            this.context= context;
+            force= false;
         }
-
+        getEventsList(AppCompatActivity context, boolean forceNew){
+            this.context= context;
+            force= forceNew;
+        }
         @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        protected Void doInBackground(Void...v){
+            results= new Results();
 
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
+            if(!force){
+                try{
+                    results.data= Utility.getSharedPreferences(context).getString("completeEventsList",null);
+                    parseResponse();
+                    if(globalEventsList.size()<=0)
+                        throw new Exception();
+                }
+                catch(Exception e){
+                    force= true;
+                }
             }
 
-            return false;
+            if(force) {
+                HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
+                hc.putBody("{\"method\": \"" + Constants.METHOD.EVENT_DETAILS + "\"}");
+                results = hc.getData();
+                parseResponse();
+            }
+
+            return null;
         }
 
         @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        protected void onPostExecute(Void v){
+            Log.v("Size", ""+getSupportFragmentManager().getFragments().size());
+            for(int i=0; i<getSupportFragmentManager().getFragments().size();i++)
+            ((DaysFragment)getSupportFragmentManager().getFragments().get(i)).notifyChanges();
+
         }
 
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        private void parseResponse(){
+            try{
+                EventResponse er= (EventResponse)Utility.getObjectFromJson(results.data, EventResponse.class);
+                globalEventsList= er.eventList;
+                Utility.getSharedPreferencesEditor(context).putString("completeEventsList",results.data).commit();
+            }
+            catch(Exception e){
 
+            }
         }
+    }
+
+    public void refreshList(){
+        new getEventsList(this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

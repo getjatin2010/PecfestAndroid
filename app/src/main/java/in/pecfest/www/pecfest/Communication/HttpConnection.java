@@ -25,6 +25,7 @@ public class HttpConnection {
     private Results rts;
     private String []keys;
     private String []values;
+    private String bodyData=null;
     int keyCount=0;
     int defaultTimeout=10000;
     int connTimeout=4000;
@@ -82,6 +83,11 @@ public class HttpConnection {
         }
 
     }
+
+    public void putBody(String data){
+        bodyData= data;
+    }
+
     public Results getData(){
 
         try{
@@ -119,6 +125,16 @@ public class HttpConnection {
                 OutputStream os = conn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
                 writer.write(query);
+                writer.flush();
+                writer.close();
+                os.close();
+
+            }
+
+            if(bodyData!=null){
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                writer.write(bodyData);
                 writer.flush();
                 writer.close();
                 os.close();

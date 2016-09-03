@@ -33,10 +33,17 @@
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
-            android:theme="@style/EventsTheme" />
+            android:theme="@style/EventsTheme">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+        </activity>
+
         <activity android:name=".Activites.register" />
         <activity android:name=".Activites.login" />
         <activity android:name=".Activites.contactus" />
@@ -47,10 +54,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Activites.navverify" />
         <activity android:name=".Activites.SplashsScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
     </application>
 

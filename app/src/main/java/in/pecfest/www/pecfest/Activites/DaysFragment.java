@@ -3,20 +3,22 @@ package in.pecfest.www.pecfest.Activites;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.MenuItem;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
 import in.pecfest.www.pecfest.Adapters.EventsAdapter;
+import in.pecfest.www.pecfest.Model.EventDetails.Event;
 import in.pecfest.www.pecfest.R;
 
 /**
@@ -29,6 +31,7 @@ public class DaysFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     ArrayList<EventsAdapter.EventsData> eventsList, eventsListTemp;
+    private SwipeRefreshLayout srl;
 
     public DaysFragment(){
 
@@ -42,7 +45,6 @@ public class DaysFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -51,15 +53,30 @@ public class DaysFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView= inflater.inflate(R.layout.days_fragment, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.events_recycler_view);
+        srl= (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        eventsList= new ArrayList<EventsAdapter.EventsData>();
+        eventsListTemp= new ArrayList<EventsAdapter.EventsData>();
+        mAdapter = new EventsAdapter(eventsListTemp, getContext());
+        mRecyclerView.setAdapter(mAdapter);
         return rootView;
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        showEventsGrid();
+
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                srl.setRefreshing(true);
+                ((Events)getActivity()).refreshList();
+            }
+        });
+        notifyChanges();
     }
 
         @Override
@@ -72,7 +89,7 @@ public class DaysFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(query.isEmpty()){
+                if (query.isEmpty()) {
                     eventsListTemp.clear();
                     eventsListTemp.addAll(eventsList);
                     return false;
@@ -80,18 +97,18 @@ public class DaysFragment extends Fragment {
 
                 eventsListTemp.clear();
                 query = query.toLowerCase();
-                for(EventsAdapter.EventsData item: eventsList){
-                    if(item.eventName.toLowerCase().contains(query) || item.clubName.toLowerCase().contains(query)){
+                for (EventsAdapter.EventsData item : eventsList) {
+                    if (item.eventName.toLowerCase().contains(query) || item.clubName.toLowerCase().contains(query)) {
                         eventsListTemp.add(item);
                     }
                 }
                 mAdapter.notifyDataSetChanged();
                 return false;
-             }
+            }
 
             @Override
             public boolean onQueryTextChange(String query) {
-                if(query.isEmpty()){
+                if (query.isEmpty()) {
                     eventsListTemp.clear();
                     eventsListTemp.addAll(eventsList);
                     mAdapter.notifyDataSetChanged();
@@ -103,44 +120,24 @@ public class DaysFragment extends Fragment {
 
     }
 
-    private void showEventsGrid(){
+    public void notifyChanges(){
+        addAllModed();
+        srl.setRefreshing(false);
+        mAdapter.notifyDataSetChanged();
+    }
 
-        eventsList= new ArrayList<EventsAdapter.EventsData>();
-        eventsList.add(new EventsAdapter.EventsData("1","Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-        eventsList.add(new EventsAdapter.EventsData("2","Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-        eventsList.add(new EventsAdapter.EventsData("3","Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-        eventsList.add(new EventsAdapter.EventsData("4","Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
+    public void addAllModed(){
 
-        if(showDay!=2) {
-            eventsList.add(new EventsAdapter.EventsData("5", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("6", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("7", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("8", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("9", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("10", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("11", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("12", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
+        eventsList.clear();
+        for(int i=0; i<Events.globalEventsList.size();i++){
+            Event ev= Events.globalEventsList.get(i);
+            if(ev.day==showDay){
+                eventsList.add(new EventsAdapter.EventsData(""+ev.eventId, ev.eventName, ev.clubName, (ev.eventDetails!=null && ev.eventDetails.length()>50)?(ev.eventDetails.substring(0,50)+"..."): ev.eventDetails, ev.location+", "+ev.time));
+            }
         }
-
-        if(showDay!=3) {
-
-
-            eventsList.add(new EventsAdapter.EventsData("13", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("14", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("15", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("16", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("17", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("18", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("19", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("20", "Plane making", "Asce", "Make planes that fly the distance. Win many cool prizes. First prize 5k cash.", "7th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("21", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-            eventsList.add(new EventsAdapter.EventsData("22", "Hackathon", "Ieee", "Make the apps in an overnight hackathon. Win great prizes. Fist prize: 35k.", "8th Oct"));
-        }
-
-        eventsListTemp= new ArrayList<EventsAdapter.EventsData>();
+        eventsListTemp.clear();
         eventsListTemp.addAll(eventsList);
-        mAdapter = new EventsAdapter(eventsListTemp, getContext());
-        mRecyclerView.setAdapter(mAdapter);
+
     }
 
 }

@@ -89,7 +89,7 @@ public class Utility {
         return context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE);
     }
 
-    public SharedPreferences.Editor getSharedPreferencesEditor(Context context){
+    public static SharedPreferences.Editor getSharedPreferencesEditor(Context context){
         return context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE).edit();
     } 
 

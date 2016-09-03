@@ -1,12 +1,11 @@
 package in.pecfest.www.pecfest.Model.EventDetails;
 
-import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
-
+import java.util.ArrayList;
 /**
  * Created by jatin on 3/9/16.
  */
 public class EventResponse {
 
     public int count;
-    public Event eventList[];
+    public ArrayList<Event> eventList;
 }
