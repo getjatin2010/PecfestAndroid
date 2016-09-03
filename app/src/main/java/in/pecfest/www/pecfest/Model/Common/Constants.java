@@ -12,6 +12,7 @@ public class Constants {
         public static final String RESGISTRATION = "registration";
         public static final String SPONSOR_REQUEST = "sponsorlist";
         public static final String LOAD_SPONSER = "loadSponsor";
+        public static final String EVENT_DETAILS = "getEventDetails";
         // We can add method name here
 
     }
