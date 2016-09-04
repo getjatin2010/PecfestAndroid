@@ -10,7 +10,7 @@
         android:padding="10dp"
         android:id="@+id/event_name"
         android:background="@color/eventsNav"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/white" />
 
     <TextView
         android:layout_width="match_parent"

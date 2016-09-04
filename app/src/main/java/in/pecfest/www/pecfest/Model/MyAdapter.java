@@ -2,6 +2,7 @@ package in.pecfest.www.pecfest.Model;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,11 @@ public class MyAdapter extends ArrayAdapter<Item>{
         TextView labelView = (TextView) rowView.findViewById(R.id.label);
         TextView valueView = (TextView) rowView.findViewById(R.id.value);
         TextView number= (TextView) rowView.findViewById(R.id.n);
+
+        //change colour
+        labelView.setTextColor(Color.DKGRAY);
+        valueView.setTextColor(Color.DKGRAY);
+        number.setTextColor(Color.DKGRAY);
 
         // 4. Set the text for textView
         labelView.setText(itemsArrayList.get(position).getTitle());

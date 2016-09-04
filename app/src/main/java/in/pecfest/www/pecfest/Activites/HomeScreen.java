@@ -100,7 +100,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private TextView notification_digit,navBarHeaderText;
     private NavigationView nav_view;
 
-//Randomaize Colour and Sponsor array for gridView--------------------------
+    //Randomaize Colour and Sponsor array for gridView--------------------------
     void randomizeArray(int[] array){
 
         Random r=new Random();
@@ -153,7 +153,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
         params.leftMargin = (int) ((0));
-        params.topMargin=(int)(1.29*height/3);
+        params.topMargin=(int)(1.3*height/3);
         grid.setLayoutParams(params);
 
 
@@ -292,7 +292,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         //Getting Navigational Header Text
         View headerLayout = navigationView.getHeaderView(0);
         navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
-        
+
         sp1 = (ImageView)findViewById(R.id.sp1);
         sp2 = (ImageView)findViewById(R.id.sp2);
         sp3 = (ImageView)findViewById(R.id.sp3);
@@ -302,25 +302,15 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         addHomePager();
         positionEverything();
         setSponsorImage();
-        checkLogin();
-
     }
 
-
-    public void checkLogin()
-    {
-        String login = Utility.getsaveId(this);
-        if(!(login==null||login==""))
-        {
-            navBarHeaderText.setText("Hello " +login+" !");
-            navBarHeaderText.setClickable(false);
-        }
-    }
     void notifCol(){
         if(notifications>0){
             notificationLayout.setBackgroundResource(R.drawable.noti_new);
             notification_digit.setText(String.valueOf(notifications));
             //notification_digit.setBackgroundResource(android.R.color.holo_red_dark);
+
+            //notification_digit.setTextColor(getResources().getColor(R.color.black));
 
         }else{
             notificationLayout.setBackgroundResource(R.drawable.noti_default);
@@ -369,45 +359,44 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    /* @Override
+     public boolean onOptionsItemSelected(MenuItem item) {
+         // Handle action bar item clicks here. The action bar will
+         // automatically handle clicks on the Home/Up button, so long
+         // as you specify a parent activity in AndroidManifest.xml.
+         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        switch (id){
-            case R.id.notification_actionbar_menu:
-               Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
+         //noinspection SimplifiableIfStatement
+         switch (id){
+             case R.id.notification_actionbar_menu:
+                Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
 
-                break;
-            case R.id.dotdot_actionbar_menu:
-                Toast.makeText(HomeScreen.this,"you clicked dotdot walla thing",Toast.LENGTH_SHORT).show();
-                break;
+                 break;
+             case R.id.dotdot_actionbar_menu:
+                 Toast.makeText(HomeScreen.this,"you clicked dotdot walla thing",Toast.LENGTH_SHORT).show();
+                 break;
 
-        }
-        if (id == R.id.action_settings) {
-            return true;
-        }
+         }
+         if (id == R.id.action_settings) {
+             return true;
+         }
 
-        return super.onOptionsItemSelected(item);
-    }
-*/
+         return super.onOptionsItemSelected(item);
+     }
+ */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-   if(item.getItemId()==R.id.nav_contact)
-   {
-        Intent i=new Intent(getApplicationContext(),contactus.class);
-        startActivity(i);
-   }
+        if(item.getItemId()==R.id.nav_contact)
+        {
+            Intent i=new Intent(getApplicationContext(),contactus.class);
+            startActivity(i);
+        }
         if(item.getItemId()==R.id.nav_verify)
         {
 
             Intent i= new Intent(getApplicationContext(),navverify.class);
-            i.putExtra("fromNav",true);
             startActivity(i);
         }
 
@@ -458,12 +447,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(Color.CYAN);
+            dots[i].setTextColor(Color.WHITE);
             dotsLayout.addView(dots[i]);
         }
 
         if (dots.length > 0)
-            dots[currentPage].setTextColor(Color.BLUE);
+            dots[currentPage].setTextColor(Color.BLACK);
     }
 
 

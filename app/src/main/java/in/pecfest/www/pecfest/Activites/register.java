@@ -3,12 +3,17 @@ package in.pecfest.www.pecfest.Activites;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Shader;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -53,6 +58,9 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         Toolbar toolbar=(Toolbar)findViewById(R.id.notification_toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +68,15 @@ public class register extends AppCompatActivity implements CommunicationInterfac
                 finish();
             }
         });
+        // mask actionbar title with bitmap------------------------------------
+        TextView actionBarTitle=(TextView)findViewById(R.id.registerText_Register);
+        TextView actionBarNotice=(TextView)findViewById(R.id.registrationActionBar);
+        Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
+        Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        actionBarTitle.getPaint().setShader(shader);
+        shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        actionBarNotice.getPaint().setShader(shader);
+        //---------------------------------------------------------------------
         //----------------------------------------------------------------------------
         signUpButton = (Button) findViewById(R.id.btn_signup);
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +346,13 @@ public class register extends AppCompatActivity implements CommunicationInterfac
                 alertDialog.show();
             }
         }
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="in.pecfest.www.pecfest.Activites.Notification"
-    android:background="@drawable/banner">
+    android:background="@drawable/background">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/notification_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:drawable/screen_background_dark_transparent"
+        android:background="@android:drawable/screen_background_light_transparent"
         android:elevation="4dp"
 
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 

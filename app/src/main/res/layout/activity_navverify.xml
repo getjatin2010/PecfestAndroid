@@ -1,20 +1,21 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    >
+<LinearLayout
 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/banner"
+    android:gravity="center">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:layout_height="match_parent"
+        android:padding="24dp"
+        android:background="@android:drawable/screen_background_light_transparent">
 
         <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
@@ -24,7 +25,6 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
             android:layout_marginBottom="8dp"
             >
             <EditText android:id="@+id/number"
@@ -38,12 +38,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="8dp"
-          >
+            >
             <EditText android:id="@+id/otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="ENTER OTP"/>
+                android:inputType="textPassword"
+                android:hint="ENTER OTP"
+                android:textColor="@color/white"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
@@ -54,7 +55,8 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:text="VERIFY"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/white"
+            />
 
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

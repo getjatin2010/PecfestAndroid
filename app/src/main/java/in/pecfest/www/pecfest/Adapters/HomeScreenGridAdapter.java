@@ -58,7 +58,7 @@ public class HomeScreenGridAdapter extends BaseAdapter {
             textView.setText(text[position]);
             imageView.setImageResource(imageId[position]);
             imageView.setColorFilter(getFilterColour(position), PorterDuff.Mode.MULTIPLY);
-
+            imageView.setAlpha(180);
             //making grid variable
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(display.getWidth()/2, (int) (display.getHeight()/5.79));
             imageView.setLayoutParams(layoutParams);

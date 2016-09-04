@@ -12,4 +12,5 @@
     <string name="title_activity_notification">Notification</string>
     <string name="pecfestTitle">PECFEST</string>
     <string name="notice">NOTICE</string>
+    <string name="Register">REGISTER</string>
 </resources>

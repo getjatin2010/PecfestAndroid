@@ -26,6 +26,7 @@ public class contactus extends AppCompatActivity {
 
             // 3. setListAdapter
             listView.setAdapter(adapter);
+
         }
 
         private ArrayList<Item> generateData(){
@@ -37,9 +38,6 @@ public class contactus extends AppCompatActivity {
             items.add(new Item("Infra ","Devansh","9466504866"));
             items.add(new Item("PR ","Devansh","9466504866"));
             items.add(new Item("Secretary  ","Devansh","9466504866"));
-
-
-
             return items;
         }
 }

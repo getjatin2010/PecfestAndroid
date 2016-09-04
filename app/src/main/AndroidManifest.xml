@@ -33,23 +33,24 @@
             android:name=".Activites.Notification"
             android:label="@string/title_activity_notification"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".Activites.Events"
             android:label="@string/title_activity_events"
-            android:theme="@style/EventsTheme">
-
-        </activity>
-
-        <activity android:name=".Activites.register" />
-        <activity android:name=".Activites.login" />
-        <activity android:name=".Activites.contactus" />
-        <activity android:name=".Activites.verify" />
+            android:theme="@style/EventsTheme" />
+        <activity android:name=".Activites.register"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
+        <activity android:name=".Activites.login"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
+        <activity android:name=".Activites.contactus"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
+        <activity android:name=".Activites.verify"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity
             android:name=".Activites.EventDetails"
             android:theme="@style/EventsRegisterTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activites.navverify" />
+        <activity android:name=".Activites.navverify"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity android:name=".Activites.SplashsScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
