@@ -93,10 +93,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             "Shows","Lecture",
             "Register"};
     int[] imageId={
-            R.drawable.events1,     //event
-            R.drawable.shows4,      //shows
-            R.drawable.lectures1,  //lecture
-            R.drawable.register    //register
+            //R.drawable.events1,     //event
+           // R.drawable.shows4,      //shows
+           // R.drawable.lectures1,  //lecture
+            //R.drawable.register    //register
     };
     ViewPager mViewPager;
     private LinearLayout dotsLayout,notificationLayout;
