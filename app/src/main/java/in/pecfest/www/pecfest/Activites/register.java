@@ -328,7 +328,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             else
             {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setMessage("You have been registered. Please Enter OTP on next page to verify your pecfestID send to your mobile number"+respone.response);
+                alertDialogBuilder.setMessage("You have been registered. Please Enter your pecfestID sent to your mobile number on next page to verify");
                 alertDialogBuilder.setPositiveButton("yayy!!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {

@@ -46,15 +46,32 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         final Context thisclass = this;
-        loadSponsors();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        if(!Utility.isNetworkAvailable(this))
+        {
+            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("Internet is not available");
 
-            }
-        },Constants.SPLASH_SCREEN_WAIT);
+            alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    finish();
+                }
+            });
 
+
+            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+        else {
+            loadSponsors();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            }, Constants.SPLASH_SCREEN_WAIT);
+        }
         }
 
 

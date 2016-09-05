@@ -14,6 +14,7 @@ public class Constants {
         public static final String LOAD_SPONSER = "loadSponsor";
         public static final String EVENT_DETAILS = "getEventDetails";
         public static final String VERIFY = "verifyId";
+        public static final String LOGIN = "checkLogin";
         // We can add method name here
 
     }

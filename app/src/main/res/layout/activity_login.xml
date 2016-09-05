@@ -32,7 +32,7 @@
             <EditText android:id="@+id/inputPecfestId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="text"
                 android:hint="Pecfest Id"/>
         </android.support.design.widget.TextInputLayout>
 
