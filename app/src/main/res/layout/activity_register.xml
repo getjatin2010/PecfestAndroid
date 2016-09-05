@@ -4,14 +4,15 @@
     android:layout_width="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/batman">
+    android:background="@drawable/batman"
+    >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/notification_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:drawable/screen_background_light_transparent"
-        android:elevation="4dp"
+        android:background="@color/darkBlue"
+        android:elevation="16dp"
 
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -20,23 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp">
-            <TextView
-                android:id="@+id/registrationActionBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pecfestTitle"
-                android:layout_alignParentLeft="true"
-                android:textSize="30sp"
-                android:textColor="@color/black"
-                android:clickable="true"
-                />
+
             <TextView
                 android:id="@+id/registerText_Register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Register"
                 android:textSize="30sp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
@@ -53,7 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp">
+            android:paddingRight="24dp"
+            android:elevation="8dp">
 
             <ImageView android:src="@drawable/logo"
                 android:layout_width="match_parent"

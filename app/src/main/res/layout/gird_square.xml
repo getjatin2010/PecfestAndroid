@@ -2,24 +2,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="100dp"
+    android:layout_margin="5dp"
+    android:elevation="8dp">
 
     <ImageView
         android:id="@+id/grid_square_image"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/no_image"/>
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:gravity="center"
         android:id="@+id/grid_square_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:textColor="@color/white"
         android:hint="test"
-        android:background="@android:drawable/screen_background_dark_transparent"
+
         android:textSize="25sp"
         android:layout_gravity="center" />
 

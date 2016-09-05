@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
 
-    android:background="@drawable/background">
+    android:background="@color/white">
 
     <include
         layout="@layout/app_bar_home_screen"
@@ -23,7 +23,7 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home_screen"
         app:menu="@menu/activity_home_screen_drawer"
-        android:background="@drawable/pattern"
+        android:background="@color/white"
         />
 
 </android.support.v4.widget.DrawerLayout>

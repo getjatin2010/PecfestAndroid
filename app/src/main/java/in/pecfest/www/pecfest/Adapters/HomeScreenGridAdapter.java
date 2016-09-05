@@ -54,14 +54,15 @@ public class HomeScreenGridAdapter extends BaseAdapter {
             //grid=new View(context);
             grid=inflater.inflate(R.layout.gird_square,null);
             TextView textView=(TextView)grid.findViewById(R.id.grid_square_text);
-            ImageView imageView=(ImageView)grid.findViewById(R.id.grid_square_image);
+            textView.setBackgroundColor(getFilterColour(position));
+            //ImageView imageView=(ImageView)grid.findViewById(R.id.grid_square_image);
             textView.setText(text[position]);
-            imageView.setImageResource(imageId[position]);
-            imageView.setColorFilter(getFilterColour(position), PorterDuff.Mode.MULTIPLY);
-            imageView.setAlpha(180);
+            //imageView.setImageResource(imageId[position]);
+            //imageView.setColorFilter(getFilterColour(position), PorterDuff.Mode.MULTIPLY);
+            //imageView.setAlpha(180);
             //making grid variable
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(display.getWidth()/2, (int) (display.getHeight()/5.79));
-            imageView.setLayoutParams(layoutParams);
+            textView.setLayoutParams(layoutParams);
 
         }else{
             grid=(View)convertView;

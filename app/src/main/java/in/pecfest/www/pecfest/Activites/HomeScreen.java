@@ -1,6 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -69,12 +71,14 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     GridView grid;
     //GridView tint colour list---------------------------------------
 
-    int[] colour={android.R.color.holo_red_dark,
-            android.R.color.holo_green_dark,
-            android.R.color.holo_purple,
-            android.R.color.holo_orange_dark,
-            android.R.color.holo_blue_dark,
-            android.R.color.secondary_text_dark_nodisable
+    int[] colour={
+            R.color.yellow,
+            R.color.green2,
+            R.color.darkBlue,
+            R.color.blue,
+            R.color.red,
+            R.color.orange1,
+            R.color.orange0,
     };
     //----------------------------------------------------------------
 //for homescreen page viewer----------------------------------------------
@@ -201,11 +205,17 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //allow animation for changing activity
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
+
         setContentView(R.layout.activity_home_screen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
+
+
 
         //animation changer initialize
         imageViewAnimatedChange=new ImageViewAnimatedChange();
@@ -223,6 +233,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         notifCol();
 
         notificationLayout.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
 
@@ -230,10 +241,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
                 intent.putExtra("newNotificationNumber",notifications);
                 intent.putExtra("sponsorCurrentIndex",sponsorInt);
+                startActivity(intent);
                 notifications=0;
                 notifCol();
+
                 //notif.setImageResource(R.drawable.notiDefault);
-                startActivity(intent);
 
             }
         });
@@ -407,12 +419,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
             navBarHeaderText.setText("LOGIN ");
             navBarHeaderText.setClickable(true);
-
-
-
-
-
-
         }
         return true;
     }

@@ -71,12 +71,12 @@ public class Notification extends AppCompatActivity {
         sp4 = (ImageView)findViewById(R.id.sp4);
         sp5 = (ImageView)findViewById(R.id.sp5);
         // mask actionbar title with bitmap------------------------------------
-        TextView actionBarTitle=(TextView)findViewById(R.id.pefcestText_notification);
+        //TextView actionBarTitle=(TextView)findViewById(R.id.pefcestText_notification);
         TextView actionBarNotice=(TextView)findViewById(R.id.noticeText_notification);
         Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
+        //Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        //actionBarTitle.getPaint().setShader(shader);
         Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
-        actionBarTitle.getPaint().setShader(shader);
-        shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
         actionBarNotice.getPaint().setShader(shader);
         //---------------------------------------------------------------------
 
@@ -94,13 +94,13 @@ public class Notification extends AppCompatActivity {
         marquee.run();
         //------------------------------------
 //for returning to homescreen form notification---------------------------------
-        pecfestText_notification=(TextView)findViewById(R.id.pefcestText_notification);
+        /*pecfestText_notification=(TextView)findViewById(R.id.pefcestText_notification);
         pecfestText_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
 //for returning to homescreen form notification---------------------------------
 
     }

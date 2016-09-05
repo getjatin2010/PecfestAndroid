@@ -1,5 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +12,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -37,8 +40,8 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splashs_screen);
 
+        setContentView(R.layout.activity_splashs_screen);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -51,9 +54,11 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
 
             }
         },Constants.SPLASH_SCREEN_WAIT);
+
         }
 
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onRequestCompleted(String method, Response rr) {
 

@@ -18,5 +18,17 @@
     <color name="primary_darker">#CC1D1D</color>
     <color name="accent">#FFFFFF</color>
     <color name="eventsNav">#125688</color>
+    <color name="darkBlue">#125688</color>
+    <color name="darkGreen">#1B5E20</color>
+
+    <color name="blue">#0277BD</color>
+    <color name="yellow">#827717</color>
+    <color name="green1">#33691E</color>
+    <color name="green2">#1B5E20</color>
+
+    <color name="orange0">#FFA000</color>
+    <color name="orange1">#FF6F00</color>
+    <color name="red">#BF360C</color>
+
 
 </resources>

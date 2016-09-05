@@ -61,21 +61,21 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
+        /*TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
         returnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
         // mask actionbar title with bitmap------------------------------------
         TextView actionBarTitle=(TextView)findViewById(R.id.registerText_Register);
-        TextView actionBarNotice=(TextView)findViewById(R.id.registrationActionBar);
+        //TextView actionBarNotice=(TextView)findViewById(R.id.registrationActionBar);
         Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
         Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
         actionBarTitle.getPaint().setShader(shader);
-        shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
-        actionBarNotice.getPaint().setShader(shader);
+        //shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
+        //actionBarNotice.getPaint().setShader(shader);
         //---------------------------------------------------------------------
         //----------------------------------------------------------------------------
         signUpButton = (Button) findViewById(R.id.btn_signup);

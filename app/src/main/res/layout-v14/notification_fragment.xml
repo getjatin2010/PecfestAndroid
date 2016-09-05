@@ -5,15 +5,16 @@
     android:padding="2dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="@android:drawable/list_selector_background"
+    android:elevation="4dp"
+    android:background="@color/white"
+    android:layout_margin="5dp"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:background="@android:drawable/screen_background_light_transparent">
+        android:paddingRight="5dp">
         <TextView
             android:id="@+id/notification_new_Text"
             android:layout_width="wrap_content"
