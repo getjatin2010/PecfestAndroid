@@ -157,13 +157,13 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
         params.leftMargin = (int) ((0));
-        params.topMargin=(int)(1.3*height/3);
+        params.topMargin=(int)(1.27*height/3);
         grid.setLayoutParams(params);
 
 
         params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) ((1.18*2*height/3));
+        params.topMargin = (int) ((1.16*2*height/3));
         sponsorBanner.setLayoutParams(params);
 
     }
