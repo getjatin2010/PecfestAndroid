@@ -32,8 +32,13 @@ public class navverify extends AppCompatActivity implements CommunicationInterfa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navverify);
         bundle = getIntent().getExtras();
-        fromNav = bundle.getBoolean("fromNav");
-
+        try {
+            fromNav = bundle.getBoolean("fromNav");
+        }
+        catch(Exception e)
+        {
+            fromNav = true;
+        }
         phoneEdit = (EditText)findViewById(R.id.number);
         pecfestIdEdit=(EditText)findViewById(R.id.otp);
         btn_login = (Button)findViewById(R.id.btn_login);
