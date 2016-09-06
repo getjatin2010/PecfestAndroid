@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 import in.pecfest.www.pecfest.Communication.ExecuteRequest;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Request;
+import in.pecfest.www.pecfest.Model.login.LoginResponse;
 import in.pecfest.www.pecfest.R;
 
 
@@ -66,18 +67,24 @@ public class Utility {
         return userName;
     }
 
-    public static void saveId(String id,Context context)
+    public static void saveId(LoginResponse lr,Context context)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor  =sharedPreferences.edit();
-        editor.putString("pecId",id);
+        editor.putString("pecId",lr.pecfestId);
+        editor.putString("name",lr.name);
+        editor.putString("phone",lr.phone);
         editor.commit();
     }
 
-    public static String getsaveId(Context context)
+    public static LoginResponse getsaveId(Context context)
     {
+        LoginResponse lr = new LoginResponse();
         SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences",Context.MODE_PRIVATE);
-        return sharedPreferences.getString("pecId","");
+        lr.pecfestId = sharedPreferences.getString("pecId",null);
+        lr.name = sharedPreferences.getString("name",null);
+        lr.phone = sharedPreferences.getString("phone",null);
+        return lr;
     }
 
     public static void setUsername(Context context, String pun){
@@ -93,29 +100,7 @@ public class Utility {
         return context.getSharedPreferences(sharedPreferences, Context.MODE_PRIVATE).edit();
     } 
 
-    public static  void showDialogForPecfestID(final Context context)
-    {
-        final AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        final EditText input = new EditText(context);
-        alertDialog.setTitle("Enter Your PecfestId");
-        alertDialog.setIcon(R.mipmap.ic_launcher);
-        input.setInputType(InputType.TYPE_CLASS_TEXT );
-        String pecfestOld = Utility.getsaveId(context);
-        input.setHint("PecfestID");
-        if(pecfestOld!="")
-            input.setText(pecfestOld);
-        alertDialog.setView(input);
-        alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "DONE", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                String pecfestId = input.getText().toString();
-                if (pecfestId != null) {
-                    Utility.saveId(pecfestId,context);
-                }
-            }
-        });
-        alertDialog.show();
 
-    }
 
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
