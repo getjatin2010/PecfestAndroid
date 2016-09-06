@@ -82,11 +82,11 @@ public class login extends AppCompatActivity  implements CommunicationInterface
             final LoginResponse respone= (LoginResponse) Utility.getObjectFromJson(rr.JsonResponse, LoginResponse.class);
             if(respone.login ==false)
             {
-                Utility.showProblemDialog(this, "Please enter Correct PecfestId");
+                Utility.showProblemDialog(this, respone.response);
             }
             else
             {
-                Utility.saveId(inputPecfestId.getText().toString(),this);
+                Utility.saveId(respone,this);
                 Toast.makeText(this,"Logged In",Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK, null);
                 finish();

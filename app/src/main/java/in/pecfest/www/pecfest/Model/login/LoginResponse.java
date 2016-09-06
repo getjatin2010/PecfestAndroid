@@ -5,4 +5,9 @@ package in.pecfest.www.pecfest.Model.login;
  */
 public class LoginResponse {
    public boolean login;
+   public String name;
+   public String phone;
+   public String pecfestId;
+   public String response;
+
 }

@@ -42,6 +42,7 @@ import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.login.LoginResponse;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
 import in.pecfest.www.pecfest.Utilites.Utility;
@@ -50,6 +51,7 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
     private static int notifications=3,x=4;
     public int sponsorInt=0;
+
 
     public static final int DELAY=3000;
     Handler handler;//for runnable
@@ -176,8 +178,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp4,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp5,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp4, DataHolder.getInstance().sponsorImage[(sponsorInt++) % DataHolder.getInstance().spon]);
+        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp5, DataHolder.getInstance().sponsorImage[(sponsorInt++) % DataHolder.getInstance().spon]);
 
     }
     //-----------------------------------------------------------------------------------------------------
@@ -297,6 +299,15 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         View headerLayout = navigationView.getHeaderView(0);
         navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
 
+
+
+        LoginResponse lr = Utility.getsaveId(this);
+        if(lr.name!=null)
+        {
+            navBarHeaderText.setText("Hello " + lr.name + " !");
+            navBarHeaderText.setClickable(false);
+        }
+
         sp1 = (ImageView)findViewById(R.id.sp1);
         sp2 = (ImageView)findViewById(R.id.sp2);
         sp3 = (ImageView)findViewById(R.id.sp3);
@@ -354,8 +365,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 5) {
             if (resultCode == RESULT_OK) {
-                String pecfestId  = Utility.getsaveId(this);
-                navBarHeaderText.setText("Hello " +pecfestId+" !");
+                LoginResponse lr= Utility.getsaveId(this);
+                navBarHeaderText.setText("Hello " +lr.name+" !");
                 navBarHeaderText.setClickable(false);
 
             }
@@ -407,7 +418,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         if(item.getItemId()==R.id.nav_logout)
         {
-            Utility.saveId(null,getApplicationContext());
+            LoginResponse lr = new LoginResponse();
+            lr.name = null;
+            lr.phone = null;
+            lr.pecfestId = null;
+            Utility.saveId(lr,getApplicationContext());
             Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
             navBarHeaderText.setText("LOGIN ");
             navBarHeaderText.setClickable(true);
@@ -452,8 +467,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.BLACK);
     }
-
-
 
 
 

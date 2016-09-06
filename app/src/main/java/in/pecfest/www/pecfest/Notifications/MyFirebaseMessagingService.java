@@ -8,6 +8,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 /**
  * Created by Abhi on 06-08-2016.
@@ -26,6 +27,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            Utility.storeNotifs(this, remoteMessage.getData().toString());
         }
 
         // Check if message contains a notification payload.
@@ -34,8 +36,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             generateNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
 
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
 
     public void generateNotification(String title, String body){
@@ -54,4 +54,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
 
     }
+
 }
