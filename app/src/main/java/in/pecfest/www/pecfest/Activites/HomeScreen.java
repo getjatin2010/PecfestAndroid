@@ -1,7 +1,6 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,20 +35,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.Random;
 
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
-import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
-import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
-import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
-import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
-import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
 import in.pecfest.www.pecfest.Utilites.Utility;
@@ -266,10 +258,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         startActivity(new Intent(getApplicationContext(), Events.class));
                         break;
                     case "Shows":
-
+                        startActivity(new Intent(getApplicationContext(), Events.class).putExtra("title","Shows"));
                         break;
-                    case "Lectures":
-
+                    case "Lecture":
+                        startActivity(new Intent(getApplicationContext(), Events.class).putExtra("title","Lectures"));
                         break;
                     case "Register":
                         Intent i= new Intent(getApplicationContext(),register.class);

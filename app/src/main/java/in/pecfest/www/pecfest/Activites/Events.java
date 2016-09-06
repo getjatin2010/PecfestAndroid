@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -31,7 +30,7 @@ public class Events extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public static ArrayList<Event> globalEventsList;
-
+    String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +40,26 @@ public class Events extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if((title=getIntent().getStringExtra("title"))!=null){
+            getSupportActionBar().setTitle(title);
+        }
+        else
+            title="";
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        if(title.equals("Shows"))
+            setupViewPager2(viewPager);
+        else
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        globalEventsList= new ArrayList<Event>();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if(title.equals("Shows") || title.equals("Lectures")){
+            fab.setVisibility(View.GONE);
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +68,10 @@ public class Events extends AppCompatActivity {
             }
         });
 
-        new getEventsList(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        if(!title.equals("Shows")) {
+            globalEventsList = new ArrayList<Event>();
+            new getEventsList(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
     @Override
@@ -81,6 +93,13 @@ public class Events extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    private void setupViewPager2(ViewPager viewPager){
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ShowsFragment(1), "DAY 1");
+        adapter.addFragment(new ShowsFragment(2), "DAY 2");
+        adapter.addFragment(new ShowsFragment(3), "DAY 3");
+        viewPager.setAdapter(adapter);
+    }
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -127,31 +146,37 @@ public class Events extends AppCompatActivity {
         protected Void doInBackground(Void...v){
             results= new Results();
 
-            if(!force){
-                try{
-                    results.data= Utility.getSharedPreferences(context).getString("completeEventsList",null);
-                    parseResponse();
-                    if(globalEventsList.size()<=0)
-                        throw new Exception();
-                }
-                catch(Exception e){
-                    force= true;
-                }
-            }
-
-            if(force) {
+            if(title.equals("Lectures")){
                 HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
                 hc.putBody("{\"method\": \"" + Constants.METHOD.EVENT_DETAILS + "\"}");
                 results = hc.getData();
                 parseResponse();
             }
+            else {
 
+                if (!force) {
+                    try {
+                        results.data = Utility.getSharedPreferences(context).getString("completeEventsList", null);
+                        parseResponse();
+                        if (globalEventsList.size() <= 0)
+                            throw new Exception();
+                    } catch (Exception e) {
+                        force = true;
+                    }
+                }
+
+                if (force) {
+                    HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
+                    hc.putBody("{\"method\": \"" + Constants.METHOD.EVENT_DETAILS + "\"}");
+                    results = hc.getData();
+                    parseResponse();
+                }
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void v){
-            Log.v("Size", ""+getSupportFragmentManager().getFragments().size());
             for(int i=0; i<getSupportFragmentManager().getFragments().size();i++)
             ((DaysFragment)getSupportFragmentManager().getFragments().get(i)).notifyChanges();
 
