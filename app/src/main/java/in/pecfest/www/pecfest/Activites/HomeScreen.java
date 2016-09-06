@@ -150,7 +150,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         float width = dm.widthPixels;
         float height = dm.heightPixels;
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)width,(int)(height*.97f/3));
         params.leftMargin = (int) ((0));
         params.topMargin = (int) ((height*0.00125));
         mViewPager.setLayoutParams(params);

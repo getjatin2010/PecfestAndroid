@@ -93,7 +93,20 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
                     i1.execute();
                 }
             } catch (Exception e) {
-                Toast.makeText(this, "Invalid response!", Toast.LENGTH_LONG).show();
+                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+                alertDialogBuilder.setMessage("Internet is not available");
+
+                alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        finish();
+                    }
+                });
+
+
+                android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
             }
         }
         if (method.equals(Constants.METHOD.LOAD_SPONSER))
