@@ -118,15 +118,22 @@ public class Utility {
     public static ArrayList<String> getNotifs(Context context) {
         String key = getSharedPreferences(context).getString("notifKeys", null);
         ArrayList<String> al = new ArrayList<String>();
-        if (key == null)
-            return al;
-        String keys[] = key.split(",");
-        for (int i = 0; i < keys.length; i++) {
-            if (keys[i] == null || keys[i].isEmpty())
-                continue;
-            String temp = getSharedPreferences(context).getString("n" + keys[i], null);
-            if (temp != null)
-                al.add(temp);
+
+        try {
+
+            if (key == null)
+                return al;
+            String keys[] = key.split(",");
+            for (int i = 0; i < keys.length; i++) {
+                if (keys[i] == null || keys[i].isEmpty())
+                    continue;
+                String temp = getSharedPreferences(context).getString("n" + keys[i], null);
+                if (temp != null)
+                    al.add(temp);
+            }
+        }
+        catch(Exception e){
+
         }
         return al;
     }
@@ -135,5 +142,24 @@ public class Utility {
         double rand= Math.random();
         Utility.getSharedPreferencesEditor(context).putString("notifKeys",Utility.getSharedPreferences(context).getString("notifKeys","")+","+rand).putString("n"+rand,data).commit();
     }
+
+    public static void clearNotifs(Context context) {
+
+        try {
+            String key = getSharedPreferences(context).getString("notifKeys", null);
+
+            String keys[] = key.split(",");
+            for (int i = 0; i < keys.length; i++) {
+                if (keys[i] == null || keys[i].isEmpty())
+                    continue;
+                getSharedPreferencesEditor(context).remove("n" + keys[i]);
+            }
+            getSharedPreferencesEditor(context).remove("notifKeys").commit();
+        }
+        catch(Exception e){
+
+        }
+    }
+
 }
 
