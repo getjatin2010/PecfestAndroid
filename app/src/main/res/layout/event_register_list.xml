@@ -42,8 +42,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/register_invalid"
         android:textSize="14sp"
-        android:text="Invalid"
+        android:text="invalid"
         android:layout_toRightOf="@id/register_id"
+        android:padding="8dp"
+        android:textColor="@color/red"
         android:visibility="gone" />
 
     <ImageView

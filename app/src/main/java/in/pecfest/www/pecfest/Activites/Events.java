@@ -46,6 +46,8 @@ public class Events extends AppCompatActivity {
         else
             title="";
 
+        globalEventsList = new ArrayList<Event>();
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         if(title.equals("Shows"))
             setupViewPager2(viewPager);
@@ -69,7 +71,6 @@ public class Events extends AppCompatActivity {
         });
 
         if(!title.equals("Shows")) {
-            globalEventsList = new ArrayList<Event>();
             new getEventsList(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -150,14 +151,14 @@ public class Events extends AppCompatActivity {
                 HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
                 hc.putBody("{\"method\": \"" + Constants.METHOD.EVENT_DETAILS + "\"}");
                 results = hc.getData();
-                parseResponse();
+                parseResponse(force);
             }
             else {
 
                 if (!force) {
                     try {
                         results.data = Utility.getSharedPreferences(context).getString("completeEventsList", null);
-                        parseResponse();
+                        parseResponse(force);
                         if (globalEventsList.size() <= 0)
                             throw new Exception();
                     } catch (Exception e) {
@@ -169,7 +170,7 @@ public class Events extends AppCompatActivity {
                     HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
                     hc.putBody("{\"method\": \"" + Constants.METHOD.EVENT_DETAILS + "\"}");
                     results = hc.getData();
-                    parseResponse();
+                    parseResponse(force);
                 }
             }
             return null;
@@ -179,14 +180,14 @@ public class Events extends AppCompatActivity {
         protected void onPostExecute(Void v){
             for(int i=0; i<getSupportFragmentManager().getFragments().size();i++)
             ((DaysFragment)getSupportFragmentManager().getFragments().get(i)).notifyChanges();
-
         }
 
-        private void parseResponse(){
+        private void parseResponse(boolean force){
             try{
                 EventResponse er= (EventResponse)Utility.getObjectFromJson(results.data, EventResponse.class);
                 globalEventsList= er.eventList;
-                Utility.getSharedPreferencesEditor(context).putString("completeEventsList",results.data).commit();
+                if(force)
+                    Utility.getSharedPreferencesEditor(context).putString("completeEventsList",results.data).commit();
             }
             catch(Exception e){
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import in.pecfest.www.pecfest.Activites.EventDetails;
 import in.pecfest.www.pecfest.R;
 
 public class EventRegisterAdapter extends ArrayAdapter<String> {
@@ -52,7 +53,15 @@ public class EventRegisterAdapter extends ArrayAdapter<String> {
         }
 
         holder.tx1.setText("#"+(position+1));
+
         holder.tx2.setText(registrantsList.get(position));
+
+        if(checkExistence(registrantsList.get(position))){
+            holder.tx4.setVisibility(View.VISIBLE);
+        }
+        else
+        holder.tx4.setVisibility(View.GONE);
+
         holder.tx3.setText("");
         holder.tx5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,5 +77,18 @@ public class EventRegisterAdapter extends ArrayAdapter<String> {
     @Override
     public int getCount(){
         return registrantsList.size();
+    }
+
+    private boolean checkExistence(String str){
+        String []arr= ((EventDetails)context).invalidList;
+
+        if(arr==null)
+            return false;
+
+        for(int i=0;i<arr.length;i++){
+            if(arr[i].equals(str))
+                return true;
+        }
+        return false;
     }
 }
