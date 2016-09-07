@@ -7,20 +7,23 @@ import android.graphics.BitmapShader;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import in.pecfest.www.pecfest.Adapters.Notification_Adapter;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
+import in.pecfest.www.pecfest.Notifications.NotificationPayload;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class Notification extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -33,12 +36,8 @@ public class Notification extends AppCompatActivity {
     private ImageViewAnimatedChange imageViewAnimatedChange;
 
     Handler handler;//for runnable
-    private String[] bodyText={"RoboWars is postponed from 3:00 pm to 5:00 pm ",
-            "CodeWars is preponed from 5:00 pm to 3:00 pm",
-            "Venue of Human Foosball has been changed from Atheletic Field to Football ground ",
-            "Winner of Treasure Hunt is Jilly Baker!\nCongratulations !"
-            ,"asidaosi","asddddd","asdwqq"},
-            titleText={"RoboWars","CodeWars","FoosBall","Treasure Hunt","asdasudhiau","asd","asss"};
+    private String[] bodyText;
+            String[] titleText;
 
 
     Runnable marquee=new Runnable() {
@@ -61,10 +60,29 @@ public class Notification extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ArrayList<String> notifications = Utility.getNotifs(this);
+        newNotificationNumber = notifications.size();
+
+        bodyText = new String[newNotificationNumber];
+        titleText = new String[newNotificationNumber];
+
+        for(int i = 0 ; i< newNotificationNumber ; i++)
+        {
+            Log.e("mssg", notifications.get(i));
+            NotificationPayload notificationPayload = null;
+            try {
+                notificationPayload = (NotificationPayload) Utility.getObjectFromJson(notifications.get(i).toString(), NotificationPayload.class);
+                bodyText[i] = notificationPayload.text;
+                titleText[i] = notificationPayload.title;
+                }
+            catch (Exception e)
+            {
+                i--;
+            }
+        }
 
         sponsorInt=getIntent().getIntExtra("sponsorCurrentIndex",0);
 
-        newNotificationNumber=getIntent().getIntExtra("newNotificationNumber",0);
         sp1 = (ImageView)findViewById(R.id.sp1);
         sp2 = (ImageView)findViewById(R.id.sp2);
         sp3 = (ImageView)findViewById(R.id.sp3);
