@@ -81,7 +81,7 @@ public class Notification extends AppCompatActivity {
 
             }
             bodyText[i] = notificationPayload.text;
-            titleText[i] = "";
+            titleText[i] = notificationPayload.head;
         }
 
         sponsorInt=getIntent().getIntExtra("sponsorCurrentIndex",0);
