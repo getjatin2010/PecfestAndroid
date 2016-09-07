@@ -7,18 +7,15 @@ import android.graphics.BitmapShader;
 import android.graphics.Shader;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.Console;
 import java.util.ArrayList;
 
 import in.pecfest.www.pecfest.Adapters.Notification_Adapter;
@@ -74,14 +71,14 @@ public class Notification extends AppCompatActivity {
             Log.e("mssg", notifications.get(i));
             NotificationPayload notificationPayload = null;
             try {
-                 notificationPayload = (NotificationPayload) Utility.getObjectFromJson(notifications.get(i).toString(), NotificationPayload.class);
+                notificationPayload = (NotificationPayload) Utility.getObjectFromJson(notifications.get(i).toString(), NotificationPayload.class);
+                bodyText[i] = notificationPayload.text;
+                titleText[i] = notificationPayload.title;
                 }
             catch (Exception e)
             {
-
+                i--;
             }
-            bodyText[i] = notificationPayload.text;
-            titleText[i] = notificationPayload.head;
         }
 
         sponsorInt=getIntent().getIntExtra("sponsorCurrentIndex",0);
