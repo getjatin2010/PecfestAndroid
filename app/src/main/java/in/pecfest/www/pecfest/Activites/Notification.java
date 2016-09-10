@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import in.pecfest.www.pecfest.Adapters.Notification_Adapter;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
@@ -36,8 +37,10 @@ public class Notification extends AppCompatActivity {
     private ImageViewAnimatedChange imageViewAnimatedChange;
 
     Handler handler;//for runnable
-    private String[] bodyText;
-            String[] titleText;
+    private ArrayList<String> bodyText;
+            ArrayList<String> titleText;
+
+    private String[] body,title;
 
 
     Runnable marquee=new Runnable() {
@@ -60,11 +63,13 @@ public class Notification extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         ArrayList<String> notifications = Utility.getNotifs(this);
+
         newNotificationNumber = notifications.size();
 
-        bodyText = new String[newNotificationNumber];
-        titleText = new String[newNotificationNumber];
+        bodyText = new ArrayList<>();
+        titleText = new ArrayList<>();
         int count = 0;
         for(int i = 0 ; i< newNotificationNumber ; i++)
         {
@@ -72,8 +77,8 @@ public class Notification extends AppCompatActivity {
             NotificationPayload notificationPayload = null;
             try {
                 notificationPayload = (NotificationPayload) Utility.getObjectFromJson(notifications.get(i).toString(), NotificationPayload.class);
-                bodyText[count] = notificationPayload.text;
-                titleText[count] = notificationPayload.title;
+                bodyText.add(notificationPayload.text);
+                titleText.add( notificationPayload.title);
                 count++;
                 }
             catch (Exception e)
@@ -82,6 +87,7 @@ public class Notification extends AppCompatActivity {
             }
         }
         newNotificationNumber= count;
+
 
 
 
@@ -106,12 +112,10 @@ public class Notification extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.notification_recycle_layout);
         linearLayoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter=new Notification_Adapter(Notification.this,titleText,bodyText,newNotificationNumber);
+        Collections.reverse(titleText);
+        Collections.reverse(bodyText);
+        adapter=new Notification_Adapter(Notification.this,titleText,bodyText);
         recyclerView.setAdapter(adapter);
-//recycleView-------------------------------------------------------------------
-
-        //testscroll start runable------------
-
         handler=new Handler();
         marquee.run();
         //------------------------------------

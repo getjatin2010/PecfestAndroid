@@ -27,13 +27,6 @@
             android:textSize="20sp"
             android:textColor="#000000"
             android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:textColor="@android:color/holo_red_dark"
-            android:text="new"
-            tools:targetApi="ice_cream_sandwich" />
     </LinearLayout>
     <TextView
         android:id="@+id/body"
@@ -41,7 +34,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-
         android:text="body"
         android:textSize="18sp"
         android:textColor="#000000"
