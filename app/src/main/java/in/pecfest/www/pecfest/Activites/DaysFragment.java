@@ -89,6 +89,33 @@ public class DaysFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+//                if (query.isEmpty()) {
+//                    eventsListTemp.clear();
+//                    eventsListTemp.addAll(eventsList);
+//                    return false;
+//                }
+//
+//                eventsListTemp.clear();
+//                query = query.toLowerCase();
+//                for (EventsAdapter.EventsData item : eventsList) {
+//                    if (item.eventName.toLowerCase().contains(query) || item.clubName.toLowerCase().contains(query)) {
+//                        eventsListTemp.add(item);
+//                    }
+//                }
+//                mAdapter.notifyDataSetChanged();
+               return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+//                if (query.isEmpty()) {
+//                    eventsListTemp.clear();
+//                    eventsListTemp.addAll(eventsList);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//
+//                return false;
+
                 if (query.isEmpty()) {
                     eventsListTemp.clear();
                     eventsListTemp.addAll(eventsList);
@@ -104,17 +131,7 @@ public class DaysFragment extends Fragment {
                 }
                 mAdapter.notifyDataSetChanged();
                 return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String query) {
-                if (query.isEmpty()) {
-                    eventsListTemp.clear();
-                    eventsListTemp.addAll(eventsList);
-                    mAdapter.notifyDataSetChanged();
-                }
-
-                return false;
             }
         });
 

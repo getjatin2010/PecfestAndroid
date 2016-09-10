@@ -65,21 +65,25 @@ public class Notification extends AppCompatActivity {
 
         bodyText = new String[newNotificationNumber];
         titleText = new String[newNotificationNumber];
-
+        int count = 0;
         for(int i = 0 ; i< newNotificationNumber ; i++)
         {
             Log.e("mssg", notifications.get(i));
             NotificationPayload notificationPayload = null;
             try {
                 notificationPayload = (NotificationPayload) Utility.getObjectFromJson(notifications.get(i).toString(), NotificationPayload.class);
-                bodyText[i] = notificationPayload.text;
-                titleText[i] = notificationPayload.title;
+                bodyText[count] = notificationPayload.text;
+                titleText[count] = notificationPayload.title;
+                count++;
                 }
             catch (Exception e)
             {
-                i--;
+
             }
         }
+        newNotificationNumber= count;
+
+
 
         sponsorInt=getIntent().getIntExtra("sponsorCurrentIndex",0);
 

@@ -22,11 +22,19 @@
             android:orientation="horizontal"
             android:layout_alignParentBottom="true">
 
-            <EditText
+            <!--<EditText-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:id="@+id/event_register_id" />-->
+
+            <AutoCompleteTextView
+                android:id="@+id/event_register_id"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/event_register_id" />
+                android:ems="10"
+                android:hint="Pecfest Id " />
 
             <Button
                 android:layout_width="wrap_content"

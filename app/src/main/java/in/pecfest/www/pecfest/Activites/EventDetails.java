@@ -6,8 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,8 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 public class EventDetails extends AppCompatActivity {
 
     TextView tx1, tx2, tx3, tx4, tx5;
-    EditText et1;
+//    EditText et1;
+    AutoCompleteTextView et1;
     ImageView iv1;
     ListView lv1;
     Button bt1,bt2;
@@ -36,6 +38,7 @@ public class EventDetails extends AppCompatActivity {
     ArrayList<String> registrantsList;
     ViewGroup header;
     String pecfestEventId="";
+    ArrayList<String> cacheList;
     Event event;
     public String[] invalidList;
     @Override
@@ -64,12 +67,17 @@ public class EventDetails extends AppCompatActivity {
         tx5= (TextView) header.findViewById(R.id.register_label);
 
         iv1= (ImageView) header.findViewById(R.id.event_image);
-        et1= (EditText) findViewById(R.id.event_register_id);
+        et1= (AutoCompleteTextView) findViewById(R.id.event_register_id);
         bt1= (Button) findViewById(R.id.btn_event_register);
         bt2= (Button) findViewById(R.id.btn_event_submit);
 
         registrantsList= new ArrayList<String>();
         registerAdapter= new EventRegisterAdapter(this, registrantsList);
+
+        if(Utility.getsaveId((this))!=null && Utility.getsaveId((this)).pecfestId!=null){
+            registerAdapter.add(Utility.getsaveId(this).pecfestId);
+        }
+
         lv1.setAdapter(registerAdapter);
 
         tx1.setText(event.eventName);
@@ -82,6 +90,9 @@ public class EventDetails extends AppCompatActivity {
             bt2.setVisibility(View.GONE);
             tx5.setVisibility(View.GONE);
         }
+
+        et1.setAdapter(new ArrayAdapter(this,android.R.layout.simple_list_item_1, getCacheList()));
+        et1.setThreshold(1);
 
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +121,11 @@ public class EventDetails extends AppCompatActivity {
         et1.setText("");
         registrantsList.add(r);
         registerAdapter.notifyDataSetChanged();
+
+//        addToCacheList(r);
+//        for(int i=0;i<cacheList.size();i++){
+//            Log.v("list",cacheList.get(i));
+//        }
     }
 
     public void submitRegistrants(){
@@ -142,6 +158,10 @@ public class EventDetails extends AppCompatActivity {
                 EventRegisterResponse err= (EventRegisterResponse)Utility.getObjectFromJson(rts.data, EventRegisterResponse.class);
                 if(err.registered){
                     tx4.setText("Registered succesfully!");
+
+                    for(int i=0;i<registrantsList.size();i++)
+                        addToCacheList(registrantsList.get(i));
+
                     return;
                 }
                 if(err.invalidMembers!=null) {
@@ -158,6 +178,35 @@ public class EventDetails extends AppCompatActivity {
 
             }
         }
+    }
+
+    private ArrayList<String> getCacheList(){
+        if(cacheList==null) {
+            cacheList = new ArrayList<String>();
+            String t = Utility.getSharedPreferences(this).getString("cachedIds", null);
+            if (t != null) {
+                String[] a = t.split(",");
+                for (int i = 0; i < a.length; i++) {
+                    if (a[i].isEmpty())
+                        continue;
+                    cacheList.add(a[i]);
+                }
+            }
+        }
+        return cacheList;
+    }
+
+    private void addToCacheList(String str){
+
+        if(cacheList==null)
+            getCacheList();
+
+        for(int i=0;i<cacheList.size();i++){
+            if(cacheList.get(i).equals(str))
+                return;
+        }
+        cacheList.add(str);
+        Utility.getSharedPreferencesEditor(this).putString("cachedIds",Utility.getSharedPreferences(this).getString("cachedIds","")+","+str).commit();
     }
 
 }
