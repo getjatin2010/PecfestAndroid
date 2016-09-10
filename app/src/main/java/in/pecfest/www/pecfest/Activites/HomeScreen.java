@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Color;
 import android.graphics.Shader;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -415,6 +416,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             startActivity(i);
         }
 
+        if(item.getItemId()==R.id.nav_map)
+        {
+            location();
+        }
+
 
         if(item.getItemId()==R.id.nav_logout)
         {
@@ -450,6 +456,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
+    }
+
+    public void location()
+    {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:30.7667,76.7833?q=PEC University of Technology,Chandigarh"));
+        startActivity(intent);
     }
 
     private void addBottomDots(int currentPage, int length) {
