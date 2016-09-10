@@ -45,17 +45,17 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Activites.register"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan"
             />
         <activity android:name=".Activites.login"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize|adjustPan"/>
         <activity android:name=".Activites.contactus"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Activites.verify"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize|adjustPan"/>
         <activity
             android:name=".Activites.EventDetails"
             android:theme="@style/EventsRegisterTheme"

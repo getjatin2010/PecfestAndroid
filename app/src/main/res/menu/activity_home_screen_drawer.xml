@@ -6,15 +6,15 @@
     <group android:title="single">
         <item
             android:id="@+id/nav_Regevent"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/events"
             android:title="Registered events" />
         <item
             android:id="@+id/nav_verify"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/verify"
             android:title="Verify Id" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/logout"
             android:title="Logout" />
 
 
@@ -26,11 +26,11 @@
 
             <item
                 android:id="@+id/nav_map"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/map"
                 android:title="Map" />
             <item
                 android:id="@+id/nav_contact"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/cell"
                 android:title="Contact Us" />
 
 

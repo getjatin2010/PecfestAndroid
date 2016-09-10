@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/batman"
+
     >
 
     <android.support.v7.widget.Toolbar
@@ -37,6 +37,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true"
+        android:background="@drawable/batman"
         >
 
         <LinearLayout
