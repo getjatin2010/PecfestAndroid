@@ -318,6 +318,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         addHomePager();
         positionEverything();
         setSponsorImage();
+
     }
 
     void notifCol(){
@@ -478,6 +479,23 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.BLACK);
+    }
+    public void menu()
+    {
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//
+//        navigationView.setNavigationItemSelectedListener(this);
+//        View headerLayout = navigationView.getHeaderView(0);
+//        navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
+
+        LoginResponse lr = Utility.getsaveId(this);
+        if(lr.name==null) {
+            MenuItem m= (MenuItem) findViewById(R.id.nav_logout);
+            m.setVisible(false);
+            this.invalidateOptionsMenu();
+
+        }
+
     }
 
 

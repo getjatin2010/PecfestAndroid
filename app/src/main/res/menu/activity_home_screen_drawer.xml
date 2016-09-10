@@ -9,23 +9,21 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Registered events" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Pecfest Gallery" />
+            android:id="@+id/nav_verify"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Verify Id" />
         <item
-            android:id="@+id/nav_selfieChamp"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Selfie Champ" />
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Logout" />
+
 
     </group>
 
     <item android:title="Help">
         <menu>
 
-            <item
-                android:id="@+id/nav_verify"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Verify Id" />
+
             <item
                 android:id="@+id/nav_map"
                 android:icon="@drawable/ic_menu_send"
@@ -34,10 +32,7 @@
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Contact Us" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Logout" />
+
 
         </menu>
     </item>
