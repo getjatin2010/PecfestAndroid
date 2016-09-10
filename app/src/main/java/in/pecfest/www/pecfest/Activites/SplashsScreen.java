@@ -44,24 +44,18 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
         setContentView(R.layout.activity_splashs_screen);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         final Context thisclass = this;
+
+        startClass();
+
+        }
+
+    private void startClass()
+    {
 
         if(!Utility.isNetworkAvailable(this))
         {
-            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
-            alertDialogBuilder.setMessage("Internet is not available");
-
-            alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface arg0, int arg1) {
-                    finish();
-                }
-            });
-
-
-            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+            retryDialog();
         }
         else {
             loadSponsors();
@@ -72,8 +66,23 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
                 }
             }, Constants.SPLASH_SCREEN_WAIT);
         }
-        }
+    }
 
+    public  void retryDialog()
+    {
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Internet is not available");
+
+        alertDialogBuilder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                startClass();
+            }
+        });
+        android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+    }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -88,35 +97,16 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
                 sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
 
                 if (sponsorResponse != null) {
-                    sponsorResponse.randomizeList();
-                    LoadSponsorImages i1 = new LoadSponsorImages(sponsorResponse, this, 1, true);
-                    i1.execute();
+                    Intent mainIntent = new Intent(this,HomeScreen.class);
+                    mainIntent.putExtra("sponsorResponse",rr.JsonResponse);
+                    startActivity(mainIntent);
+                    finish();
                 }
             } catch (Exception e) {
-                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
-                alertDialogBuilder.setMessage("Internet is not available");
-
-                alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        finish();
-                    }
-                });
-
-
-                android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+               retryDialog();
 
             }
         }
-        if (method.equals(Constants.METHOD.LOAD_SPONSER))
-        {
-            Intent mainIntent = new Intent(this,HomeScreen.class);
-            startActivity(mainIntent);
-            finish();
-        }
-
-
     }
 
 

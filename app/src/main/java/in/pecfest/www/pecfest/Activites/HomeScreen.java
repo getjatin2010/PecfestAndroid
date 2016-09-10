@@ -40,9 +40,12 @@ import java.util.Random;
 
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
+import in.pecfest.www.pecfest.Communication.LoadSponsorImages;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
+import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.Model.login.LoginResponse;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.ImageViewAnimatedChange;
@@ -128,6 +131,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             handler.postDelayed(this,DELAY);
         }
     };
+
     void marqueeBanner(){
         int y=Math.abs(x-4);
         x=(x+1)%8;
@@ -169,6 +173,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         if(rr.isSuccess==false)
         {
             Toast.makeText(this,rr.errorMessage,Toast.LENGTH_LONG).show();
+        }
+        if(method.equals(Constants.METHOD.LOAD_SPONSER))
+        {
+            setSponsorImage();
         }
     }
 
@@ -317,7 +325,18 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         //------------------------------------------------------------------------------
         addHomePager();
         positionEverything();
-        setSponsorImage();
+        try {
+            SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(this.getIntent().getExtras().getString("sponsorResponse"), SponsorResponse.class);
+            if (sponsorResponse != null) {
+                sponsorResponse.randomizeList();
+                LoadSponsorImages i1 = new LoadSponsorImages(sponsorResponse, this, 1, true);
+                i1.execute();
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
 
     }
 
