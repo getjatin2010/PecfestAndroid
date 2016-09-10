@@ -33,25 +33,13 @@ public class Notification extends AppCompatActivity {
     private TextView pecfestText_notification;
     private int newNotificationNumber;
     int sponsorInt;
-    private ImageView sp1,sp2,sp3,sp4,sp5;
-    private ImageViewAnimatedChange imageViewAnimatedChange;
 
-    Handler handler;//for runnable
+
     private ArrayList<String> bodyText;
             ArrayList<String> titleText;
 
-    private String[] body,title;
 
 
-    Runnable marquee=new Runnable() {
-        @Override
-        public void run() {
-            if(DataHolder.getInstance().sponsorImage!=null){
-                setSponsorImage();
-            }
-            handler.postDelayed(this,HomeScreen.DELAY);
-        }
-    };
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -93,13 +81,6 @@ public class Notification extends AppCompatActivity {
 
         sponsorInt=getIntent().getIntExtra("sponsorCurrentIndex",0);
 
-        sp1 = (ImageView)findViewById(R.id.sp1);
-        sp2 = (ImageView)findViewById(R.id.sp2);
-        sp3 = (ImageView)findViewById(R.id.sp3);
-        sp4 = (ImageView)findViewById(R.id.sp4);
-        sp5 = (ImageView)findViewById(R.id.sp5);
-        // mask actionbar title with bitmap------------------------------------
-        //TextView actionBarTitle=(TextView)findViewById(R.id.pefcestText_notification);
         TextView actionBarNotice=(TextView)findViewById(R.id.noticeText_notification);
         Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
         //Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
@@ -116,8 +97,7 @@ public class Notification extends AppCompatActivity {
         Collections.reverse(bodyText);
         adapter=new Notification_Adapter(Notification.this,titleText,bodyText);
         recyclerView.setAdapter(adapter);
-        handler=new Handler();
-        marquee.run();
+
         //------------------------------------
 //for returning to homescreen form notification---------------------------------
         /*pecfestText_notification=(TextView)findViewById(R.id.pefcestText_notification);
@@ -130,14 +110,6 @@ public class Notification extends AppCompatActivity {
 //for returning to homescreen form notification---------------------------------
 
     }
-    private void setSponsorImage(){
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp4,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(Notification.this,this.sp5,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){

@@ -17,45 +17,5 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/notification_recycle_layout" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/sponsorBanner"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-
-        android:background="@color/darkBlue"
-        android:weightSum="5">
-        <ImageView
-            android:id="@+id/sp1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            />
-        <ImageView
-            android:id="@+id/sp2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_weight="1"/>
-        <ImageView
-            android:id="@+id/sp3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <ImageView
-            android:id="@+id/sp4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <ImageView
-            android:id="@+id/sp5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-    </LinearLayout>
 
 </RelativeLayout>
