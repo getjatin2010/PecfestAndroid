@@ -244,7 +244,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
                 intent.putExtra("newNotificationNumber",notifications);
                 intent.putExtra("sponsorCurrentIndex", sponsorInt);
