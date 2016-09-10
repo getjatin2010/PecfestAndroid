@@ -12,6 +12,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import in.pecfest.www.pecfest.Communication.ExecuteRequest;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
+import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.login.LoginResponse;
 import in.pecfest.www.pecfest.R;
@@ -40,6 +41,34 @@ public class Utility {
         ExecuteRequest er = new ExecuteRequest(context, request, tt);
         er.execute();
     }
+
+    public static void setNewNotificationIncrement(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE);
+        int num = sharedPreferences.getInt(Constants.newNotifs, 0);
+        num = num+1;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(Constants.newNotifs,num);
+        editor.commit();
+    }
+
+
+
+    public static void setNewNotificationZero(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(Constants.newNotifs,0);
+        editor.commit();
+    }
+
+    public static int getNewNotifs(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE);
+        int num = sharedPreferences.getInt(Constants.newNotifs, 0);
+        return num;
+    }
+
 
 
     public static void setActionBarTitle(String title, ActionBar actionBar) {

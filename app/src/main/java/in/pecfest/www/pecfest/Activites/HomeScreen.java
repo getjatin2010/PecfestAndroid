@@ -53,7 +53,7 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 
 
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
-    private static int notifications=3,x=4;
+    private  int notifications=0,x=4;
     public int sponsorInt=0;
 
 
@@ -233,6 +233,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         //notification button--------------------------------------------------
         notificationLayout=(LinearLayout) findViewById(R.id.notification_Layout);
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);
+
+        notifications =Utility.getNewNotifs(this);
+        Log.e("o",String.valueOf(notifications));
+
         notifCol();
 
         notificationLayout.setOnClickListener(new View.OnClickListener() {
@@ -240,12 +244,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(HomeScreen.this,"you clicked notification",Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
                 intent.putExtra("newNotificationNumber",notifications);
-                intent.putExtra("sponsorCurrentIndex",sponsorInt);
+                intent.putExtra("sponsorCurrentIndex", sponsorInt);
+                Utility.setNewNotificationZero(HomeScreen.this);
+                notifications = 0;
                 startActivity(intent);
-                notifications=0;
                 notifCol();
 
                 //notif.setImageResource(R.drawable.notiDefault);
@@ -381,7 +385,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         Intent i=new Intent(getApplicationContext(),login.class);
         startActivityForResult(i, 5);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 5) {
@@ -480,7 +483,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
     public void location()
     {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:30.7667,76.7833?q=PEC University of Technology,Chandigarh"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:30.766202,76.786354?q=PEC University of Technology,Chandigarh"));
         startActivity(intent);
     }
 
