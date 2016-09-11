@@ -91,7 +91,11 @@ public class EventDetails extends AppCompatActivity {
         if(event.eventDetails==null || event.eventDetails.isEmpty())
             tx3.setVisibility(View.GONE);
 
-        tx6.setText("Category: "+event.eventTypeName+"\n"+"Location: "+event.location+"\n"+"Time: "+"Day "+event.day+" "+event.time+"\n"+"Contact: "+event.clubHead.replace(";",", "));
+        String t="Category: "+event.eventTypeName+"\n"+"Location: "+event.location+"\n"+"Time: "+"Day "+event.day+" "+event.time+"\n"+"Contact: "+event.clubHead.replace(";",", ");
+        if(event.maxSize>0)
+            t=t+"\n\n"+"Team Size: "+event.minSize+"-"+event.maxSize;
+        tx6.setText(t);
+
         if(event.maxSize==0){
             et1.setVisibility(View.GONE);
             bt1.setVisibility(View.GONE);

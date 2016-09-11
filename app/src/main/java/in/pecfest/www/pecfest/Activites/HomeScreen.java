@@ -29,13 +29,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Random;
 
@@ -262,7 +263,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
-
+        //Subscribe for notifications
+        FirebaseMessaging.getInstance().subscribeToTopic("pecfest");
 
         //animation changer initialize
         imageViewAnimatedChange=new ImageViewAnimatedChange();
@@ -319,7 +321,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                     case "Shows":
                         startActivity(new Intent(getApplicationContext(), Events.class).putExtra("title","Shows"));
                         break;
-                    case "Lecture":
+                    case "Lecture & Workshops":
                         startActivity(new Intent(getApplicationContext(), Events.class).putExtra("title","Lectures"));
                         break;
                     case "Register":
