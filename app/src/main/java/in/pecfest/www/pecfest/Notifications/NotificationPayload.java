@@ -6,4 +6,5 @@ package in.pecfest.www.pecfest.Notifications;
 public class NotificationPayload {
     public String text;
     public String title;
+    public String photo;
 }

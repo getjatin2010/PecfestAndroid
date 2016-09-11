@@ -175,6 +175,7 @@ public class Utility {
     public static void storeNotifs(Context context, String data){
         double rand= Math.random();
         Utility.getSharedPreferencesEditor(context).putString("notifKeys",Utility.getSharedPreferences(context).getString("notifKeys","")+","+rand).putString("n"+rand,data).commit();
+        setNewNotificationIncrement(context);
     }
 
     public static void clearNotifs(Context context) {
@@ -205,8 +206,12 @@ public class Utility {
     }
 
     public static getBitmap GetBitmap(String url, ImageView iv, boolean resize, int width, boolean fetchFromLocal){
-        getBitmap gbp=(getBitmap)new getBitmap(url, (url.substring(url.lastIndexOf(".")-9, url.length())).replace("/","-"), iv, null, resize, width, fetchFromLocal).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        getBitmap gbp=(getBitmap)new getBitmap(url, getIdForPhotos(url) , iv, null, resize, width, fetchFromLocal).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
         return gbp;
+    }
+
+    public static String getIdForPhotos(String url){
+        return (url.substring(url.lastIndexOf(".")-9, url.length())).replace("/","-");
     }
 }
 

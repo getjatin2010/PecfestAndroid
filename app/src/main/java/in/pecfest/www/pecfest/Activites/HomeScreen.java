@@ -36,6 +36,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.Random;
 
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
@@ -218,7 +220,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
-
+        //Subscribe for notifications
+        FirebaseMessaging.getInstance().subscribeToTopic("pecfest");
 
         //animation changer initialize
         imageViewAnimatedChange=new ImageViewAnimatedChange();
