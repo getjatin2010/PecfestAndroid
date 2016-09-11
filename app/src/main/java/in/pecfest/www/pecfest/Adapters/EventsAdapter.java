@@ -91,6 +91,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         public String clubName;
         String description;
         String date;
+        public String eventType;
 
         public EventsData(String i, String e, String c, String d, String dt){
             eventId= i;
@@ -98,6 +99,16 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             clubName= c;
             description= d;
             date= dt;
+            eventType="";
+        }
+
+        public EventsData(String i, String e, String c, String d, String dt, String et){
+            eventId= i;
+            eventName= e;
+            clubName= c;
+            description= d;
+            date= dt;
+            eventType= et;
         }
 
         public String getEventId(){

@@ -28,7 +28,7 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class EventDetails extends AppCompatActivity {
 
-    TextView tx1, tx2, tx3, tx4, tx5;
+    TextView tx1, tx2, tx3, tx4, tx5,tx6;
 //    EditText et1;
     AutoCompleteTextView et1;
     ImageView iv1;
@@ -65,7 +65,7 @@ public class EventDetails extends AppCompatActivity {
         tx3= (TextView) header.findViewById(R.id.event_details);
         tx4= (TextView) header.findViewById(R.id.register_message);
         tx5= (TextView) header.findViewById(R.id.register_label);
-
+        tx6= (TextView) header.findViewById(R.id.event_details_ext);
         iv1= (ImageView) header.findViewById(R.id.event_image);
         et1= (AutoCompleteTextView) findViewById(R.id.event_register_id);
         bt1= (Button) findViewById(R.id.btn_event_register);
@@ -83,7 +83,10 @@ public class EventDetails extends AppCompatActivity {
         tx1.setText(event.eventName);
         tx2.setText(event.clubName);
         tx3.setText(event.eventDetails);
+        if(event.eventDetails==null || event.eventDetails.isEmpty())
+            tx3.setVisibility(View.GONE);
 
+        tx6.setText("Category: "+event.eventTypeName+"\n"+"Location: "+event.location+"\n"+"Time: "+"Day "+event.day+" "+event.time+"\n"+"Contact: "+event.clubHead.replace(";",", "));
         if(event.maxSize==0){
             et1.setVisibility(View.GONE);
             bt1.setVisibility(View.GONE);
@@ -103,6 +106,7 @@ public class EventDetails extends AppCompatActivity {
 
         bt2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+                tx4.setVisibility(View.GONE);
                 submitRegistrants();
             }
 
@@ -157,6 +161,7 @@ public class EventDetails extends AppCompatActivity {
             try{
                 EventRegisterResponse err= (EventRegisterResponse)Utility.getObjectFromJson(rts.data, EventRegisterResponse.class);
                 if(err.registered){
+                    tx4.setVisibility(View.VISIBLE);
                     tx4.setText("Registered succesfully!");
 
                     for(int i=0;i<registrantsList.size();i++)

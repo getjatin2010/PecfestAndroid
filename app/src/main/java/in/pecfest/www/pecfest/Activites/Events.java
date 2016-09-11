@@ -64,9 +64,7 @@ public class Events extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if(title.equals("Shows") || title.equals("Lectures")){
-            fab.setVisibility(View.GONE);
-        }
+        fab.setVisibility(View.GONE);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

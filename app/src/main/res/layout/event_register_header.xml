@@ -51,12 +51,25 @@
         android:elevation="4dp"/>
 
     <TextView
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_details_ext"
+        android:layout_below="@id/event_details"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:textColor="@color/jumbo"
+        android:text="Some description for the event. "
+        android:elevation="4dp"/>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="There were some errors!"
         android:textSize="15sp"
         android:id="@+id/register_message"
-        android:layout_below="@id/event_details"
+        android:layout_below="@id/event_details_ext"
         android:padding="5dp"
         android:textColor="@color/primary"
         android:visibility="gone"/>

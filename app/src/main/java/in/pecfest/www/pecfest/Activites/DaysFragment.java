@@ -125,7 +125,7 @@ public class DaysFragment extends Fragment {
                 eventsListTemp.clear();
                 query = query.toLowerCase();
                 for (EventsAdapter.EventsData item : eventsList) {
-                    if (item.eventName.toLowerCase().contains(query) || item.clubName.toLowerCase().contains(query)) {
+                    if (item.eventName.toLowerCase().contains(query) || item.clubName.toLowerCase().contains(query) || item.eventType.toLowerCase().contains(query)) {
                         eventsListTemp.add(item);
                     }
                 }
@@ -152,7 +152,7 @@ public class DaysFragment extends Fragment {
         for(int i=0; i<Events.globalEventsList.size();i++){
             Event ev= Events.globalEventsList.get(i);
             if(ev.day==showDay){
-                eventsList.add(new EventsAdapter.EventsData(""+ev.eventId, ev.eventName, ev.clubName, (ev.eventDetails!=null && ev.eventDetails.length()>50)?(ev.eventDetails.substring(0,50)+"..."): ev.eventDetails, ev.location+", "+ev.time));
+                eventsList.add(new EventsAdapter.EventsData(""+ev.eventId, ev.eventName, ev.clubName, (ev.eventDetails!=null && ev.eventDetails.length()>50)?(ev.eventDetails.substring(0,50)+"..."): ev.eventDetails, ev.location+", "+ev.time,ev.eventTypeName));
             }
         }
         eventsListTemp.clear();
