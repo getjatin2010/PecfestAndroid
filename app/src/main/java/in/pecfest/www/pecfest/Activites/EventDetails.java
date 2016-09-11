@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import in.pecfest.www.pecfest.Adapters.EventRegisterAdapter;
 import in.pecfest.www.pecfest.Communication.HttpConnection;
+import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Model.Communication.RequestC;
 import in.pecfest.www.pecfest.Model.EventDetails.Event;
 import in.pecfest.www.pecfest.Model.EventRegister.EventRegisterRequest;
@@ -60,6 +61,10 @@ public class EventDetails extends AppCompatActivity {
         header= (ViewGroup) getLayoutInflater().inflate(R.layout.event_register_header, lv1, false);
         lv1.addHeaderView(header);
 
+        ImageView imageView = (ImageView)header.findViewById(R.id.event_image);
+        ImageLoader il = new ImageLoader(event.imageUrl,imageView,1,false);
+        il.execute();
+        
         tx1= (TextView) header.findViewById(R.id.event_name);
         tx2= (TextView) header.findViewById(R.id.club_name);
         tx3= (TextView) header.findViewById(R.id.event_details);
