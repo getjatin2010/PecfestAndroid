@@ -23,6 +23,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -46,7 +47,9 @@ import in.pecfest.www.pecfest.Communication.LoadSponsorImages;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
+import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Posters.PosterResponse;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.Model.login.LoginResponse;
 import in.pecfest.www.pecfest.R;
@@ -55,21 +58,19 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 
 
 public class HomeScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,CommunicationInterface {
-    private  int notifications=0,x=4;
-    public int sponsorInt=0;
+    private  int notifications=0,posterCount =1;
+    public int sponsorInt=1;
 
 
     public static final int DELAY=3000;
-    Handler handler;//for runnable
+    Handler handler,handlerPoster;//for runnable
     private ImageViewAnimatedChange  imageViewAnimatedChange;
     Button a;
     TextView t;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
-    EditText e;
     public String as;
     GridView grid;
-    //GridView tint colour list---------------------------------------
 
     int[] colour={
             R.color.yellow,
@@ -82,15 +83,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     };
     //----------------------------------------------------------------
 //for homescreen page viewer----------------------------------------------
-    final int[] mResources = {
-            R.drawable.banner1,
-            R.drawable.banner2,
-            R.drawable.banner3,
-            R.drawable.banner4
-    };
+
     //---------------------------------------------------------------------
     String[] text={"Events",
-            "Shows","Lecture",
+            "Shows","Lecture & Workshops",
             "Register"};
     int[] imageId={
             //R.drawable.events1,     //event
@@ -102,7 +98,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private LinearLayout dotsLayout,notificationLayout;
 
     private TextView notification_digit,navBarHeaderText;
-    private NavigationView nav_view;
 
     //Randomaize Colour and Sponsor array for gridView--------------------------
     void randomizeArray(int[] array){
@@ -125,7 +120,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     Runnable marquee=new Runnable() {
         @Override
         public void run() {
-            marqueeBanner();
 
             if(DataHolder.getInstance().sponsorImage!=null){
                 setSponsorImage();
@@ -134,9 +128,17 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
     };
 
+    Runnable marquee2=new Runnable() {
+        @Override
+        public void run() {
+            marqueeBanner();
+            handlerPoster.postDelayed(this,DELAY);
+        }
+    };
+    int x = 0;
     void marqueeBanner(){
-        int y=Math.abs(x-4);
-        x=(x+1)%8;
+        int y=Math.abs(x);
+        x=(x+1)%posterCount;
         mViewPager.setCurrentItem(y,true);
     }
 
@@ -156,15 +158,25 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         params.topMargin = (int) ((height*0.00125));
         mViewPager.setLayoutParams(params);
 
-        params = new RelativeLayout.LayoutParams((int)width,(int)(1.05f*height/3));
-        params.leftMargin = (int) ((0));
-        params.topMargin=(int)(1.27*height/3);
-        grid.setLayoutParams(params);
 
+        if(Build.VERSION.SDK_INT<=Build.VERSION_CODES.KITKAT)
+        {
+            params = new RelativeLayout.LayoutParams((int) width, (int) (1.05f * height / 3));
+            params.leftMargin = (int) ((0));
+            params.topMargin = (int) (1.25 * height / 3);
+            grid.setLayoutParams(params);
+
+        }
+        else {
+            params = new RelativeLayout.LayoutParams((int) width, (int) (1.05f * height / 3));
+            params.leftMargin = (int) ((0));
+            params.topMargin = (int) (1.27 * height / 3);
+            grid.setLayoutParams(params);
+        }
 
         params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) ((1.16*2*height/3));
+        params.topMargin = (int) ((1.15*2*height/3));
         sponsorBanner.setLayoutParams(params);
 
     }
@@ -179,6 +191,37 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         if(method.equals(Constants.METHOD.LOAD_SPONSER))
         {
             setSponsorImage();
+        }
+        if((method.equals(Constants.METHOD.GET_POSTERS)))
+        {
+            final PosterResponse pr = (PosterResponse)Utility.getObjectFromJson(rr.JsonResponse,PosterResponse.class);
+            mViewPager.setAdapter(new HomePagerAdapter(this, pr.posterUrl));
+            addBottomDots(0, pr.posterUrl.length);
+            posterCount =  pr.posterUrl.length;
+            mViewPager.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    handlerPoster.removeCallbacks(marquee2);
+                    handlerPoster.postDelayed(marquee2,8000);
+                    return false;
+                }
+            });
+            mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
+                @Override
+                public void onPageSelected(int position) {
+                    addBottomDots(position, pr.posterUrl.length);
+                }
+
+                @Override
+                public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int arg0) {
+
+                }
+            });
         }
     }
 
@@ -199,11 +242,13 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     protected void onResume() {
         super.onResume();
         handler.postDelayed(marquee, DELAY);
+        handlerPoster.postDelayed(marquee2, DELAY);
     }
     @Override
     protected void onPause() {
         super.onPause();
         handler.removeCallbacks(marquee);
+        handlerPoster.removeCallbacks(marquee2);
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -293,6 +338,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         //testscroll------------------
         handler=new Handler();
+        handlerPoster = new Handler();
         //testscroll------------------
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -332,6 +378,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         //------------------------------------------------------------------------------
         addHomePager();
         positionEverything();
+        getPosters();
         try {
             SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(this.getIntent().getExtras().getString("sponsorResponse"), SponsorResponse.class);
             if (sponsorResponse != null) {
@@ -347,6 +394,15 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
     }
 
+    private void getPosters()
+    {
+        Request r = new Request();
+        r.hidePleaseWaitAtEnd = false;
+        r.showPleaseWaitAtStart = false;
+        r.method = Constants.METHOD.GET_POSTERS;
+
+        Utility.SendRequestToServer(this,r);
+    }
     void notifCol(){
         if(notifications>0){
             notificationLayout.setBackgroundResource(R.drawable.noti_new);
@@ -464,24 +520,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
     private void addHomePager(){
 
-        mViewPager.setAdapter(new HomePagerAdapter(this, mResources));
-        addBottomDots(0, mResources.length);
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
-            @Override
-            public void onPageSelected(int position) {
-                addBottomDots(position, mResources.length);
-            }
 
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-
-            }
-        });
     }
 
     public void location()

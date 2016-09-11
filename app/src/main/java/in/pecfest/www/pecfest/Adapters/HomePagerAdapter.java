@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.R;
 
 /**
@@ -17,8 +18,8 @@ public class HomePagerAdapter extends PagerAdapter {
 
         Context mContext;
         LayoutInflater mLayoutInflater;
-        int mResources[];
-        public HomePagerAdapter(Context context, int []resources) {
+        String mResources[];
+        public HomePagerAdapter(Context context, String []resources) {
             mContext = context;
             mResources= resources;
             mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -39,7 +40,8 @@ public class HomePagerAdapter extends PagerAdapter {
             View itemView = mLayoutInflater.inflate(R.layout.home_pager_item, container, false);
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.homePagerImageView);
-            imageView.setImageResource(mResources[position]);
+            ImageLoader ig = new ImageLoader(mResources[position],imageView,1,false);
+            ig.execute();
 
             container.addView(itemView);
 
