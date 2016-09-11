@@ -18,7 +18,8 @@
         android:textColor="@color/white"
         android:layout_alignLeft="@id/shows_image"
         android:layout_above="@+id/shows_desc"
-        android:padding="5dp"/>
+        android:padding="5dp"
+        android:background="@android:drawable/screen_background_dark_transparent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -29,7 +30,8 @@
         android:textColor="@color/white"
         android:layout_alignLeft="@id/shows_image"
         android:layout_alignBottom="@id/shows_image"
-        android:padding="5dp" />
+        android:padding="5dp"
+        android:background="@android:drawable/screen_background_dark_transparent" />
 
 
 

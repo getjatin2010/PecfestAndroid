@@ -3,13 +3,18 @@ package in.pecfest.www.pecfest.Utilites;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
+
 import in.pecfest.www.pecfest.Communication.ExecuteRequest;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
@@ -190,5 +195,18 @@ public class Utility {
         }
     }
 
+
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    public static getBitmap GetBitmap(String url, ImageView iv, boolean resize, int width, boolean fetchFromLocal){
+        getBitmap gbp=(getBitmap)new getBitmap(url, (url.substring(url.lastIndexOf(".")-9, url.length())).replace("/","-"), iv, null, resize, width, fetchFromLocal).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        return gbp;
+    }
 }
 

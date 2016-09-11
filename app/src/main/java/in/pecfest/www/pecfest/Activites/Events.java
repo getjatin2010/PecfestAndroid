@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -21,6 +22,7 @@ import in.pecfest.www.pecfest.Communication.HttpConnection;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.EventDetails.Event;
 import in.pecfest.www.pecfest.Model.EventDetails.EventResponse;
+import in.pecfest.www.pecfest.Model.MegaShows.MegaResponse;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Results;
 import in.pecfest.www.pecfest.Utilites.Utility;
@@ -30,6 +32,7 @@ public class Events extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public static ArrayList<Event> globalEventsList;
+    public static MegaResponse megaResponse;
     String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,10 @@ public class Events extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if((title=getIntent().getStringExtra("title"))!=null){
-            getSupportActionBar().setTitle(title);
+            if(title.equals("Lectures"))
+                getSupportActionBar().setTitle("Lectures & Workshops");
+            else
+                getSupportActionBar().setTitle(title);
         }
         else
             title="";
@@ -72,6 +78,9 @@ public class Events extends AppCompatActivity {
 
         if(!title.equals("Shows")) {
             new getEventsList(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        else{
+            new getShow().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -197,5 +206,34 @@ public class Events extends AppCompatActivity {
 
     public void refreshList(){
         new getEventsList(this, true).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    class getShow extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void...v){
+
+            try {
+                HttpConnection hc = new HttpConnection(Utility.getBaseUrl(Events.this), 1);
+                hc.putBody("{\"method\": \"" + Constants.METHOD.GET_MEGA_SHOWS + "\"}");
+                Results rts = hc.getData();
+                megaResponse = (MegaResponse)Utility.getObjectFromJson(rts.data,MegaResponse.class);
+            }
+            catch(Exception e){
+                Log.v("Error", e.getMessage());
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v){
+            try{
+                for(int i=0; i<getSupportFragmentManager().getFragments().size();i++)
+                    ((ShowsFragment)getSupportFragmentManager().getFragments().get(i)).notifyChanges();
+            }
+            catch (Exception e)
+            {
+                Log.v("Error2", e.getMessage());
+            }
+        }
     }
 }
