@@ -13,7 +13,8 @@ public class Constants {
         public static final String SPONSOR_REQUEST = "getSponsorlist";
         public static final String LOAD_SPONSER = "loadSponsor";
         public static final String EVENT_DETAILS = "getEventDetails";
-        public static final String VERIFY = "verifyId";
+        public static final String LECTURE_DETAILS = "getLectureDetails";
+        public static final String VERIFY = "verifyIdWithoutPhone";
         public static final String LOGIN = "checkLogin";
         public static final String GET_MEGA_SHOWS = "getMegaShowImgs";
         public static final String GET_POSTERS = "getPosterURLs";

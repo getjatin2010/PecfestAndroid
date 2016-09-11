@@ -226,7 +226,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     //set downloaded image to imageView--------------------------------------------------------------------
     private void setSponsorImage(){
 
-        Log.e("pecfest",String.valueOf(DataHolder.getInstance().spon));
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
         imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
@@ -443,7 +442,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 5) {
+        if (requestCode == 5 || requestCode == 6 ) {
             if (resultCode == RESULT_OK) {
                 LoginResponse lr= Utility.getsaveId(this);
                 navBarHeaderText.setText("Hello " +lr.name+" !");
@@ -492,7 +491,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         {
 
             Intent i= new Intent(getApplicationContext(),navverify.class);
-            startActivity(i);
+            startActivityForResult(i,6);
         }
 
         if(item.getItemId()==R.id.nav_map)

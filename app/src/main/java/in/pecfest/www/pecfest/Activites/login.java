@@ -64,8 +64,6 @@ public class login extends AppCompatActivity  implements CommunicationInterface
 
     Utility.SendRequestToServer(this, req);
 
-
-
     }
 
     @Override

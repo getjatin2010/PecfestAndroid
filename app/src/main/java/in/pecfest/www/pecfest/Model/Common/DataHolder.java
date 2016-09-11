@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
  */
 public class DataHolder {
     public Bitmap sponsorImage[];
-    public int spon = 0;
+    public int spon = 1;
     private static final DataHolder holder = new DataHolder();
     public static DataHolder getInstance()
     {

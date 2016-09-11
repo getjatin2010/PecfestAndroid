@@ -156,7 +156,7 @@ public class Events extends AppCompatActivity {
 
             if(title.equals("Lectures")){
                 HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
-                hc.putBody("{\"method\": \"" + Constants.METHOD.EVENT_DETAILS + "\"}");
+                hc.putBody("{\"method\": \"" + Constants.METHOD.LECTURE_DETAILS + "\"}");
                 results = hc.getData();
                 parseResponse(force);
             }
