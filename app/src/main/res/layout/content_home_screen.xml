@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context="in.pecfest.www.pecfest.Activites.HomeScreen"
+            tools:context="pecapps.pecfest2015.Activites.HomeScreen"
             tools:showIn="@layout/app_bar_home_screen"
             >
             <android.support.v4.view.ViewPager

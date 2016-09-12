@@ -1,4 +1,4 @@
-package in.pecfest.www.pecfest;
+package pecapps.pecfest2015.www.pecfest;
 
 import org.junit.Test;
 

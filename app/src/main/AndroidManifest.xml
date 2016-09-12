@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="in.pecfest.www.pecfest">
+    package="pecapps.pecfest2015">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,68 +12,68 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".Activites.HomeScreen"
+            android:name="pecapps.pecfest2015.Activites.HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"></activity>
 
-        <service android:name=".Notifications.MyFirebaseMessagingService">
+        <service android:name="pecapps.pecfest2015.Notifications.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".Notifications.MyFirebaseInstanceIDService">
+        <service android:name="pecapps.pecfest2015.Notifications.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <activity
-            android:name=".Activites.Notification"
+            android:name="pecapps.pecfest2015.Activites.Notification"
             android:label="@string/title_activity_notification"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activites.Events"
+            android:name="pecapps.pecfest2015.Activites.Events"
             android:label="@string/title_activity_events"
             android:screenOrientation="portrait"
             android:theme="@style/EventsTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activites.register"
+            android:name="pecapps.pecfest2015.Activites.register"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activites.login"
+            android:name="pecapps.pecfest2015.Activites.login"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
-            android:name=".Activites.contactus"
+            android:name="pecapps.pecfest2015.Activites.contactus"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Activites.verify"
+            android:name="pecapps.pecfest2015.Activites.verify"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|adjustPan" />
         <activity
-            android:name=".Activites.EventDetails"
+            android:name="pecapps.pecfest2015.Activites.EventDetails"
             android:screenOrientation="portrait"
             android:theme="@style/EventsRegisterTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activites.navverify"
+            android:name="pecapps.pecfest2015.Activites.navverify"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activites.SplashsScreen">
+        <activity android:name="pecapps.pecfest2015.Activites.SplashsScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activites.RegisteredEvents"></activity>
+        <activity android:name="pecapps.pecfest2015.Activites.RegisteredEvents"></activity>
     </application>
 
 </manifest>
