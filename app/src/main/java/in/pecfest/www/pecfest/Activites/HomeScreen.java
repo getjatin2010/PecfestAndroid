@@ -200,7 +200,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
         if(method.equals(Constants.METHOD.LOAD_SPONSER))
         {
-            setSponsorImage();
+
         }
         if((method.equals(Constants.METHOD.GET_POSTERS)))
         {
@@ -443,18 +443,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         addHomePager();
         positionEverything();
         getPosters();
-        try {
-            SponsorResponse sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(this.getIntent().getExtras().getString("sponsorResponse"), SponsorResponse.class);
-            if (sponsorResponse != null) {
-                sponsorResponse.randomizeList();
-                LoadSponsorImages i1 = new LoadSponsorImages(sponsorResponse, this, 1, true);
-                i1.execute();
-            }
-        }
-        catch (Exception e)
-        {
+        setSponsorImage();
 
-        }
 
     }
 

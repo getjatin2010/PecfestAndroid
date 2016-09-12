@@ -59,12 +59,7 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
         }
         else {
             loadSponsors();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
 
-                }
-            }, Constants.SPLASH_SCREEN_WAIT);
         }
     }
 
@@ -92,21 +87,38 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
             Toast.makeText(this, rr.errorMessage, Toast.LENGTH_LONG).show();
         }
 
+
+
+
+        if (method.equals(Constants.METHOD.LOAD_SPONSER))
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent mainIntent = new Intent(SplashsScreen.this, HomeScreen.class);
+                startActivity(mainIntent);
+                finish();
+            }
+        }, 500);
+
         if (method.equals(Constants.METHOD.SPONSOR_REQUEST)) {
             try {
                 sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
 
                 if (sponsorResponse != null) {
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent mainIntent = new Intent(SplashsScreen.this, HomeScreen.class);
-                            mainIntent.putExtra("sponsorResponse", rr.JsonResponse);
-                            startActivity(mainIntent);
-                            finish();
+                    try {
+                        if (sponsorResponse != null) {
+                            sponsorResponse.randomizeList();
+                            LoadSponsorImages i1 = new LoadSponsorImages(sponsorResponse, this, 1, true);
+                            i1.execute();
                         }
-                    }, 2000);
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+
 
                 }
             } catch (Exception e) {

@@ -86,6 +86,7 @@ public class EventDetails extends AppCompatActivity {
         lv1.setAdapter(registerAdapter);
 
         tx1.setText(event.eventName);
+        if(event.clubName!=null || event.clubName!="")
         tx2.setText(event.clubName);
         if(event.instructions!=null && event.instructions!="")
         tx3.setText(event.eventDetails+"\n\n"+"Instructions:\n\n"+event.instructions);

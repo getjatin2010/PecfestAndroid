@@ -7,11 +7,16 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -23,6 +28,7 @@ import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 
 /**
@@ -36,6 +42,7 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
     private boolean roundImage;
     private float ratio;
     private Context context;
+    public static final String STORAGE_PATH= Environment.getExternalStorageDirectory()+"/Pecfest/.data/";
     private boolean isSopnsor = false;
     //for loading sponsors to localVariable--------------------------------------------------------------
 
@@ -90,13 +97,12 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
         for (int i = 0; i < sponsorResponse.sponsorlist.length; i++) {
 
             try {
-                URL urlConnection = new URL(sponsorResponse.sponsorlist[i].sponsorUrl);
-                HttpURLConnection connection = (HttpURLConnection) urlConnection
-                        .openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap result = BitmapFactory.decodeStream(input);
+                Bitmap result = fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[i].sponsorUrl));
+                if(result==null)
+                {
+                    result = fetchFromWeb(sponsorResponse.sponsorlist[i].sponsorUrl);
+                    saveToLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[i].sponsorUrl),result);
+                }
                 if(result!=null)
                 {
                     if(roundImage==true)
@@ -132,5 +138,53 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
 
     }
 
+
+    public static Bitmap fetchFromLocal(String i){
+        try{
+            Log.v("from local", "photo from local" + i);
+            File f=new File(STORAGE_PATH+"images/"+i);
+            return BitmapFactory.decodeStream((InputStream)new FileInputStream(f));
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+
+    public static Bitmap fetchFromWeb(String u){
+        Bitmap b=null;
+        try{
+            b=BitmapFactory.decodeStream((InputStream) new URL(u).getContent());
+        }
+        catch(Exception e){
+            Log.v("err-report", "from fetchFromWeb "+e.getMessage());
+        }
+        return b;
+    }
+
+    public static void saveToLocal(String id, Bitmap b){
+
+        File f,o;
+        FileOutputStream fos;
+
+        try{
+            f=new File(STORAGE_PATH+"images/");
+            if(!f.exists()){
+                f.mkdirs();
+            }
+            Log.v("filename", ""+id);
+            o=new File(f,id);
+            fos=new FileOutputStream(o);
+
+            if(id.contains("png"))
+                b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            else
+                b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+
+            fos.close();
+        }
+        catch(Exception e){
+            Log.v("err-report", "from saveToLocal "+e.getMessage());
+        }
+    }
 
 }
