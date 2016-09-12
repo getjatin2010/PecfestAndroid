@@ -34,17 +34,14 @@ public class DaysFragment extends Fragment {
     private SwipeRefreshLayout srl;
 
     public DaysFragment(){
-
     }
 
-    public DaysFragment(int day){
-        showDay=day;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        showDay = getArguments().getInt("day");
     }
 
     @Override

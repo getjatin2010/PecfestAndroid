@@ -96,17 +96,50 @@ public class Events extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DaysFragment(1), "8th Oct");
-        adapter.addFragment(new DaysFragment(2), "9th Oct");
-        adapter.addFragment(new DaysFragment(3), "10th Oct");
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("day", 1);
+        Fragment day1 = new DaysFragment();
+        day1.setArguments(bundle1);
+
+        Bundle bundle2 = new Bundle();
+        bundle2.putInt("day", 2);
+        Fragment day2 = new DaysFragment();
+        day2.setArguments(bundle2);
+
+        Bundle bundle3 = new Bundle();
+        bundle3.putInt("day", 3);
+        Fragment day3 = new DaysFragment();
+        day3.setArguments(bundle3);
+
+        adapter.addFragment(day1, "8th Oct");
+        adapter.addFragment(day2, "9th Oct");
+        adapter.addFragment(day3, "10th Oct");
         viewPager.setAdapter(adapter);
     }
 
     private void setupViewPager2(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ShowsFragment(1), "8th Oct");
-        adapter.addFragment(new ShowsFragment(2), "9th Oct");
-        adapter.addFragment(new ShowsFragment(3), "10th Oct");
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("day", 1);
+        Fragment day1 = new ShowsFragment();
+        day1.setArguments(bundle1);
+
+        Bundle bundle2 = new Bundle();
+        bundle2.putInt("day", 2);
+        Fragment day2 = new ShowsFragment();
+        day2.setArguments(bundle2);
+
+        Bundle bundle3 = new Bundle();
+        bundle3.putInt("day", 3);
+        Fragment day3 = new ShowsFragment();
+        day3.setArguments(bundle3);
+
+
+        adapter.addFragment(day1, "8th Oct");
+        adapter.addFragment(day2, "9th Oct");
+        adapter.addFragment(day3, "10th Oct");
         viewPager.setAdapter(adapter);
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {

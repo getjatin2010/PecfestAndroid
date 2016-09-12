@@ -25,9 +25,6 @@ public class ShowsFragment extends Fragment {
 
     }
 
-    public ShowsFragment(int day){
-        showDay= day;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +34,8 @@ public class ShowsFragment extends Fragment {
         iv1 = (ImageView) rootView.findViewById(R.id.shows_image);
         tx1 = (TextView) rootView.findViewById(R.id.shows_title);
         tx2 = (TextView) rootView.findViewById(R.id.shows_desc);
+
+        showDay = getArguments().getInt("day");
 
         return rootView;
     }
