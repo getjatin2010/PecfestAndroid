@@ -38,7 +38,7 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
     public static final String STORAGE_PATH= Environment.getExternalStorageDirectory()+"/Pecfest/.data/";
 
 
-    getBitmap(String u, String id, ImageView i){
+    public getBitmap(String u, String id, ImageView i){
         this(u, id, i, null, false, 0);
     }
 

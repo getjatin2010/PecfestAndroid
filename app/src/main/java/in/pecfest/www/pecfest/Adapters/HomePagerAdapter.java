@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.Utility;
+import in.pecfest.www.pecfest.Utilites.getBitmap;
 
 /**
  * Created by Abhi on 04-08-2016.
@@ -40,9 +43,8 @@ public class HomePagerAdapter extends PagerAdapter {
             View itemView = mLayoutInflater.inflate(R.layout.home_pager_item, container, false);
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.homePagerImageView);
-            ImageLoader ig = new ImageLoader(mResources[position],imageView,1,false);
-            ig.execute();
-
+                getBitmap b = new getBitmap(mResources[position],mResources[position], imageView);
+                b.execute();
             container.addView(itemView);
 
             return itemView;

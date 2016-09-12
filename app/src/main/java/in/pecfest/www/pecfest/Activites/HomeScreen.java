@@ -135,9 +135,20 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
     };
     int x = 0;
+    Boolean goingFront = true;
     void marqueeBanner(){
         int y=Math.abs(x);
-        x=(x+1)%posterCount;
+
+        if(x==0)
+            goingFront = true;
+        if(x==posterCount-1)
+            goingFront = false;
+
+         if(goingFront)
+            x=(x+1)%posterCount;
+         else
+             x = (x-1)%posterCount;
+
         mViewPager.setCurrentItem(y,true);
     }
 
