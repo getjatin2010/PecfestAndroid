@@ -97,6 +97,8 @@ public class Notification extends AppCompatActivity {
         Collections.reverse(bodyText);
         adapter=new Notification_Adapter(Notification.this,titleText,bodyText);
         recyclerView.setAdapter(adapter);
+        Utility.setNewNotificationZero(this);
+
 
         //------------------------------------
 //for returning to homescreen form notification---------------------------------

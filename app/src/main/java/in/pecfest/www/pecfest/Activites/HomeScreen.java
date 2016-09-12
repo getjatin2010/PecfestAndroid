@@ -1,6 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -48,6 +49,8 @@ import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
+import in.pecfest.www.pecfest.Model.Permissions.PermissionRequest;
+import in.pecfest.www.pecfest.Model.Permissions.PermissionResponse;
 import in.pecfest.www.pecfest.Model.Posters.PosterResponse;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
 import in.pecfest.www.pecfest.Model.login.LoginResponse;
@@ -190,6 +193,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         {
             Toast.makeText(this,rr.errorMessage,Toast.LENGTH_LONG).show();
         }
+        if(method.equalsIgnoreCase(Constants.METHOD.APP_PERMISSIONS))
+        {
+            PermissionResponse pr =(PermissionResponse)Utility.getObjectFromJson(rr.JsonResponse,PermissionResponse.class);              ;
+            WhatToDo(pr);
+        }
         if(method.equals(Constants.METHOD.LOAD_SPONSER))
         {
             setSponsorImage();
@@ -200,6 +208,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             mViewPager.setAdapter(new HomePagerAdapter(this, pr.posterUrl));
             addBottomDots(0, pr.posterUrl.length);
             posterCount =  pr.posterUrl.length;
+            if(posterCount==0)
+                posterCount = 1;
             mViewPager.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -227,6 +237,39 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
+
+    private void WhatToDo(PermissionResponse pr)
+    {
+        if(pr.code.equalsIgnoreCase(Constants.PERMISSIONS.WARNING))
+        {
+            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage(pr.text);
+
+            alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+        else if(pr.code.equalsIgnoreCase(Constants.PERMISSIONS.STOP))
+        {
+            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage(pr.text);
+
+            alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    finish();
+                }
+            });
+            android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+    }
+
+
     //set downloaded image to imageView--------------------------------------------------------------------
     private void setSponsorImage(){
 
@@ -245,6 +288,23 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         handler.postDelayed(marquee, DELAY);
         handlerPoster.postDelayed(marquee2, DELAY);
     }
+
+
+    public void getPermissions()
+    {
+        PermissionRequest pr = new PermissionRequest();
+        pr.version = Constants.appVersion;
+
+        Request r = new Request();
+        r.hidePleaseWaitAtEnd =false;
+        r.showPleaseWaitAtStart = false;
+        r.method = Constants.METHOD.APP_PERMISSIONS;
+        r.requestData = Utility.GetJsonObject(pr);
+
+        Utility.SendRequestToServer(this, r);
+
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -296,7 +356,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 Intent intent=new Intent(HomeScreen.this,Notification.class);
                 intent.putExtra("newNotificationNumber",notifications);
                 intent.putExtra("sponsorCurrentIndex", sponsorInt);
-                Utility.setNewNotificationZero(HomeScreen.this);
                 notifications = 0;
                 startActivity(intent);
                 notifCol();
@@ -377,6 +436,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         sp4 = (ImageView)findViewById(R.id.sp4);
         sp5 = (ImageView)findViewById(R.id.sp5);
         //------------------------------------------------------------------------------
+        getPermissions();
         addHomePager();
         positionEverything();
         getPosters();
