@@ -240,6 +240,9 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
     private void WhatToDo(PermissionResponse pr)
     {
+        if(pr==null)
+            return;
+
         if(pr.code.equalsIgnoreCase(Constants.PERMISSIONS.WARNING))
         {
             android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);

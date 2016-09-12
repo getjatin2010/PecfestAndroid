@@ -43,10 +43,8 @@ public class HomePagerAdapter extends PagerAdapter {
             View itemView = mLayoutInflater.inflate(R.layout.home_pager_item, container, false);
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.homePagerImageView);
-                getBitmap b = new getBitmap(mResources[position],mResources[position], imageView);
-                b.execute();
-            container.addView(itemView);
-
+                Utility.GetBitmap(mResources[position],imageView,false,0,true);
+                container.addView(itemView);
             return itemView;
         }
 
