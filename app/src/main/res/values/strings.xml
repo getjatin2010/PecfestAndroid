@@ -13,4 +13,6 @@
     <string name="pecfestTitle">PECFEST</string>
     <string name="notice">NOTICE</string>
     <string name="Register">REGISTER</string>
+    <string name="verification">VERIFY</string>
+    <string name="Login">LOGIN</string>
 </resources>
