@@ -568,21 +568,28 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
 
         if(item.getItemId()==R.id.nav_Regevent){
-            Intent i=new Intent(getApplicationContext(), RegisteredEvents.class);
-            startActivity(i);
+            if ((Utility.getsaveId((this)) != null && Utility.getsaveId((this)).pecfestId != null)) {
+                Intent i = new Intent(getApplicationContext(), RegisteredEvents.class);
+                startActivity(i);
+            }
+            else
+            {
+                Toast.makeText(this,"Please Login",Toast.LENGTH_SHORT).show();
+            }
         }
 
 
-        if(item.getItemId()==R.id.nav_logout)
-        {
-            LoginResponse lr = new LoginResponse();
-            lr.name = null;
-            lr.phone = null;
-            lr.pecfestId = null;
-            Utility.saveId(lr,getApplicationContext());
-            Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
-            navBarHeaderText.setText("LOGIN ");
-            navBarHeaderText.setClickable(true);
+        if(item.getItemId()==R.id.nav_logout) {
+            if ((Utility.getsaveId((this)) != null && Utility.getsaveId((this)).pecfestId != null)) {
+                LoginResponse lr = new LoginResponse();
+                lr.name = null;
+                lr.phone = null;
+                lr.pecfestId = null;
+                Utility.saveId(lr, getApplicationContext());
+                Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+                navBarHeaderText.setText("LOGIN ");
+                navBarHeaderText.setClickable(true);
+            }
         }
         return true;
     }
@@ -626,7 +633,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             MenuItem m= (MenuItem) findViewById(R.id.nav_logout);
             m.setVisible(false);
             this.invalidateOptionsMenu();
-
         }
 
     }

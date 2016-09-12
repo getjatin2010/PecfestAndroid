@@ -86,7 +86,7 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void onRequestCompleted(String method, Response rr) {
+    public void onRequestCompleted(String method, final Response rr) {
 
         if (rr.isSuccess == false) {
             Toast.makeText(this, rr.errorMessage, Toast.LENGTH_LONG).show();
@@ -97,10 +97,17 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
                 sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
 
                 if (sponsorResponse != null) {
-                    Intent mainIntent = new Intent(this,HomeScreen.class);
-                    mainIntent.putExtra("sponsorResponse",rr.JsonResponse);
-                    startActivity(mainIntent);
-                    finish();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent mainIntent = new Intent(SplashsScreen.this, HomeScreen.class);
+                            mainIntent.putExtra("sponsorResponse", rr.JsonResponse);
+                            startActivity(mainIntent);
+                            finish();
+                        }
+                    }, 2000);
+
                 }
             } catch (Exception e) {
                retryDialog();
