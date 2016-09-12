@@ -39,6 +39,7 @@ TextView ta;
         Toolbar t= (Toolbar) findViewById(R.id.notification_toolbar);
         setSupportActionBar(t);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        listView.setFadingEdgeLength(150);
        // final String a=ta.getText().toString();
 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     @Override
