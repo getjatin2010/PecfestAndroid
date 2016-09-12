@@ -59,13 +59,22 @@ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
     private ArrayList<Item> generateData(){
             ArrayList<Item> items = new ArrayList<Item>();
-            items.add(new Item("Publicity ","Devansh","9466504866"));
-            items.add(new Item("Marketing ","Devansh","9466504866"));
-            items.add(new Item("Finance ","Devansh","9466504866"));
-            items.add(new Item("Technical ","Devansh","9466504866"));
-            items.add(new Item("Infra ","Devansh","9466504866"));
-            items.add(new Item("PR ","Devansh","9466504866"));
-            items.add(new Item("Secretary  ","Devansh","9466504866"));
+            items.add(new Item("Convener ","Prashant Sharma","9779898998"));
+            items.add(new Item("Co Convener ","Navdeep Singh Lathar","9041143100"));
+            items.add(new Item("Secretary ","Devanshu and Vaibhav","9815447755"));
+            items.add(new Item("Event Coordination ","Dhruv and Sakshi","9501461928"));
+            items.add(new Item("Infra ","Navi Joshi","9465588808"));
+            items.add(new Item("Public Relations ","Divija Rawat","9560813266"));
+            items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
+        items.add(new Item("Mega Shows  ","Vaibhav Sharma","9988634375"));
+        items.add(new Item("Logistics  ","Nupur Arora","7814667022"));
+        items.add(new Item("Discipline  ","Tahir Sandhu","9779190230"));
+        items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
+        items.add(new Item("Publicity and Alumni Relations  ","Karandeep and Vrinda","8699176783"));
+        items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
+        items.add(new Item("Marketing","Shishir Kumar","8591155276"));
+        items.add(new Item("Creative  ","Sahil Garg","9041370343"));
+        items.add(new Item("Finance  ","Shine and Asheem","9915324444"));
             return items;
         }
 }
