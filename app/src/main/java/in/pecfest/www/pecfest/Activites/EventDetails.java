@@ -87,6 +87,9 @@ public class EventDetails extends AppCompatActivity {
 
         tx1.setText(event.eventName);
         tx2.setText(event.clubName);
+        if(event.instructions!=null && event.instructions!="")
+        tx3.setText(event.eventDetails+"\n\n"+"Instructions:\n\n"+event.instructions);
+        else
         tx3.setText(event.eventDetails);
         if(event.eventDetails==null || event.eventDetails.isEmpty())
             tx3.setVisibility(View.GONE);
