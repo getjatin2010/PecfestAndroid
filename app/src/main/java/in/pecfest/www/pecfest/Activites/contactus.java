@@ -75,6 +75,7 @@ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         items.add(new Item("Marketing","Shishir Kumar","8591155276"));
         items.add(new Item("Creative  ","Sahil Garg","9041370343"));
         items.add(new Item("Finance  ","Shine and Asheem","9915324444"));
+        items.add(new Item("App Development Team ","Jatin Arora, Abhinandan, Devansh and Nishchit","9041092408"));
             return items;
         }
 }
