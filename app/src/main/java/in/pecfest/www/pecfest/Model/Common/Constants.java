@@ -18,7 +18,7 @@ public class Constants {
         public static final String LOGIN = "checkLogin";
         public static final String GET_MEGA_SHOWS = "getMegaShowImgs";
         public static final String GET_POSTERS = "getPosterURLs";
-
+        public static final String REGISTERED_EVENT = "EventsForId";
         // We can add method name here
 
     }
