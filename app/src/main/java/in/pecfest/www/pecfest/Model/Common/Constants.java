@@ -5,6 +5,7 @@ package in.pecfest.www.pecfest.Model.Common;
  */
 public class Constants {
 
+    public static String appVersion = "1.0";
     public static int SPLASH_SCREEN_WAIT = 2000;
     public static String newNotifs = "newnotifs";
     public static class METHOD
@@ -19,6 +20,7 @@ public class Constants {
         public static final String GET_MEGA_SHOWS = "getMegaShowImgs";
         public static final String GET_POSTERS = "getPosterURLs";
         public static final String REGISTERED_EVENT = "EventsForId";
+        public static final String APP_PERMISSIONS = "appPermissions";
         // We can add method name here
 
     }
@@ -28,4 +30,11 @@ public class Constants {
         public static final String HOMEWORK_FILE_NAME = "Homework_File";
        // We can add other Constants by making static classes
     }
+
+    public static class PERMISSIONS
+    {
+        public static final String WARNING = "warning";
+        public static final String STOP = "stop";
+    }
+
 }

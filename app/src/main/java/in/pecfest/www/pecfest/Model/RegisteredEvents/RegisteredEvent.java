@@ -10,4 +10,5 @@ public class RegisteredEvent {
     public String day;
     public String time;
     public String members[];
+
 }

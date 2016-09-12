@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
     <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="1dp"
-        android:layout_margin="2dp">
+        android:layout_margin="5dp"
+        card_view:cardElevation="3dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,43 +24,52 @@
             android:layout_height="wrap_content"
             android:id="@+id/registered_eventname"
             android:text="Event name"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/registered_lb1"
-            android:textSize="18sp"
-            android:text="Registered: "
-            android:layout_below="@id/registered_eventname"
-            android:paddingLeft="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/registered_lb2"
             android:textSize="17sp"
-            android:text="Abhinandan"
-            android:layout_below="@id/registered_eventname"
-            android:layout_toRightOf="@id/registered_lb1" />
+            android:textStyle="bold"
+            android:textColor="@color/jet" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/registered_details"
             android:text="Location, time"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textSize="14sp"/>
+            android:layout_below="@id/registered_eventname"
+            android:paddingLeft="5dp"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/registered_contact"
             android:text="Contact me"
-            android:layout_below="@id/registered_lb2"
-            android:textSize="15sp" />
+            android:layout_below="@id/registered_details"
+            android:paddingLeft="5dp"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registered_lb1"
+            android:textSize="15sp"
+            android:text="Registered: "
+            android:layout_below="@id/registered_contact"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registered_lb2"
+            android:textSize="15sp"
+            android:text="Abhinandan"
+            android:layout_below="@id/registered_contact"
+            android:layout_toRightOf="@id/registered_lb1" />
+
+
+
+
 
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
+    </RelativeLayout>
