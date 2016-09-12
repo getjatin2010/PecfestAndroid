@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import in.pecfest.www.pecfest.Communication.ExecuteRequest;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
@@ -57,7 +58,20 @@ public class Utility {
         editor.commit();
     }
 
+    public static void saveDateHour(String data,Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("dateHour", data);
+        editor.commit();
+    }
 
+    public static String getDateHour(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("appPreferences", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("dateHour", null);
+
+    }
 
     public static void setNewNotificationZero(Context context)
     {

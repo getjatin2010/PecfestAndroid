@@ -101,6 +101,7 @@ public class navverify extends AppCompatActivity implements CommunicationInterfa
             final LoginResponse respone= (LoginResponse) Utility.getObjectFromJson(rr.JsonResponse, LoginResponse.class);
             Utility.saveId(respone, this);
             if(respone.login==true) {
+                Utility.saveId(respone,this);
                 Toast.makeText(this, "Logged In", Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK, null);
             }

@@ -74,8 +74,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     int[] colour={
             R.color.yellow,
             R.color.green2,
-            R.color.darkBlue,
-            R.color.blue,
+            R.color.colorAccent,
+            R.color.green3,
             R.color.red,
             R.color.orange1,
             R.color.orange0,
@@ -169,20 +169,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         mViewPager.setLayoutParams(params);
 
 
-        if(Build.VERSION.SDK_INT<=Build.VERSION_CODES.KITKAT)
-        {
-            params = new RelativeLayout.LayoutParams((int) width, (int) (1.05f * height / 3));
-            params.leftMargin = (int) ((0));
-            params.topMargin = (int) (1.25 * height / 3);
-            grid.setLayoutParams(params);
+        params = new RelativeLayout.LayoutParams((int) width, (int) (1.05f * height / 3));
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) (1.25 * height / 3);
+        grid.setLayoutParams(params);
 
-        }
-        else {
-            params = new RelativeLayout.LayoutParams((int) width, (int) (1.05f * height / 3));
-            params.leftMargin = (int) ((0));
-            params.topMargin = (int) (1.27 * height / 3);
-            grid.setLayoutParams(params);
-        }
+
 
         params = new RelativeLayout.LayoutParams((int)width,(int)height/3);
         params.leftMargin = (int) ((0));

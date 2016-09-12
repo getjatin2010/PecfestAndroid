@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import in.pecfest.www.pecfest.Communication.HttpConnection;
@@ -95,17 +96,17 @@ public class Events extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DaysFragment(1), "DAY 1");
-        adapter.addFragment(new DaysFragment(2), "DAY 2");
-        adapter.addFragment(new DaysFragment(3), "DAY 3");
+        adapter.addFragment(new DaysFragment(1), "8th Oct");
+        adapter.addFragment(new DaysFragment(2), "9th Oct");
+        adapter.addFragment(new DaysFragment(3), "10th Oct");
         viewPager.setAdapter(adapter);
     }
 
     private void setupViewPager2(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ShowsFragment(1), "DAY 1");
-        adapter.addFragment(new ShowsFragment(2), "DAY 2");
-        adapter.addFragment(new ShowsFragment(3), "DAY 3");
+        adapter.addFragment(new ShowsFragment(1), "8th Oct");
+        adapter.addFragment(new ShowsFragment(2), "9th Oct");
+        adapter.addFragment(new ShowsFragment(3), "10th Oct");
         viewPager.setAdapter(adapter);
     }
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -145,6 +146,20 @@ public class Events extends AppCompatActivity {
         getEventsList(AppCompatActivity context){
             this.context= context;
             force= false;
+            Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            String value =  String.valueOf(hour)+String.valueOf(day);
+            if(value.equals(Utility.getDateHour(context)))
+            {
+                force = false;
+            }
+            else
+            {
+                Utility.saveDateHour(value,context);
+                force = true;
+
+            }
         }
         getEventsList(AppCompatActivity context, boolean forceNew){
             this.context= context;
