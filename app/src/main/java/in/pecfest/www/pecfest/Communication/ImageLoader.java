@@ -116,7 +116,7 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
         else
         {
             if(!isSopnsor)
-                imageView.setImageResource(R.drawable.no_image);
+                imageView.setImageResource(R.drawable.white);
         }
     }
 

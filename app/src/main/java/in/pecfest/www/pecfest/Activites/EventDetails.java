@@ -135,6 +135,11 @@ public class EventDetails extends AppCompatActivity {
             Toast.makeText(this, "Maximum limit reached!", Toast.LENGTH_SHORT).show();
             return;
         }
+        if(registrantsList.contains(r))
+        {
+            Toast.makeText(this, "Inserted Before", Toast.LENGTH_SHORT).show();
+            return;
+        }
         et1.setText("");
         registrantsList.add(r);
         registerAdapter.notifyDataSetChanged();

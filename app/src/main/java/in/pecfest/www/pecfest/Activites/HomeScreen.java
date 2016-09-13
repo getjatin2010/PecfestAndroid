@@ -571,14 +571,32 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         if(item.getItemId()==R.id.nav_logout) {
             if ((Utility.getsaveId((this)) != null && Utility.getsaveId((this)).pecfestId != null)) {
-                LoginResponse lr = new LoginResponse();
-                lr.name = null;
-                lr.phone = null;
-                lr.pecfestId = null;
-                Utility.saveId(lr, getApplicationContext());
-                Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
-                navBarHeaderText.setText("LOGIN ");
-                navBarHeaderText.setClickable(true);
+                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+                alertDialogBuilder.setMessage("Are you sure you want to logut?");
+
+                alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        LoginResponse lr = new LoginResponse();
+                        lr.name = null;
+                        lr.phone = null;
+                        lr.pecfestId = null;
+                        Utility.saveId(lr, getApplicationContext());
+                        Toast.makeText(HomeScreen.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                        navBarHeaderText.setText("LOGIN ");
+                        navBarHeaderText.setClickable(true);
+                    }
+                });
+                android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+
+
+            }
+            else
+            {
+                Toast.makeText(this,"Not Logged in!",Toast.LENGTH_SHORT).show();
+
             }
         }
         return true;
