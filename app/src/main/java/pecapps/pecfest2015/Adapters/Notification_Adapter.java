@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 /**
  * Created by Nischit on 8/16/2016.

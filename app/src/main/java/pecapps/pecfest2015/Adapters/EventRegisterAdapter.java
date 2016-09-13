@@ -15,8 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pecapps.pecfest2015.Activites.EventDetails;
-import pecapps.pecfest2015.www.pecfest.R;
-
+import pecapps.pecfest2015.R;
 public class EventRegisterAdapter extends ArrayAdapter<String> {
 
     Activity context;

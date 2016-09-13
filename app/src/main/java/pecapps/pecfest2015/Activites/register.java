@@ -32,7 +32,7 @@ import pecapps.pecfest2015.Model.Common.Request;
 import pecapps.pecfest2015.Model.Common.Response;
 import pecapps.pecfest2015.Model.Registration.RegistrationRequest;
 import pecapps.pecfest2015.Model.Registration.RegistrationResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Utility;
 
 public class register extends AppCompatActivity implements CommunicationInterface {

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import pecapps.pecfest2015.Model.MegaShows.MegaResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Utility;
 
 /**

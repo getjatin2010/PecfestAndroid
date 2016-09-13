@@ -24,7 +24,7 @@ import pecapps.pecfest2015.Model.Common.Constants;
 import pecapps.pecfest2015.Model.EventDetails.Event;
 import pecapps.pecfest2015.Model.EventDetails.EventResponse;
 import pecapps.pecfest2015.Model.MegaShows.MegaResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Results;
 import pecapps.pecfest2015.Utilites.Utility;
 

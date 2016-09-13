@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import pecapps.pecfest2015.Communication.ImageLoader;
 import pecapps.pecfest2015.Model.Sponsor.SponsorResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 /**
  * Created by Nischit on 8/9/2016.

@@ -20,7 +20,7 @@ import pecapps.pecfest2015.Model.Verify.VerifyRequest;
 import pecapps.pecfest2015.Model.Verify.VerifyResponse;
 import pecapps.pecfest2015.Model.login.LoginRequest;
 import pecapps.pecfest2015.Model.login.LoginResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Utility;
 
 public class navverify extends AppCompatActivity implements CommunicationInterface {

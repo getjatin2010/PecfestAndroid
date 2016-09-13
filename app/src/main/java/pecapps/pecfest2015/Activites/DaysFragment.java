@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import pecapps.pecfest2015.Adapters.EventsAdapter;
 import pecapps.pecfest2015.Model.EventDetails.Event;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 /**
  * Created by Abhi on 24-08-2016.

@@ -52,7 +52,7 @@ import pecapps.pecfest2015.Model.Permissions.PermissionRequest;
 import pecapps.pecfest2015.Model.Permissions.PermissionResponse;
 import pecapps.pecfest2015.Model.Posters.PosterResponse;
 import pecapps.pecfest2015.Model.login.LoginResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.ImageViewAnimatedChange;
 import pecapps.pecfest2015.Utilites.Utility;
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import pecapps.pecfest2015.Model.Item;
 import pecapps.pecfest2015.Model.MyAdapter;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 public class contactus extends AppCompatActivity {
 TextView ta;

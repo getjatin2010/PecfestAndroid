@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pecapps.pecfest2015.Activites.EventDetails;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 /**
  * Created by Abhi on 07-08-2016.
  */

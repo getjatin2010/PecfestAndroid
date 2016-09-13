@@ -15,7 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import pecapps.pecfest2015.Model.Common.DataHolder;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 
 /**

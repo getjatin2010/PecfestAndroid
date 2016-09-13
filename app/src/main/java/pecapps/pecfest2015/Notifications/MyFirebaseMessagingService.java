@@ -10,7 +10,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import pecapps.pecfest2015.Activites.Notification;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Utility;
 import pecapps.pecfest2015.Utilites.getBitmap;
 

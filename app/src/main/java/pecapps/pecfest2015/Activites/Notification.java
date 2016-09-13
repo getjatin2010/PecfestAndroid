@@ -19,7 +19,7 @@ import java.util.Collections;
 
 import pecapps.pecfest2015.Adapters.Notification_Adapter;
 import pecapps.pecfest2015.Notifications.NotificationPayload;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Utility;
 
 public class Notification extends AppCompatActivity {

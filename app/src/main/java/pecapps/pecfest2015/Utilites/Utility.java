@@ -20,7 +20,7 @@ import pecapps.pecfest2015.Interfaces.CommunicationInterface;
 import pecapps.pecfest2015.Model.Common.Constants;
 import pecapps.pecfest2015.Model.Common.Request;
 import pecapps.pecfest2015.Model.login.LoginResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 
 public class Utility {

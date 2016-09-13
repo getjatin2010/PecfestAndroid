@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "620969950047",
-    "firebase_url": "https://pecfest-app.firebaseio.com",
-    "project_id": "pecfest-app",
-    "storage_bucket": "pecfest-app.appspot.com"
+    "project_number": "889566923763",
+    "firebase_url": "https://pecfest-app-2015.firebaseio.com",
+    "project_id": "pecfest-app-2015",
+    "storage_bucket": "pecfest-app-2015.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:620969950047:android:fc31dce17b9c30b8",
+        "mobilesdk_app_id": "1:889566923763:android:e12baba343fdd3e8",
         "android_client_info": {
-          "package_name": "in.pecfest.www.pecfest"
+          "package_name": "pecapps.pecfest2015"
         }
       },
       "oauth_client": [
         {
-          "client_id": "620969950047-f673bq74le36lcgmeha9rvefoc4uol4q.apps.googleusercontent.com",
+          "client_id": "889566923763-sul8bqv8fmg173oeuvdjsf22nu7gf44b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBsXlfEW2T2xeTzwIkWTZb3gRqJa_CrgB8"
+          "current_key": "AIzaSyAALCFxXuzHGNSSzEUjdbGjcanNrWLi7x8"
         }
       ],
       "services": {

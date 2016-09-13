@@ -17,7 +17,7 @@ import pecapps.pecfest2015.Model.Common.Response;
 import pecapps.pecfest2015.Model.RegisteredEvents.RegisteredEvent;
 import pecapps.pecfest2015.Model.RegisteredEvents.RegisteredEventRequest;
 import pecapps.pecfest2015.Model.RegisteredEvents.RegisteredEventResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Utility;
 
 public class RegisteredEvents extends AppCompatActivity implements CommunicationInterface {

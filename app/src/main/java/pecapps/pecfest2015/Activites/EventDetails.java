@@ -23,7 +23,7 @@ import pecapps.pecfest2015.Model.Communication.RequestC;
 import pecapps.pecfest2015.Model.EventDetails.Event;
 import pecapps.pecfest2015.Model.EventRegister.EventRegisterRequest;
 import pecapps.pecfest2015.Model.EventRegister.EventRegisterResponse;
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 import pecapps.pecfest2015.Utilites.Results;
 import pecapps.pecfest2015.Utilites.Utility;
 

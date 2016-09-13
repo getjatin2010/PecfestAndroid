@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import pecapps.pecfest2015.www.pecfest.R;
+import pecapps.pecfest2015.R;
 
 /**
  * Created by Nischit on 8/9/2016.
