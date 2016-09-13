@@ -36,7 +36,6 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fillViewport="true"
         android:background="@drawable/batman"
         >
 
@@ -224,6 +223,27 @@
                         android:layout_marginTop="15dp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="By clicking 'Register' button you will be providing your consent to the following terms and conditions:"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" 1. The Pecfest team may share the contact details with the sponsors if need arises."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  2. Provision of accommodation is subjected to availability of resources."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. In case of any discrepancies or grievances the Pecfest team shall have the final say."/>
             </LinearLayout>
 
             <!-- Signup Button -->
