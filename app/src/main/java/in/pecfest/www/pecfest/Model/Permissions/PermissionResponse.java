@@ -6,4 +6,5 @@ package in.pecfest.www.pecfest.Model.Permissions;
 public class PermissionResponse {
     public String code;
     public String text;
+    public int lecture;
 }

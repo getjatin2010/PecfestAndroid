@@ -185,7 +185,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         sponsorBanner.setLayoutParams(params);
 
     }
-
+    PermissionResponse pr;
     @Override
     public void onRequestCompleted(String method, Response rr) {
 
@@ -195,7 +195,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         }
         if(method.equalsIgnoreCase(Constants.METHOD.APP_PERMISSIONS))
         {
-            PermissionResponse pr =(PermissionResponse)Utility.getObjectFromJson(rr.JsonResponse,PermissionResponse.class);              ;
+            pr =(PermissionResponse)Utility.getObjectFromJson(rr.JsonResponse,PermissionResponse.class);              ;
             WhatToDo(pr);
         }
         if(method.equals(Constants.METHOD.LOAD_SPONSER))
@@ -387,7 +387,10 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         startActivity(new Intent(getApplicationContext(), Events.class).putExtra("title","Shows"));
                         break;
                     case "Lecture & Workshops":
+                        if(pr==null || pr.lecture !=0)
                         startActivity(new Intent(getApplicationContext(), Events.class).putExtra("title","Lectures"));
+                        else
+                        Toast.makeText(HomeScreen.this,"Will start this section soon",Toast.LENGTH_SHORT).show();
                         break;
                     case "Register":
                         Intent i= new Intent(getApplicationContext(),register.class);
