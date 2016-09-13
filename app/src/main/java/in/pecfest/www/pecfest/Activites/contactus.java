@@ -68,6 +68,7 @@ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             items.add(new Item("Public Relations ","Divija Rawat","9560813266"));
             items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
         items.add(new Item("Mega Shows  ","Vaibhav Sharma","9988634375"));
+        items.add(new Item("Online Publicity  ","Abhishek Singhal ","9646555234"));
         items.add(new Item("Logistics  ","Nupur Arora","7814667022"));
         items.add(new Item("Discipline  ","Tahir Sandhu","9779190230"));
         items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
