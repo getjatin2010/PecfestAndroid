@@ -8,11 +8,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Shader;
 import android.os.Build;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,6 +34,7 @@ import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Registration.RegistrationRequest;
 import in.pecfest.www.pecfest.Model.Registration.RegistrationResponse;
+import in.pecfest.www.pecfest.Model.login.LoginResponse;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
@@ -44,6 +47,8 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     RadioButton male,female,AccoYes,AccoNo;
     String gender = "";
     String acco = "";
+    NavigationView navigationview;
+    private TextView navBarHeaderText;
 
     Button signUpButton;
     EditText fullName,e2, emailEditText,phoneNumber;
@@ -60,15 +65,10 @@ public class register extends AppCompatActivity implements CommunicationInterfac
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        /*TextView returnHome=(TextView)findViewById(R.id.registrationActionBar);
-        returnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
-        // mask actionbar title with bitmap------------------------------------
+
+
         TextView actionBarTitle=(TextView)findViewById(R.id.registerText_Register);
         //TextView actionBarNotice=(TextView)findViewById(R.id.registrationActionBar);
         Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
@@ -109,11 +109,30 @@ public class register extends AppCompatActivity implements CommunicationInterfac
 
     public void a(View v)
     {
-        Intent i= new Intent(getApplicationContext(),login.class);
+        Intent i=new Intent(getApplicationContext(),login.class);
+        startActivityForResult(i, 5);
         finish();
-        startActivity(i);
 
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 5 || requestCode == 6) {
+            if (resultCode == RESULT_OK) {
+                View headerLayout = navigationview.getHeaderView(0);
+                navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
+                LoginResponse lr = Utility.getsaveId(this);
+                navBarHeaderText.setText("Hello " + lr.name + " !");
+                navBarHeaderText.setClickable(false);
+                navigationview = (NavigationView) findViewById(R.id.nav_view);
+                Menu nav_Menu = navigationview.getMenu();
+                nav_Menu.findItem(R.id.nav_logout).setVisible(true);
+                Menu nav_Menu1 = navigationview.getMenu();
+                nav_Menu1.findItem(R.id.nav_Regevent).setVisible(true);
+
+
+            }
+        }
     }
     public  boolean validateLetters(String name) {
 

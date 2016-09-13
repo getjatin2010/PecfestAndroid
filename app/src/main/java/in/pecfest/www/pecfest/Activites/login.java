@@ -3,10 +3,12 @@ package in.pecfest.www.pecfest.Activites;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +31,7 @@ public class login extends AppCompatActivity  implements CommunicationInterface
     TextView input;
     EditText inputPecfestId;
     Button login;
-
+NavigationView navigationview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class login extends AppCompatActivity  implements CommunicationInterface
         req.hidePleaseWaitAtEnd = true;
 
     Utility.SendRequestToServer(this, req);
+
+
 
     }
 

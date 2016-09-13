@@ -69,6 +69,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     private ImageViewAnimatedChange  imageViewAnimatedChange;
     Button a;
     TextView t;
+    MenuItem i1,i2;
+    NavigationView navigationview;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
     public String as;
@@ -372,6 +374,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 //------------HOMEPAGE GRID------------------------------------------------
         randomizeArray(colour);//Randomize colours array before passing
 
+hideItem();
         HomeScreenGridAdapter adapter= new HomeScreenGridAdapter(HomeScreen.this,text,imageId,colour,getWindowManager().getDefaultDisplay());
         grid=(GridView)findViewById(R.id.gridViewHomePage);
         grid.setAdapter(adapter);
@@ -450,7 +453,20 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
     }
+    private void hideItem()
+    {
 
+        LoginResponse lr = Utility.getsaveId(this);
+        if(lr.name==null) {
+            navigationview = (NavigationView) findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationview.getMenu();
+            nav_Menu.findItem(R.id.nav_logout).setVisible(false);
+            Menu nav_Menu1 = navigationview.getMenu();
+            nav_Menu1.findItem(R.id.nav_Regevent).setVisible(false);
+        }
+
+
+    }
     private void getPosters()
     {
         Request r = new Request();
@@ -508,6 +524,12 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                 LoginResponse lr= Utility.getsaveId(this);
                 navBarHeaderText.setText("Hello " +lr.name+" !");
                 navBarHeaderText.setClickable(false);
+                navigationview = (NavigationView) findViewById(R.id.nav_view);
+                Menu nav_Menu = navigationview.getMenu();
+                nav_Menu.findItem(R.id.nav_logout).setVisible(true);
+                Menu nav_Menu1 = navigationview.getMenu();
+                nav_Menu1.findItem(R.id.nav_Regevent).setVisible(true);
+
 
             }
         }
@@ -588,6 +610,11 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
                         Toast.makeText(HomeScreen.this, "Logged Out", Toast.LENGTH_SHORT).show();
                         navBarHeaderText.setText("LOGIN ");
                         navBarHeaderText.setClickable(true);
+                        navigationview = (NavigationView) findViewById(R.id.nav_view);
+                        Menu nav_Menu = navigationview.getMenu();
+                        nav_Menu.findItem(R.id.nav_logout).setVisible(false);
+                        Menu nav_Menu1 = navigationview.getMenu();
+                        nav_Menu1.findItem(R.id.nav_Regevent).setVisible(false);
                     }
                 });
                 android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
@@ -631,23 +658,8 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.BLACK);
     }
-    public void menu()
-    {
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//
-//        navigationView.setNavigationItemSelectedListener(this);
-//        View headerLayout = navigationView.getHeaderView(0);
-//        navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
 
-        LoginResponse lr = Utility.getsaveId(this);
-        if(lr.name==null) {
-            MenuItem m= (MenuItem) findViewById(R.id.nav_logout);
-            m.setVisible(false);
-            this.invalidateOptionsMenu();
-        }
 
     }
 
 
-
-}
