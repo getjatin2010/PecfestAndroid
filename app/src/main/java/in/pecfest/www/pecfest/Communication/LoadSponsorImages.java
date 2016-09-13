@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,21 +17,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
-import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Response;
-import in.pecfest.www.pecfest.Model.Sponsor.Sponsor;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
-import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
 
 
 /**
- * Created by Pradeep on 20-01-2016.
+ * Created by Jatin on 20-01-2016.
  */
 public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
 
@@ -42,8 +37,7 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
     private boolean roundImage;
     private float ratio;
     private Context context;
-    public static final String STORAGE_PATH= Environment.getExternalStorageDirectory()+"/Pecfest/.data/";
-    private boolean isSopnsor = false;
+   private boolean isSopnsor = false;
     //for loading sponsors to localVariable--------------------------------------------------------------
 
     public LoadSponsorImages(SponsorResponse sponsorResponse,Context context, float ratio, boolean roundImage) {
@@ -51,8 +45,6 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
         this.ratio = ratio;
         this.roundImage = roundImage;
         this.context = context;
-        DataHolder.getInstance().sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
-        DataHolder.getInstance().spon = 0;
     }
 
     public LoadSponsorImages(SponsorResponse sponsorResponse,Context context, float ratio, ProgressBar progressBar, boolean roundImage) {
@@ -61,8 +53,6 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
         this.ratio = ratio;
         mImageIndeterminateProgressBar = progressBar;
         this.roundImage = roundImage;
-        DataHolder.getInstance().sponsorImage=new Bitmap[sponsorResponse.sponsorlist.length+1];
-        DataHolder.getInstance().spon = 0;
 
     }
 
@@ -100,15 +90,13 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
                 Bitmap result = fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[i].sponsorUrl));
                 if(result==null)
                 {
-                    result = fetchFromWeb(sponsorResponse.sponsorlist[i].sponsorUrl);
+                    result = getRoundedShape(fetchFromWeb(sponsorResponse.sponsorlist[i].sponsorUrl));
                     saveToLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[i].sponsorUrl),result);
                 }
                 if(result!=null)
                 {
                     if(roundImage==true)
                         result = getRoundedShape(result);
-
-                    DataHolder.getInstance().sponsorImage[DataHolder.getInstance().spon++]=result;
 
                 }
 
@@ -142,7 +130,7 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
     public static Bitmap fetchFromLocal(String i){
         try{
             Log.v("from local", "photo from local" + i);
-            File f=new File(STORAGE_PATH+"images/"+i);
+            File f=new File(Constants.STORAGE_PATH+"images/"+i);
             return BitmapFactory.decodeStream((InputStream)new FileInputStream(f));
         }
         catch(Exception e){
@@ -167,7 +155,7 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
         FileOutputStream fos;
 
         try{
-            f=new File(STORAGE_PATH+"images/");
+            f=new File(Constants.STORAGE_PATH+"images/");
             if(!f.exists()){
                 f.mkdirs();
             }
@@ -186,5 +174,6 @@ public class LoadSponsorImages extends AsyncTask<Void, Void, Response> {
             Log.v("err-report", "from saveToLocal "+e.getMessage());
         }
     }
+
 
 }

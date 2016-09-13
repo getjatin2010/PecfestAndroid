@@ -1,30 +1,19 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Communication.LoadSponsorImages;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
-import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Sponsor.SponsorResponse;
@@ -35,7 +24,7 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
 
 
     SponsorResponse sponsorResponse;
-
+    String data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +84,7 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
             @Override
             public void run() {
                 Intent mainIntent = new Intent(SplashsScreen.this, HomeScreen.class);
+                mainIntent.putExtra("sponsor",data);
                 startActivity(mainIntent);
                 finish();
             }
@@ -102,8 +92,9 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
 
         if (method.equals(Constants.METHOD.SPONSOR_REQUEST)) {
             try {
-                sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
 
+                sponsorResponse = (SponsorResponse) Utility.getObjectFromJson(rr.JsonResponse, SponsorResponse.class);
+                data = rr.JsonResponse;
                 if (sponsorResponse != null) {
 
                     try {

@@ -1,15 +1,20 @@
 package in.pecfest.www.pecfest.Model.Common;
 
+import android.os.Environment;
+
 /**
  * Created by jatin on 20/1/16.
  */
 public class Constants {
 
-    public static String appVersion = "1.0";
+    public static String appVersion = "2.8";
     public static int SPLASH_SCREEN_WAIT = 2000;
+    public static final String STORAGE_PATH= Environment.getExternalStorageDirectory()+"/Pecfest/.data/";
+
     public static String newNotifs = "newnotifs";
     public static class METHOD
     {
+
         public static final String RESGISTRATION = "register";
         public static final String SPONSOR_REQUEST = "getSponsorlist";
         public static final String LOAD_SPONSER = "loadSponsor";

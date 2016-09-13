@@ -1,6 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,7 +43,6 @@ public class register extends AppCompatActivity implements CommunicationInterfac
     Editable name;
     Editable college;
     Editable email;
-    TextView loginLink;
     Editable phone;
     RadioButton male,female,AccoYes,AccoNo;
     String gender = "";
@@ -100,8 +100,6 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         emailEditText = (EditText) findViewById(R.id.input_email);
         phoneNumber= (EditText) findViewById(R.id.input_phone);
 
-        loginLink = (TextView) findViewById(R.id.link_login);
-
         ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,colleges);
         collegeName.setAdapter(adapter);
         collegeName.setThreshold(1);
@@ -109,31 +107,11 @@ public class register extends AppCompatActivity implements CommunicationInterfac
 
     public void a(View v)
     {
-        Intent i=new Intent(getApplicationContext(),login.class);
+        Intent i=new Intent(getBaseContext(),login.class);
         startActivityForResult(i, 5);
         finish();
-
-
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 5 || requestCode == 6) {
-            if (resultCode == RESULT_OK) {
-                View headerLayout = navigationview.getHeaderView(0);
-                navBarHeaderText = (TextView)headerLayout.findViewById(R.id.navBarHeaderText);
-                LoginResponse lr = Utility.getsaveId(this);
-                navBarHeaderText.setText("Hello " + lr.name + " !");
-                navBarHeaderText.setClickable(false);
-                navigationview = (NavigationView) findViewById(R.id.nav_view);
-                Menu nav_Menu = navigationview.getMenu();
-                nav_Menu.findItem(R.id.nav_logout).setVisible(true);
-                Menu nav_Menu1 = navigationview.getMenu();
-                nav_Menu1.findItem(R.id.nav_Regevent).setVisible(true);
 
-
-            }
-        }
-    }
     public  boolean validateLetters(String name) {
 
         if(name==null)
@@ -327,7 +305,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         rr.hidePleaseWaitAtEnd = true;
         rr.heading = null;
         rr.requestData= Utility.GetJsonObject(registrationRequest);
-        Utility.SendRequestToServer(this,rr);
+        Utility.SendRequestToServer(this, rr);
     }
 
     @Override
@@ -355,8 +333,7 @@ public class register extends AppCompatActivity implements CommunicationInterfac
                         i.putExtra("pecfestId", respone.response);
                         i.putExtra("mobile",phone.toString() );
                         i.putExtra("fromNav",false);
-                        finish();
-                        startActivity(i);
+                        startActivityForResult(i,8);
                     }
                 });
 
@@ -372,6 +349,16 @@ public class register extends AppCompatActivity implements CommunicationInterfac
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 8) {
+            if (resultCode == RESULT_OK) {
+                setResult(Activity.RESULT_OK, null);
+            }
+            finish();
+        }
     }
 
 }

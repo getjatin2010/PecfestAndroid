@@ -14,8 +14,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import in.pecfest.www.pecfest.Activites.HomeScreen;
-import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.R;
 
 
@@ -108,8 +106,7 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> {
             if(roundImage==true)
             result = getRoundedShape(result);
             if(isSopnsor){//if is a sponsor image add to sponsor array
-                DataHolder.getInstance().sponsorImage[DataHolder.getInstance().spon++]=result;
-            }else{
+             }else{
                 imageView.setImageBitmap(result);
             }
         }

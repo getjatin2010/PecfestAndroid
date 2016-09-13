@@ -233,9 +233,15 @@ public class Events extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void v){
-            for(int i=0; i<getSupportFragmentManager().getFragments().size();i++)
-            ((DaysFragment)getSupportFragmentManager().getFragments().get(i)).notifyChanges();
-        }
+            try {
+                for (int i = 0; i < getSupportFragmentManager().getFragments().size(); i++)
+                    ((DaysFragment) getSupportFragmentManager().getFragments().get(i)).notifyChanges();
+            }
+            catch (Exception e)
+            {
+
+            }
+            }
 
         private void parseResponse(boolean force){
             try{

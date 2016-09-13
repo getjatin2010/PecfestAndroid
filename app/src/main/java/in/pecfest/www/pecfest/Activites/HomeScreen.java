@@ -39,14 +39,15 @@ import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Random;
 
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
-import in.pecfest.www.pecfest.Communication.LoadSponsorImages;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
 import in.pecfest.www.pecfest.Model.Common.Constants;
-import in.pecfest.www.pecfest.Model.Common.DataHolder;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
 import in.pecfest.www.pecfest.Model.Permissions.PermissionRequest;
@@ -64,6 +65,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     public int sponsorInt=1;
 
 
+    public static final int DELAY2=5000;
     public static final int DELAY=3000;
     Handler handler,handlerPoster;//for runnable
     private ImageViewAnimatedChange  imageViewAnimatedChange;
@@ -71,6 +73,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     TextView t;
     MenuItem i1,i2;
     NavigationView navigationview;
+    SponsorResponse sponsorResponse;
     LinearLayout sponsorBanner;
     ImageView sp1,sp2,sp3,sp4,sp5;
     public String as;
@@ -125,10 +128,9 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         @Override
         public void run() {
 
-            if(DataHolder.getInstance().sponsorImage!=null){
-                setSponsorImage();
-            }
-            handler.postDelayed(this,DELAY);
+
+            setSponsorImage();
+            handler.postDelayed(this,DELAY2);
         }
     };
 
@@ -277,20 +279,40 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
     //set downloaded image to imageView--------------------------------------------------------------------
     private void setSponsorImage(){
+        int[] arr = new int[5];
 
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp1,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp2,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this,sp3,DataHolder.getInstance().sponsorImage[(sponsorInt++)% DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp4, DataHolder.getInstance().sponsorImage[(sponsorInt++) % DataHolder.getInstance().spon]);
-        imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp5, DataHolder.getInstance().sponsorImage[(sponsorInt++) % DataHolder.getInstance().spon]);
+        for(int i = 0 ; i<5 ;i++)
+        {
+            boolean found = false;
+            int numb = (int) (Math.random() * sponsorResponse.count);
+                for(int j = 0 ; j<i ;j++)
+                {
+                    if(numb==arr[j])
+                        found=true;
+                }
 
+            if(found==true)
+                i--;
+            else
+                arr[i] = numb;
+        }
+
+        if(sponsorResponse==null)
+            sponsorResponse = (SponsorResponse)Utility.getObjectFromJson(getIntent().getExtras().getString("sponsor"),SponsorResponse.class);
+        if(sponsorResponse!=null) {
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp1, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[0]].sponsorUrl)));
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp2, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[1]].sponsorUrl)));
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp3, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[2]].sponsorUrl)));
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp4, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[3]].sponsorUrl)));
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp5, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[4]].sponsorUrl)));
+        }
     }
     //-----------------------------------------------------------------------------------------------------
     //loadImages ------------------------------------------------------------------------------------------
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(marquee, DELAY);
+        handler.postDelayed(marquee, DELAY2);
         handlerPoster.postDelayed(marquee2, DELAY);
     }
 
@@ -308,6 +330,16 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         Utility.SendRequestToServer(this, r);
 
+    }
+    public static Bitmap fetchFromLocal(String i){
+        try{
+            Log.v("from local", "photo from local" + i);
+            File f=new File(Constants.STORAGE_PATH+"images/"+i);
+            return BitmapFactory.decodeStream((InputStream)new FileInputStream(f));
+        }
+        catch(Exception e){
+            return null;
+        }
     }
 
     @Override
@@ -397,7 +429,7 @@ hideItem();
                         break;
                     case "Register":
                         Intent i= new Intent(getApplicationContext(),register.class);
-                        startActivity(i);
+                        startActivityForResult(i,7);
                         break;
                 }
             }
@@ -420,7 +452,7 @@ hideItem();
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
+        sponsorResponse = (SponsorResponse)Utility.getObjectFromJson(getIntent().getExtras().getString("sponsor"),SponsorResponse.class);
         //Sponsor-----------------------------------------------------------------------
         //SPONSOR BANNER
         sponsorBanner = (LinearLayout)findViewById(R.id.sponsorBanner);
@@ -435,7 +467,7 @@ hideItem();
         LoginResponse lr = Utility.getsaveId(this);
         if(lr.name!=null)
         {
-            navBarHeaderText.setText("Hello " + lr.name + " !");
+            navBarHeaderText.setText("Hello " + lr.name + " !\nId: "+lr.pecfestId);
             navBarHeaderText.setClickable(false);
         }
 
@@ -519,10 +551,10 @@ hideItem();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 5 || requestCode == 6 ) {
+        if (requestCode == 5 || requestCode == 6 || requestCode == 7) {
             if (resultCode == RESULT_OK) {
                 LoginResponse lr= Utility.getsaveId(this);
-                navBarHeaderText.setText("Hello " +lr.name+" !");
+                navBarHeaderText.setText("Hello " + lr.name + " !\nId: "+lr.pecfestId);
                 navBarHeaderText.setClickable(false);
                 navigationview = (NavigationView) findViewById(R.id.nav_view);
                 Menu nav_Menu = navigationview.getMenu();
