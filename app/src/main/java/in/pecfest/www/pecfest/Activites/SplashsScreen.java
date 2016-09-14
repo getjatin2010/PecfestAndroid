@@ -56,7 +56,7 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
     {
         android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Internet is not available");
-
+        alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {

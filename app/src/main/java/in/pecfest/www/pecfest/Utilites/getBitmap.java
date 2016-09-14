@@ -6,7 +6,10 @@ package in.pecfest.www.pecfest.Utilites;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
@@ -23,6 +26,8 @@ import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.net.URL;
 
+import in.pecfest.www.pecfest.Model.Common.Constants;
+
 public class getBitmap extends AsyncTask<String, Void, Bitmap>{
 
     String url;
@@ -31,11 +36,11 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
     boolean photo=false;
     boolean loadFromLocal= true;
     String id;
+    boolean rounded = false;
     int width=0;
     boolean resize;
     private static int max_cache=0;
     static LruCache<String, Bitmap> imageCache;
-    public static final String STORAGE_PATH= Environment.getExternalStorageDirectory()+"/Pecfest/.data/";
 
 
     public getBitmap(String u, String id, ImageView i){
@@ -47,15 +52,16 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
     }
 
     getBitmap(String u, String id, ImageView i, ProgressBar p, boolean r, int width){
-        this(u, id, i, p, r, width, true);
+        this(u, id, i, p, r, width, true, false);
     }
 
-    getBitmap(String url, String id, ImageView iv, ProgressBar p, boolean resize, int width, boolean loadFromLocal){
+    getBitmap(String url, String id, ImageView iv, ProgressBar p, boolean resize, int width, boolean loadFromLocal,boolean rounded){
         this.url= url;
         this.id=id;
         this.resize= resize;
         this.width= width;
         this.loadFromLocal= loadFromLocal;
+        this.rounded = rounded;
 
         if(iv!=null)
             ivw=new WeakReference<ImageView>(iv);
@@ -76,7 +82,7 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
             b=fetchFromLocal(id);
 
         if(b==null){
-            b=fetchFromWeb(url);
+            b=fetchFromWeb(url,rounded);
             if(b!=null){
                 photo=true;
                 try{
@@ -112,7 +118,7 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
     public static Bitmap fetchFromLocal(String i){
         try{
             Log.v("from local", "photo from local"+i);
-            File f=new File(STORAGE_PATH+"images/"+i);
+            File f=new File(Constants.STORAGE_PATH+"images/"+i);
             return BitmapFactory.decodeStream((InputStream)new FileInputStream(f));
         }
         catch(Exception e){
@@ -120,10 +126,26 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
         }
     }
 
+    public static Bitmap fetchFromWeb(String u,boolean rounded){
+        Bitmap b=null;
+        try{
+            b=BitmapFactory.decodeStream((InputStream) new URL(u).getContent());
+            if(rounded)
+            {
+                b =  getRoundedShape(b);
+            }
+        }
+        catch(Exception e){
+            Log.v("err-report", "from fetchFromWeb "+e.getMessage());
+        }
+        return b;
+    }
+
     public static Bitmap fetchFromWeb(String u){
         Bitmap b=null;
         try{
             b=BitmapFactory.decodeStream((InputStream) new URL(u).getContent());
+                b =  getRoundedShape(b);
         }
         catch(Exception e){
             Log.v("err-report", "from fetchFromWeb "+e.getMessage());
@@ -137,7 +159,7 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
         FileOutputStream fos;
 
         try{
-            f=new File(STORAGE_PATH+"images/");
+            f=new File(Constants.STORAGE_PATH+"images/");
             if(!f.exists()){
                 f.mkdirs();
             }
@@ -212,6 +234,31 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
 
         }
     }
+
+
+    public static Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+        int targetWidth = (int)(scaleBitmapImage.getWidth() * 1);
+        int targetHeight = (int)(scaleBitmapImage.getHeight() * 1);
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
+                targetHeight,Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth),
+                        ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(),
+                        sourceBitmap.getHeight()),
+                new Rect(0, 0, targetWidth, targetHeight), null);
+        return targetBitmap;
+    }
+
 
     private static void initCache(){
         max_cache=(int)(Runtime.getRuntime().maxMemory()/1024);

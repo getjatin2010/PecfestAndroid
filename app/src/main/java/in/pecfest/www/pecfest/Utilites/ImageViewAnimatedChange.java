@@ -10,7 +10,7 @@ import android.widget.ImageView;
  * Created by Nischit on 8/25/2016.
  */
 public class ImageViewAnimatedChange {
-    public static void ImageViewAnimatedChange(Context c, final ImageView v, final Bitmap new_image) {
+    public static void ImageViewAnimatedChange(Context c, final ImageView v,final String link) {
         final Animation anim_out = AnimationUtils.loadAnimation(c, android.R.anim.slide_out_right);
         final Animation anim_in  = AnimationUtils.loadAnimation(c, android.R.anim.slide_in_left);
         anim_out.setAnimationListener(new Animation.AnimationListener()
@@ -19,7 +19,7 @@ public class ImageViewAnimatedChange {
             @Override public void onAnimationRepeat(Animation animation) {}
             @Override public void onAnimationEnd(Animation animation)
             {
-                v.setImageBitmap(new_image);
+                Utility.GetBitmap(link,v, false, 0, true,true);
                 anim_in.setAnimationListener(new Animation.AnimationListener() {
                     @Override public void onAnimationStart(Animation animation) {}
                     @Override public void onAnimationRepeat(Animation animation) {}

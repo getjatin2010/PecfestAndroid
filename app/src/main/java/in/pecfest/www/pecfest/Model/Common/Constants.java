@@ -7,13 +7,14 @@ import android.os.Environment;
  */
 public class Constants {
 
-    public static String appVersion = "2.8";
+    public static String appVersion = "2.9";
     public static int SPLASH_SCREEN_WAIT = 2000;
-    public static final String STORAGE_PATH= Environment.getExternalStorageDirectory()+"/Pecfest/.data/";
+    public static final String STORAGE_PATH= Environment.getExternalStorageDirectory().getAbsolutePath()+"/Pecfest/.data/";
 
     public static String newNotifs = "newnotifs";
     public static class METHOD
     {
+
 
         public static final String RESGISTRATION = "register";
         public static final String SPONSOR_REQUEST = "getSponsorlist";

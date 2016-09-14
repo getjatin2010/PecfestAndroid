@@ -220,7 +220,12 @@ public class Utility {
     }
 
     public static getBitmap GetBitmap(String url, ImageView iv, boolean resize, int width, boolean fetchFromLocal){
-        getBitmap gbp=(getBitmap)new getBitmap(url, getIdForPhotos(url) , iv, null, resize, width, fetchFromLocal).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        getBitmap gbp=(getBitmap)new getBitmap(url, getIdForPhotos(url) , iv, null, resize, width, fetchFromLocal,false).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+        return gbp;
+    }
+
+    public static getBitmap GetBitmap(String url, ImageView iv, boolean resize, int width, boolean fetchFromLocal,boolean round){
+        getBitmap gbp=(getBitmap)new getBitmap(url, getIdForPhotos(url) , iv, null, resize, width, fetchFromLocal,round).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
         return gbp;
     }
 

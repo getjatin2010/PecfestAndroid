@@ -3,6 +3,7 @@ package in.pecfest.www.pecfest.Activites;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
@@ -13,6 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -36,7 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.Manifest.permission;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -47,6 +50,7 @@ import java.util.Random;
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
+import in.pecfest.www.pecfest.Manifest;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
@@ -159,6 +163,36 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         mViewPager.setCurrentItem(y,true);
     }
 
+    void askPermission()
+    {
+        // Here, thisActivity is the current activity
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
+                permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission.WRITE_EXTERNAL_STORAGE},
+                        100);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
+
     void positionEverything()
     {
         DisplayMetrics dm = new DisplayMetrics();
@@ -242,7 +276,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     }
 
 
-    private void WhatToDo(PermissionResponse pr)
+    private void WhatToDo(final PermissionResponse pr)
     {
         if(pr==null)
             return;
@@ -255,6 +289,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
+                        getUpdate();
                 }
             });
             android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
@@ -268,7 +303,9 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
+                        getUpdate();
                     finish();
+
                 }
             });
             android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
@@ -300,12 +337,21 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         if(sponsorResponse==null)
             sponsorResponse = (SponsorResponse)Utility.getObjectFromJson(getIntent().getExtras().getString("sponsor"),SponsorResponse.class);
         if(sponsorResponse!=null) {
-            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp1, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[0]].sponsorUrl)));
-            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp2, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[1]].sponsorUrl)));
-            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp3, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[2]].sponsorUrl)));
-            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp4, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[3]].sponsorUrl)));
-            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp5, fetchFromLocal(Utility.getIdForPhotos(sponsorResponse.sponsorlist[arr[4]].sponsorUrl)));
-        }
+            //String url, ImageView iv, boolean resize, int width, boolean fetchFromLocal
+
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp1,
+                    sponsorResponse.sponsorlist[arr[0]].sponsorUrl);
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp2,
+                    sponsorResponse.sponsorlist[arr[1]].sponsorUrl);
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp3,
+                    sponsorResponse.sponsorlist[arr[2]].sponsorUrl);
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp4,
+                    sponsorResponse.sponsorlist[arr[3]].sponsorUrl);
+            imageViewAnimatedChange.ImageViewAnimatedChange(HomeScreen.this, sp5,
+                    sponsorResponse.sponsorlist[arr[4]].sponsorUrl);
+
+
+             }
     }
     //-----------------------------------------------------------------------------------------------------
     //loadImages ------------------------------------------------------------------------------------------
@@ -479,6 +525,7 @@ hideItem();
         //------------------------------------------------------------------------------
         getPermissions();
         addHomePager();
+        askPermission();
         positionEverything();
         getPosters();
         setSponsorImage();
@@ -690,6 +737,16 @@ hideItem();
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.BLACK);
     }
+
+
+   void getUpdate() {
+       final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+       try {
+           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+       } catch (android.content.ActivityNotFoundException anfe) {
+           startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+       }
+   }
 
 
     }
