@@ -203,10 +203,25 @@ public class Events extends AppCompatActivity {
             results= new Results();
 
             if(title.equals("Lectures")){
-                HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
-                hc.putBody("{\"method\": \"" + Constants.METHOD.LECTURE_DETAILS + "\"}");
-                results = hc.getData();
-                parseResponse(force);
+
+                if (!force) {
+                    try {
+                        results.data = Utility.getSharedPreferences(context).getString("completeLecturesList", null);
+                        parseResponse(force);
+                        if (globalEventsList.size() <= 0)
+                            throw new Exception();
+                    } catch (Exception e) {
+                        force = true;
+                    }
+                }
+
+                if(force) {
+
+                    HttpConnection hc = new HttpConnection(Utility.getBaseUrl(context), 1);
+                    hc.putBody("{\"method\": \"" + Constants.METHOD.LECTURE_DETAILS + "\"}");
+                    results = hc.getData();
+                    parseResponse(force);
+                }
             }
             else {
 
@@ -247,8 +262,12 @@ public class Events extends AppCompatActivity {
             try{
                 EventResponse er= (EventResponse)Utility.getObjectFromJson(results.data, EventResponse.class);
                 globalEventsList= er.eventList;
-                if(force)
-                    Utility.getSharedPreferencesEditor(context).putString("completeEventsList",results.data).commit();
+                if(force) {
+                    if(title.equals("Lectures"))
+                        Utility.getSharedPreferencesEditor(context).putString("completeLecturesList", results.data).commit();
+                    else
+                        Utility.getSharedPreferencesEditor(context).putString("completeEventsList", results.data).commit();
+                }
             }
             catch(Exception e){
 

@@ -2,16 +2,14 @@ package in.pecfest.www.pecfest.Activites;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -26,7 +24,7 @@ TextView ta;
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_contactus);
-        ta= (TextView) findViewById(R.id.n);
+            ta= (TextView) findViewById(R.id.n);
 
             // 1. pass context and data to the custom adapter
             final MyAdapter adapter = new MyAdapter(this, generateData());

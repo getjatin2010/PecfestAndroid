@@ -10,5 +10,6 @@
     <style name="EventsTheme" parent="AppTheme.NoActionBar">
         <item name="colorPrimary">@color/eventsNav</item>
         <item name="colorPrimaryDark">@color/nav_header_bck</item>
+        <item name="android:statusBarColor">@color/nav_header_bck</item>
     </style>
 </resources>

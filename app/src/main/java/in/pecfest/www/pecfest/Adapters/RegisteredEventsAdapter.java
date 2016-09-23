@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import in.pecfest.www.pecfest.Model.RegisteredEvents.RegisteredEvent;
 import in.pecfest.www.pecfest.R;
 
@@ -57,10 +57,14 @@ public class RegisteredEventsAdapter extends ArrayAdapter<RegisteredEvent> {
         RegisteredEvent re= registeredList.get(position);
         holder.tx1.setText(re.eventName);
         holder.tx2.setText("Location: "+re.location+", Day: "+re.day);
-        holder.tx3.setText(re.heads.replace(";",", "));
-
-        if(re.members!=null) {
-            String t= Arrays.toString(re.members);
+        holder.tx3.setText(re.heads.replace(";",", ").trim());
+        if(re.members!=null && re.members.length>0) {
+            String t= "";
+            for(int i=0;i<re.members.length;i++){
+                t=t+re.members[i];
+                if(i<re.members.length-1)
+                    t=t+", ";
+            }
             holder.tx4.setVisibility(View.VISIBLE);
             holder.tx5.setVisibility(View.VISIBLE);
             holder.tx4.setText(t);

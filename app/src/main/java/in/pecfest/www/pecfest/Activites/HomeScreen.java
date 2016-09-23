@@ -1,5 +1,6 @@
 package in.pecfest.www.pecfest.Activites;
 
+import android.Manifest.permission;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,7 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.Manifest.permission;
+
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -50,7 +51,6 @@ import java.util.Random;
 import in.pecfest.www.pecfest.Adapters.HomePagerAdapter;
 import in.pecfest.www.pecfest.Adapters.HomeScreenGridAdapter;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
-import in.pecfest.www.pecfest.Manifest;
 import in.pecfest.www.pecfest.Model.Common.Constants;
 import in.pecfest.www.pecfest.Model.Common.Request;
 import in.pecfest.www.pecfest.Model.Common.Response;
@@ -513,7 +513,7 @@ hideItem();
         LoginResponse lr = Utility.getsaveId(this);
         if(lr.name!=null)
         {
-            navBarHeaderText.setText("Hello " + lr.name + " !\nId: "+lr.pecfestId);
+            navBarHeaderText.setText("Hello " + lr.name + "!\nId: "+lr.pecfestId);
             navBarHeaderText.setClickable(false);
         }
 
