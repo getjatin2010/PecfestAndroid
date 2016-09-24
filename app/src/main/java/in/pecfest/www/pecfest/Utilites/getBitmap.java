@@ -11,7 +11,6 @@ import android.graphics.Matrix;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.View;
@@ -71,6 +70,13 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
         Log.v("url", url);
         Log.v("id", id);
     }
+
+    @Override
+    protected void onPreExecute(){
+        if(ivw!=null)
+            ivw.get().setImageBitmap(null);
+    }
+    @Override
     protected Bitmap doInBackground(String...qv){
 
         Bitmap b=null;
@@ -94,8 +100,7 @@ public class getBitmap extends AsyncTask<String, Void, Bitmap>{
                 }
             }
         }
-        if(resize && width>0 && b!=null){
-            if(b.getWidth()>=500)
+        if(width>0 && b!=null && b.getWidth()>width){
                 b=processBitmap(b,width);
         }
         if(b!=null)

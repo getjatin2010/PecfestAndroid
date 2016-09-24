@@ -1,14 +1,16 @@
 package in.pecfest.www.pecfest.Notifications;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.app.PendingIntent;
-import android.content.Intent;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import in.pecfest.www.pecfest.Activites.Events;
 import in.pecfest.www.pecfest.Activites.Notification;
 import in.pecfest.www.pecfest.R;
 import in.pecfest.www.pecfest.Utilites.Utility;
@@ -30,9 +32,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
             Log.e(TAG, "Message data payload: " + remoteMessage.getData());
             if(remoteMessage.getData()!=null) {
+
                 if(remoteMessage.getData().containsKey("type") && remoteMessage.getData().get("type").equals("notification")) {
-                    Utility.storeNotifs(this, Utility.GetJsonObject(remoteMessage.getData()));
-                    generateNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("text"),remoteMessage.getData().get("photo"), remoteMessage.getData().containsKey("collapse"));
+
+                    if(remoteMessage.getData().containsKey("save")){
+                        if(Boolean.parseBoolean(remoteMessage.getData().get("save")))
+                            Utility.storeNotifs(this, Utility.GetJsonObject(remoteMessage.getData()));
+                    }
+                    else
+                      Utility.storeNotifs(this, Utility.GetJsonObject(remoteMessage.getData()));
+
+                    generateNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("text"),remoteMessage.getData().get("photo"), Boolean.parseBoolean(remoteMessage.getData().get("collapse")), remoteMessage.getData().get("onClick"));
                 }
             }
 
@@ -40,15 +50,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
 
             Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            generateNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), null, false);
+            generateNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), null, false, "");
             Log.e(TAG, "Message data payload: " + remoteMessage.getData());
 
-            Utility.storeNotifs(this, Utility.GetJsonObject(remoteMessage.getData()));
+            //Utility.storeNotifs(this, Utility.GetJsonObject(remoteMessage.getData()));
         }
 
     }
 
-    public void generateNotification(String title, String body, String photo, boolean collapse){
+    public void generateNotification(String title, String body, String photo, boolean collapse, String onClick){
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.ic_event)
@@ -59,8 +69,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             mBuilder.setStyle(new NotificationCompat.BigTextStyle()
                     .bigText(body).setSummaryText(body));
         }
-        else if(photo!=null){
-            Bitmap b= getBitmap.fetchFromWeb(photo);
+        else if(photo!=null && photo.length()>10){
+            Bitmap b= getBitmap.fetchFromWeb(photo, false);
             getBitmap.saveToLocal(Utility.getIdForPhotos(photo), b);
             mBuilder.setStyle(new NotificationCompat.BigPictureStyle()
                     .bigPicture(b).setSummaryText(body));
@@ -69,8 +79,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Sets an ID for the notification
 
         int mNotificationId= 1;
-        if(!collapse)
-            mNotificationId = (int)(Math.random() * 99);
+        if(!collapse) {
+            mNotificationId = (int) (Math.random() * 99);
+            mBuilder.setContentText(body);
+        }
         else{
             int c=0;
             if((c=Utility.getNewNotifs(this)-1)>1)
@@ -80,9 +92,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         Intent myIntent= new Intent(this, Notification.class);
+
+         try {
+            myIntent= new Intent(this, Class.forName("in.pecfest.www.pecfest.Activites."+onClick));
+        }
+        catch(Exception e){
+            Log.v("err-not-found", e.getMessage());
+        }
+        Events e;
         PendingIntent intent2 = PendingIntent.getActivity(this, 1,
                 myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(intent2);
+        mBuilder.setAutoCancel(true);
         // Gets an instance of the NotificationManager service
         NotificationManager mNotifyMgr =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

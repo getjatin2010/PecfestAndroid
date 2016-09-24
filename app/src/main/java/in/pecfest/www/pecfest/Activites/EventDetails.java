@@ -1,5 +1,7 @@
 package in.pecfest.www.pecfest.Activites;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +20,6 @@ import java.util.ArrayList;
 
 import in.pecfest.www.pecfest.Adapters.EventRegisterAdapter;
 import in.pecfest.www.pecfest.Communication.HttpConnection;
-import in.pecfest.www.pecfest.Communication.ImageLoader;
 import in.pecfest.www.pecfest.Model.Communication.RequestC;
 import in.pecfest.www.pecfest.Model.EventDetails.Event;
 import in.pecfest.www.pecfest.Model.EventRegister.EventRegisterRequest;
@@ -29,7 +30,7 @@ import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class EventDetails extends AppCompatActivity {
 
-    TextView tx1, tx2, tx3, tx4, tx5,tx6;
+    TextView tx1, tx2, tx3, tx4, tx5,tx6,tx7;
 //    EditText et1;
     AutoCompleteTextView et1;
     ImageView iv1;
@@ -61,9 +62,9 @@ public class EventDetails extends AppCompatActivity {
         header= (ViewGroup) getLayoutInflater().inflate(R.layout.event_register_header, lv1, false);
         lv1.addHeaderView(header);
 
-        ImageView imageView = (ImageView)header.findViewById(R.id.event_image);
-        ImageLoader il = new ImageLoader(event.imageUrl,imageView,1,false);
-        il.execute();
+//        ImageView imageView = (ImageView)header.findViewById(R.id.event_image);
+//        ImageLoader il = new ImageLoader(event.imageUrl,imageView,1,false);
+//        il.execute();
         
         tx1= (TextView) header.findViewById(R.id.event_name);
         tx2= (TextView) header.findViewById(R.id.club_name);
@@ -71,10 +72,18 @@ public class EventDetails extends AppCompatActivity {
         tx4= (TextView) header.findViewById(R.id.register_message);
         tx5= (TextView) header.findViewById(R.id.register_label);
         tx6= (TextView) header.findViewById(R.id.event_details_ext);
+        tx7= (TextView) header.findViewById(R.id.event_details_ext2);
         iv1= (ImageView) header.findViewById(R.id.event_image);
         et1= (AutoCompleteTextView) findViewById(R.id.event_register_id);
         bt1= (Button) findViewById(R.id.btn_event_register);
         bt2= (Button) findViewById(R.id.btn_event_submit);
+
+        event.imageUrl="http://pecfest.in/pecfestapi2016/posters/rsz_1rsz_6.jpg";
+        if(event.imageUrl.length()<10){
+            iv1.setMinimumHeight(80);
+        }
+        else
+            Utility.GetBitmap(event.imageUrl, iv1, false, 500, true);
 
         registrantsList= new ArrayList<String>();
         registerAdapter= new EventRegisterAdapter(this, registrantsList);
@@ -99,6 +108,9 @@ public class EventDetails extends AppCompatActivity {
         if(event.maxSize>0)
             t=t+"\n\n"+"Team Size: "+event.minSize+"-"+event.maxSize;
         tx6.setText(t);
+
+        if(event.pdfLink!=null && event.pdfLink.startsWith("http"))
+            tx7.setVisibility(View.VISIBLE);
 
         if(event.maxSize==0){
             et1.setVisibility(View.GONE);
@@ -230,6 +242,16 @@ public class EventDetails extends AppCompatActivity {
         }
         cacheList.add(str);
         Utility.getSharedPreferencesEditor(this).putString("cachedIds",Utility.getSharedPreferences(this).getString("cachedIds","")+","+str).commit();
+    }
+
+    public void showMoreDetails(View view){
+        try {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.pdfLink));
+            startActivity(browserIntent);
+        }
+        catch(Exception e){
+
+        }
     }
 
 }

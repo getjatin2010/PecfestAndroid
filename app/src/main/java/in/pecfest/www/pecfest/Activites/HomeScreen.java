@@ -401,17 +401,25 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         //allow animation for changing activity
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-
-
         setContentView(R.layout.activity_home_screen);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         setSupportActionBar(toolbar);
 
+        //look for targets
+//        try {
+//            if (getIntent().getStringExtra("target") != null && !getIntent().getStringExtra("target").contains("HomeScreen"))
+//                startActivity(new Intent(this, Class.forName(getIntent().getStringExtra("target"))));
+//        }
+//        catch(Exception e){
+//            Log.v("not found on home", e.getMessage());
+//        }
+
         //Subscribe for notifications
         FirebaseMessaging.getInstance().subscribeToTopic("pecfest");
-
+        FirebaseMessaging.getInstance().subscribeToTopic("pecfestTest");
         //animation changer initialize
         imageViewAnimatedChange=new ImageViewAnimatedChange();
 

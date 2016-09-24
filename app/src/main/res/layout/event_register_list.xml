@@ -10,7 +10,7 @@
         android:id="@+id/register_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="1"
         android:padding="2dp"
         android:gravity="center_vertical"/>
@@ -21,7 +21,7 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/register_counter"
         android:id="@+id/register_id"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="pec12344"
         android:textColor="@color/black"
         android:padding="2dp"
@@ -33,7 +33,7 @@
         android:id="@+id/register_name"
         android:layout_toRightOf="@id/register_counter"
         android:layout_below="@id/register_id"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:text="Abhinandan"
         android:visibility="gone" />
 
@@ -44,7 +44,8 @@
         android:textSize="14sp"
         android:text="invalid"
         android:layout_toRightOf="@id/register_id"
-        android:padding="8dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
         android:textColor="@color/red"
         android:visibility="gone" />
 

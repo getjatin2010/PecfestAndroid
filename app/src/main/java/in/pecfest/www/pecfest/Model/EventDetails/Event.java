@@ -24,4 +24,5 @@ public class Event {
     public String eventDetails;
     public String imageUrl;
     public String instructions;
+    public String pdfLink;
 }

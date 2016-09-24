@@ -10,43 +10,55 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.ImageView;
 import java.util.ArrayList;
 
+import in.pecfest.www.pecfest.Adapters.ContactsAdapter;
 import in.pecfest.www.pecfest.Model.Item;
-import in.pecfest.www.pecfest.Model.MyAdapter;
 import in.pecfest.www.pecfest.R;
+import in.pecfest.www.pecfest.Utilites.Utility;
 
 public class contactus extends AppCompatActivity {
-TextView ta;
+
+    ContactsAdapter contactsAdapter;
+    ListView listView;
+    View footerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_contactus);
-            ta= (TextView) findViewById(R.id.n);
 
-            // 1. pass context and data to the custom adapter
-            final MyAdapter adapter = new MyAdapter(this, generateData());
-
-            // 2. Get ListView from activity_main.xml
-            ListView listView = (ListView) findViewById(R.id.listview1);
-
-            // 3. setListAdapter
-            listView.setAdapter(adapter);
         Toolbar t= (Toolbar) findViewById(R.id.notification_toolbar);
         setSupportActionBar(t);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        listView.setFadingEdgeLength(150);
+        getSupportActionBar().setTitle("Pecfest Team");
+            contactsAdapter= new ContactsAdapter(this, generateContactData());
+            // 2. Get ListView from activity_main.xml
+            listView = (ListView) findViewById(R.id.listview1);
+
+            // 3. setListAdapter
+        footerView= getLayoutInflater().inflate(R.layout.contact_footer, null);
+        listView.addFooterView(footerView);
+
+            listView.setAdapter(contactsAdapter);
+
+        listView.setFadingEdgeLength(100);
+        loadFooter();
        // final String a=ta.getText().toString();
-listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:"+adapter.getItem(position).getnumber()));
-        startActivity(intent);
-    }
-});
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    try {
+                        intent.setData(Uri.parse("tel:" + contactsAdapter.getItem(position).phone1));
+                        startActivity(intent);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+            });
         }
 
     @Override
@@ -78,4 +90,48 @@ listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         items.add(new Item("App Development Team ","Jatin Arora, Abhinandan, Devansh and Nishchit","9041092408"));
             return items;
         }
+
+    private ArrayList<ContactsAdapter.Contact> generateContactData() {
+        ArrayList<ContactsAdapter.Contact> items = new ArrayList<ContactsAdapter.Contact>();
+        items.add(ContactsAdapter.makeObject("Convener","Prashant Sharma","9779898998","http://pecfest.in/img/ourTeam/prashant.png"));
+        items.add(ContactsAdapter.makeObject("Co Convener","Navdeep Singh Lathar","9041143100","http://pecfest.in/img/ourTeam/navdeep.png"));
+        items.add(ContactsAdapter.makeObject("Secretary","Devanshu Goenka","9815447755","http://pecfest.in/img/ourTeam/devanshu.png","Vaibhav Dhingra","9815447755","http://pecfest.in/img/ourTeam/vaibhavDhingra.png"));
+        items.add(ContactsAdapter.makeObject("Event Coord Cultural","Dhruv Chaudhary","9779898998","http://pecfest.in/img/ourTeam/dhruv.png", "Shrey Nagrath","498343","http://pecfest.in/img/ourTeam/shrey.png"));
+        items.add(ContactsAdapter.makeObject("Event Coord Technical","Sakshi Vohra","9779898998","http://pecfest.in/img/ourTeam/sakshi.png", "Vanshaj","498343","http://pecfest.in/img/ourTeam/vanshaj1.png"));
+        items.add(ContactsAdapter.makeObject("Public Relations","Divija Rawat","9779898998","http://pecfest.in/img/ourTeam/divija.png"));
+        items.add(ContactsAdapter.makeObject("Online Publicity","Abhishek","9779898998","http://pecfest.in/img/ourTeam/abhishek.png"));
+        items.add(ContactsAdapter.makeObject("Infrastructure","Divija Rawat","9779898998","http://pecfest.in/img/ourTeam/navi.png"));
+        items.add(ContactsAdapter.makeObject("Hospitality","Divija Rawat","9779898998","http://pecfest.in/img/ourTeam/kamal.png"));
+
+        return items;
+    }
+
+    private void loadFooter(){
+        Utility.GetBitmap("http://pecfest.in/img/ourTeam/divija.png", (ImageView)footerView.findViewById(R.id.image1), false, 100, true, true);
+        Utility.GetBitmap("http://pecfest.in/img/ourTeam/shrey.png", (ImageView)footerView.findViewById(R.id.image2), false, 100, true, true);
+        Utility.GetBitmap("http://pecfest.in/img/ourTeam/navi.png", (ImageView)footerView.findViewById(R.id.image3), false, 100, true, true);
+        Utility.GetBitmap("http://pecfest.in/img/ourTeam/kamal.png", (ImageView)footerView.findViewById(R.id.image4), false, 100, true, true);
+    }
+
+    public void makeCall(View view){
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        try {
+            String t="";
+
+                int ids[]={R.id.phone1, R.id.phone2, R.id.phone3, R.id.phone4};
+                for (int i = 0; i < 4; i++) {
+                    try {
+                        t = ((TextView) view.findViewById(ids[i])).getText().toString();
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+            intent.setData(Uri.parse("tel:" + t));
+            startActivity(intent);
+        }
+        catch(Exception e){
+
+        }
+    }
 }

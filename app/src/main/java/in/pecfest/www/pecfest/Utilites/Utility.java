@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import in.pecfest.www.pecfest.Communication.ExecuteRequest;
 import in.pecfest.www.pecfest.Interfaces.CommunicationInterface;
@@ -230,6 +229,8 @@ public class Utility {
     }
 
     public static String getIdForPhotos(String url){
+        if(url.length()<10)
+            return url;
         return (url.substring(url.lastIndexOf(".")-9, url.length())).replace("/","-");
     }
 }
