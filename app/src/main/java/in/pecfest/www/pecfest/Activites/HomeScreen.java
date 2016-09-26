@@ -430,6 +430,16 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
         actionBarTitle.getPaint().setShader(shader);
         //---------------------------------------------------------------------
 
+
+         // Remove the comment from below line to test DrapYourCapeClass
+        //NISCHIT,Please Beautify the class
+       // startActivity(new Intent(this,DrapYourCape.class));
+
+
+
+
+
+
         //notification button--------------------------------------------------
         notificationLayout=(LinearLayout) findViewById(R.id.notification_Layout);
         notification_digit=(TextView)findViewById(R.id.actionbar_notificationTV);

@@ -10,6 +10,7 @@ public class Constants {
     public static String appVersion = "2.9";
     public static int SPLASH_SCREEN_WAIT = 2000;
     public static final String STORAGE_PATH= Environment.getExternalStorageDirectory().getAbsolutePath()+"/Pecfest/.data/";
+    public static final String STORAGE_PATH_DP= Environment.getExternalStorageDirectory().getAbsolutePath()+"/Pecfest/";
 
     public static final int  PICK_IMAGE_REQUEST = 123;
     public static String newNotifs = "newnotifs";

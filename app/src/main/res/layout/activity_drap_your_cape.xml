@@ -60,8 +60,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GET MERGED"
-        android:id="@+id/getMerged"
+        android:text="DOWNLOAD IMAGE"
+        android:id="@+id/downloadImage"
         android:layout_alignBottom="@+id/CroppedImage"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

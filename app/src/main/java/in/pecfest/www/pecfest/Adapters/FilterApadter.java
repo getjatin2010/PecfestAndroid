@@ -55,7 +55,7 @@ public class FilterApadter extends BaseAdapter {
             Utility.GetBitmap(imageId[position],imageView,false,0,true);
 
 
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) (0.2f * height), (int) (0.2f * height));
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) (0.18f * height), (int) (0.18f * height));
             params.leftMargin = (int) ((0));
             params.topMargin = (int) (0);
             imageView.setLayoutParams(params);
