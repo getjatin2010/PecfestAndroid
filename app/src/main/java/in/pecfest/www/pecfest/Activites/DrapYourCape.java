@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -81,11 +82,11 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
             @Override
             public void onClick(View v) {
                 if (croppedBitmap == null) {
-                    Toast.makeText(DrapYourCape.this, "Upload Your Image First", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DrapYourCape.this, "Please Choose a picture", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (filterBitmap == null) {
-                    Toast.makeText(DrapYourCape.this, "Select Your Tag fromm bottom", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DrapYourCape.this, "Select Your Hero from bottom", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 SaveImage(finalBitmap);
@@ -133,10 +134,17 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
             alertDialogBuilder.setPositiveButton("Show", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
-                    File file = new File(Constants.STORAGE_PATH_DP);
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setDataAndType(Uri.fromFile(file), "*/*");
-                    startActivity(intent);
+                    Uri selectedUri = Uri.parse(Constants.STORAGE_PATH_DP);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(selectedUri, "resource/folder");
+
+                    if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
+                        startActivity(intent);
+                    }
+                    else
+                    {
+                        Toast.makeText(DrapYourCape.this, "Some error occured opening pecfest Folder", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -174,7 +182,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)croppedWidth,(int)(croppedWidth));
         params.leftMargin = (int) ((width*.015f));
-        params.topMargin = (int) ((height*0.19));
+        params.topMargin = (int) ((height*0.18f));
         cropped.setLayoutParams(params);
 
 
@@ -184,22 +192,23 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
       //  shareButton.setLayoutParams(params);
 
 
-        params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.1f * height));
+        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.leftMargin = (int) ((0));
         params.topMargin = (int) (height*0.08);
-        //uploadButton.setLayoutParams(params);
+        uploadButton.setLayoutParams(params);
 
 
-        params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.1f * height));
-        params.leftMargin = (int) ((1*width/2));
+        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = (int) ((1.33*width/2));
         params.topMargin = (int) (height*0.08);
-       // downloadImage.setLayoutParams(params);
+        downloadImage.setLayoutParams(params);
+
 
 
         params = new RelativeLayout.LayoutParams((int) (width), (int) (0.21f * height));
         params.leftMargin = (int) ((0));
         params.topMargin = (int) (height*2.1/3);
-        //filterHoriList.setLayoutParams(params);
+        filterHoriList.setLayoutParams(params);
 
 //
 //        LinearLayout.LayoutParams paramsLineaer = new LinearLayout.LayoutParams((int) (width), (int) (0.3f * height));
@@ -307,7 +316,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         }
         else
         {
-            Toast.makeText(DrapYourCape.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DrapYourCape.this, "Please Choose a picture", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -335,7 +344,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                        if(croppedBitmap==null)
                        {
-                           Toast.makeText(DrapYourCape.this, "Upload A Image first", Toast.LENGTH_SHORT).show();
+                           Toast.makeText(DrapYourCape.this, "Please Choose a picture", Toast.LENGTH_SHORT).show();
                            return;
                        }
                        getBitmap b = Utility.GetBitmap(fr.filterUrls[position], null, false, 0, true);

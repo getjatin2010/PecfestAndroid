@@ -84,13 +84,13 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
     GridView grid;
 
     int[] colour={
-            R.color.yellow,
-            R.color.green2,
-            R.color.colorAccent,
-            R.color.green3,
             R.color.red,
-            R.color.orange1,
+            R.color.green2,
+            R.color.primarypink,
+            R.color.deeppurple,
+            R.color.yellowDark,
             R.color.orange0,
+            R.color.green4
     };
     //----------------------------------------------------------------
 //for homescreen page viewer----------------------------------------------
@@ -433,9 +433,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
          // Remove the comment from below line to test DrapYourCapeClass
         //NISCHIT,Please Beautify the class
-      startActivity(new Intent(this,DrapYourCape.class));
-
-
 
 
 
@@ -674,6 +671,10 @@ hideItem();
             startActivityForResult(i, 6);
         }
 
+        if(item.getItemId()==R.id.filterNav)
+        {
+            startActivity(new Intent(this,DrapYourCape.class));
+        }
         if(item.getItemId()==R.id.nav_map)
         {
             location();

@@ -28,7 +28,10 @@
     <color name="green3">#1BCE20</color>
     <color name="orange0">#FFA000</color>
     <color name="orange1">#FF6F00</color>
-    <color name="red">#BF360C</color>
-
+    <color name="red">#F44336</color>
+    <color name="green4">#8BC34A</color>
+    <color name="yellowDark">#FBC02D</color>
+    <color name="deeppurple">#009688</color>
+    <color name="primarypink">#E91E63</color>
 
 </resources>
