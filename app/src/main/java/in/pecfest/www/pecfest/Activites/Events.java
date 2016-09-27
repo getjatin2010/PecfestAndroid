@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.app.ProgressDialog;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -176,6 +176,7 @@ public class Events extends AppCompatActivity {
         AppCompatActivity context;
         Results results;
         boolean force;
+        ProgressDialog pd;
         getEventsList(AppCompatActivity context){
             this.context= context;
             force= false;
@@ -197,6 +198,13 @@ public class Events extends AppCompatActivity {
         getEventsList(AppCompatActivity context, boolean forceNew){
             this.context= context;
             force= forceNew;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            pd = new ProgressDialog(Events.this);
+            pd.setMessage("Loading content...");
+            pd.show();
         }
         @Override
         protected Void doInBackground(Void...v){
@@ -249,6 +257,8 @@ public class Events extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void v){
             try {
+                pd.dismiss();
+
                 for (int i = 0; i < getSupportFragmentManager().getFragments().size(); i++)
                     ((DaysFragment) getSupportFragmentManager().getFragments().get(i)).notifyChanges();
             }
