@@ -134,17 +134,10 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
             alertDialogBuilder.setPositiveButton("Show", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
-                    Uri selectedUri = Uri.parse(Constants.STORAGE_PATH_DP);
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(selectedUri, "resource/folder");
-
-                    if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
-                        startActivity(intent);
-                    }
-                    else
-                    {
-                        Toast.makeText(DrapYourCape.this, "Some error occured opening pecfest Folder", Toast.LENGTH_SHORT).show();
-                    }
+                    File file = new File(Constants.STORAGE_PATH_DP);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setDataAndType(Uri.fromFile(file), "*/*");
+                    startActivity(intent);
                 }
             });
 

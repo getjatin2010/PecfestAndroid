@@ -88,7 +88,6 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
             R.color.green2,
             R.color.primarypink,
             R.color.deeppurple,
-            R.color.yellowDark,
             R.color.orange0,
             R.color.green4
     };
