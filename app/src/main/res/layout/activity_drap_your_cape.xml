@@ -34,28 +34,15 @@
         android:layout_centerHorizontal="true" />
 
 
-
-    <HorizontalScrollView
+    <org.lucasr.twowayview.TwoWayView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/filterHoriList"
+        style="@style/TwoWayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="horizontal"
-        android:id="@+id/scrollViewHorizontal"
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <GridView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/filterGridView"
-                />
-        </LinearLayout>
-    </HorizontalScrollView>
-
+        android:drawSelectorOnTop="false"
+        tools:context=".Activites.DrapYourCape" />
 
     <Button
         android:layout_width="wrap_content"

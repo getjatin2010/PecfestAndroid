@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import org.lucasr.twowayview.TwoWayView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,12 +51,11 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
     Button downloadImage;
     ImageView cropped;
     Bitmap croppedBitmap;
+    TwoWayView filterHoriList ;
     Button uploadButton;
     Bitmap finalBitmap;
     FilterApadter filterApadter;
-    GridView gv;
     float width,height;
-    HorizontalScrollView scrollViewHorizontal ;
     Bitmap filterBitmap;
 
     @Override
@@ -63,8 +65,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         cropped = (ImageView)findViewById(R.id.CroppedImage);
         downloadImage = (Button)findViewById(R.id.downloadImage);
         uploadButton = (Button)findViewById(R.id.imageUpload);
-        gv = (GridView)findViewById(R.id.filterGridView);
-        scrollViewHorizontal = (HorizontalScrollView)findViewById(R.id.scrollViewHorizontal);
+        filterHoriList = (TwoWayView) findViewById(R.id.filterHoriList);
 
         positionEverything();
         getFilterUrls();
@@ -72,13 +73,11 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         downloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(croppedBitmap==null)
-                {
+                if (croppedBitmap == null) {
                     Toast.makeText(DrapYourCape.this, "Upload Your Image First", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(filterBitmap==null)
-                {
+                if (filterBitmap == null) {
                     Toast.makeText(DrapYourCape.this, "Select Your Tag fromm bottom", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -86,6 +85,16 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
 
             }
         });
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void SaveImage(Bitmap finalBitmap) {
@@ -177,7 +186,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         params = new RelativeLayout.LayoutParams((int) (width), (int) (0.21f * height));
         params.leftMargin = (int) ((0));
         params.topMargin = (int) (height*2.1/3);
-        scrollViewHorizontal.setLayoutParams(params);
+        filterHoriList.setLayoutParams(params);
 
 //
 //        LinearLayout.LayoutParams paramsLineaer = new LinearLayout.LayoutParams((int) (width), (int) (0.3f * height));
@@ -273,10 +282,9 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
                finish();
            }
             else {
-               gv.setNumColumns(fr.filterUrls.length);
                filterApadter = new FilterApadter(this, fr.filterUrls,width,height);
-               gv.setAdapter(filterApadter);
-               gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+               filterHoriList.setAdapter(filterApadter);
+               filterHoriList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
                    @Override

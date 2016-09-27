@@ -28,4 +28,7 @@
     <style name="EventsRegisterTheme" parent="Theme.AppCompat.Light.Dialog.MinWidth">
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="TwoWayView">
+        <item name="android:orientation">horizontal</item>
+    </style>
 </resources>
