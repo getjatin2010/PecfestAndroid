@@ -181,25 +181,25 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.08f * height));
         params.leftMargin = (int) ((0));
         params.topMargin = (int) (height*0.01);
-        shareButton.setLayoutParams(params);
+      //  shareButton.setLayoutParams(params);
 
 
         params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.1f * height));
         params.leftMargin = (int) ((0));
         params.topMargin = (int) (height*0.08);
-        uploadButton.setLayoutParams(params);
+        //uploadButton.setLayoutParams(params);
 
 
         params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.1f * height));
         params.leftMargin = (int) ((1*width/2));
         params.topMargin = (int) (height*0.08);
-        downloadImage.setLayoutParams(params);
+       // downloadImage.setLayoutParams(params);
 
 
         params = new RelativeLayout.LayoutParams((int) (width), (int) (0.21f * height));
         params.leftMargin = (int) ((0));
         params.topMargin = (int) (height*2.1/3);
-        filterHoriList.setLayoutParams(params);
+        //filterHoriList.setLayoutParams(params);
 
 //
 //        LinearLayout.LayoutParams paramsLineaer = new LinearLayout.LayoutParams((int) (width), (int) (0.3f * height));

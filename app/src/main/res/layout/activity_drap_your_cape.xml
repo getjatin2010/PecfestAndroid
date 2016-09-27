@@ -7,17 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="in.pecfest.www.pecfest.Activites.DrapYourCape">
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Upload Image"
-        android:id="@+id/imageUpload"
-        android:onClick="uploadImage"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    tools:context="in.pecfest.www.pecfest.Activites.DrapYourCape"
+    android:background="@drawable/pattern">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,26 +25,49 @@
         android:id="@+id/filterHoriList"
         style="@style/TwoWayView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:drawSelectorOnTop="false"
-        tools:context=".Activites.DrapYourCape" />
-
+        tools:context=".Activites.DrapYourCape"
+        android:layout_alignBottom="@+id/CroppedImage" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DOWNLOAD IMAGE"
-        android:id="@+id/downloadImage"
+        android:background="@color/darkGreen"
+        android:text="Share"
+        android:textColor="@color/white"
+        android:id="@+id/shareImageButton"
+        android:alpha="0.5"
         android:layout_alignBottom="@+id/CroppedImage"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="3dp"
+        android:elevation="8dp"/>
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Download"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        android:textSize="15sp"
+        android:id="@+id/downloadImage"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:elevation="8dp"/>
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Share Image"
-        android:id="@+id/shareImageButton"
+        android:text="Upload"
+        android:textSize="15sp"
+        android:background="@color/blue"
+        android:textColor="@color/white"
+        android:id="@+id/imageUpload"
+        android:onClick="uploadImage"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/filterHoriList"
-        android:layout_alignEnd="@+id/filterHoriList" />
+        android:elevation="8dp"/>
 
 </RelativeLayout>
