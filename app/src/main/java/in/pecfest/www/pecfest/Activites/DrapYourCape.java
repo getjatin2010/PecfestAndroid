@@ -29,6 +29,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.lucasr.twowayview.TwoWayView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -52,7 +53,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
     ImageView cropped;
     Bitmap croppedBitmap;
     TwoWayView filterHoriList ;
-    Button uploadButton;
+    Button uploadButton,shareButton;
     Bitmap finalBitmap;
     FilterApadter filterApadter;
     float width,height;
@@ -66,10 +67,16 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         downloadImage = (Button)findViewById(R.id.downloadImage);
         uploadButton = (Button)findViewById(R.id.imageUpload);
         filterHoriList = (TwoWayView) findViewById(R.id.filterHoriList);
-
+        shareButton = (Button)findViewById(R.id.shareImageButton);
         positionEverything();
         getFilterUrls();
 
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareImage();
+            }
+        });
         downloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +158,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         rr.showPleaseWaitAtStart = true;
         rr.hidePleaseWaitAtEnd = true;
         rr.heading = "Getting Filters";
-        Utility.SendRequestToServer(this,rr);
+        Utility.SendRequestToServer(this, rr);
     }
     void positionEverything()
     {
@@ -169,6 +176,12 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         params.leftMargin = (int) ((width*.015f));
         params.topMargin = (int) ((height*0.19));
         cropped.setLayoutParams(params);
+
+
+        params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.08f * height));
+        params.leftMargin = (int) ((0));
+        params.topMargin = (int) (height*0.01);
+        shareButton.setLayoutParams(params);
 
 
         params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.1f * height));
@@ -266,6 +279,37 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
 
         }
 
+
+    public void shareImage()
+    {
+        if(croppedBitmap!=null) {
+            if (finalBitmap != null) {
+                Bitmap icon = finalBitmap;
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/jpeg");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                icon.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+                try {
+                    f.createNewFile();
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(bytes.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
+                startActivity(Intent.createChooser(share, "Share Image"));
+            }
+            else
+            {
+                Toast.makeText(DrapYourCape.this, "Please Select Filter", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else
+        {
+            Toast.makeText(DrapYourCape.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public void onRequestCompleted(String method, Response rr) {

@@ -9,13 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="in.pecfest.www.pecfest.Activites.DrapYourCape">
 
-    <com.theartofdev.edmodo.cropper.CropImageView
-        xmlns:custom="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cropImageView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/white"
-        android:layout_weight="1"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -30,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/CroppedImage"
+        android:background="@drawable/border_to_imageview"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -52,5 +46,14 @@
         android:layout_alignBottom="@+id/CroppedImage"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share Image"
+        android:id="@+id/shareImageButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/filterHoriList"
+        android:layout_alignEnd="@+id/filterHoriList" />
 
 </RelativeLayout>

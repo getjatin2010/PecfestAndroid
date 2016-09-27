@@ -433,7 +433,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
          // Remove the comment from below line to test DrapYourCapeClass
         //NISCHIT,Please Beautify the class
-       startActivity(new Intent(this,DrapYourCape.class));
+      // startActivity(new Intent(this,DrapYourCape.class));
 
 
 
