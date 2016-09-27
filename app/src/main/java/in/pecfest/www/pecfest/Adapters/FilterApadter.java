@@ -47,10 +47,13 @@ public class FilterApadter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View grid;
-        LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(convertView==null){
-            //grid=new View(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {  // if it's not recycled, initialize some attributes
             grid=inflater.inflate(R.layout.filter_square,null);
+        } else {
+            grid = (View) convertView;
+        }
+            //grid=new View(context);
             ImageView imageView=(ImageView)grid.findViewById(R.id.filterImage);
             Utility.GetBitmap(imageId[position],imageView,false,0,true);
 
@@ -59,10 +62,6 @@ public class FilterApadter extends BaseAdapter {
             params.leftMargin = (int) ((0));
             params.topMargin = (int) (0);
             imageView.setLayoutParams(params);
-
-        }else{
-            grid=(View)convertView;
-        }
-        return grid;
+            return grid;
     }
 }
