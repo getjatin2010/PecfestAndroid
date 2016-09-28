@@ -80,7 +80,7 @@ public class EventDetails extends AppCompatActivity {
 
 
         if(event.imageUrl ==null || event.imageUrl.length()<6){
-            iv1.setImageResource(R.drawable.as);
+
         }
         else
             Utility.GetBitmap(event.imageUrl, iv1, false, 500, true);
