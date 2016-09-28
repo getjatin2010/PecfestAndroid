@@ -11,7 +11,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,11 +52,10 @@ import in.pecfest.www.pecfest.Utilites.getBitmap;
 
 public class DrapYourCape extends AppCompatActivity implements CommunicationInterface{
 
-    Button downloadImage;
     ImageView cropped;
     Bitmap croppedBitmap;
     TwoWayView filterHoriList ;
-    Button uploadButton,shareButton;
+    String fname;
     Bitmap finalBitmap;
     FilterApadter filterApadter;
     float width,height;
@@ -64,45 +65,52 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drap_your_cape);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Drape The Cape");
+
         cropped = (ImageView)findViewById(R.id.CroppedImage);
-        downloadImage = (Button)findViewById(R.id.downloadImage);
-        uploadButton = (Button)findViewById(R.id.imageUpload);
         filterHoriList = (TwoWayView) findViewById(R.id.filterHoriList);
-        shareButton = (Button)findViewById(R.id.shareImageButton);
         positionEverything();
         getFilterUrls();
 
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareImage();
-            }
-        });
-        downloadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (croppedBitmap == null) {
-                    Toast.makeText(DrapYourCape.this, "Please Choose a picture", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (filterBitmap == null) {
-                    Toast.makeText(DrapYourCape.this, "Select Your Hero from bottom", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                SaveImage(finalBitmap);
-
-            }
-        });
 
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_share:
+                shareImage();
+                return true;
+            case R.id.action_save:
+                if (croppedBitmap == null) {
+                    Toast.makeText(DrapYourCape.this, "Please Choose a picture", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (filterBitmap == null) {
+                    Toast.makeText(DrapYourCape.this, "Select Your Hero from bottom", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                SaveImage(finalBitmap);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+            getMenuInflater().inflate(R.menu.drape, menu);
+        return true;
     }
 
     private void SaveImage(Bitmap finalBitmap) {
@@ -112,7 +120,7 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
-        String fname = "Pecfest-"+ n +".jpg";
+        fname = "Pecfest-"+ n +".jpg";
         File file = new File (myDir, fname);
         if (file.exists ()) file.delete ();
         try {
@@ -134,10 +142,13 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
             alertDialogBuilder.setPositiveButton("Show", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
-                    File file = new File(Constants.STORAGE_PATH_DP);
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setDataAndType(Uri.fromFile(file), "*/*");
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.parse(Constants.STORAGE_PATH_DP + fname), "image/*");
                     startActivity(intent);
+
+
+
                 }
             });
 
@@ -175,32 +186,12 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)croppedWidth,(int)(croppedWidth));
         params.leftMargin = (int) ((width*.015f));
-        params.topMargin = (int) ((height*0.18f));
+        params.topMargin = (int) ((height*0.05f));
         cropped.setLayoutParams(params);
-
-
-        params = new RelativeLayout.LayoutParams((int) (.8*width/2), (int) (0.08f * height));
-        params.leftMargin = (int) ((0));
-        params.topMargin = (int) (height*0.01);
-      //  shareButton.setLayoutParams(params);
-
-
-        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = (int) ((0));
-        params.topMargin = (int) (height*0.08);
-        uploadButton.setLayoutParams(params);
-
-
-        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.leftMargin = (int) ((1.33*width/2));
-        params.topMargin = (int) (height*0.08);
-        downloadImage.setLayoutParams(params);
-
-
 
         params = new RelativeLayout.LayoutParams((int) (width), (int) (0.21f * height));
         params.leftMargin = (int) ((0));
-        params.topMargin = (int) (height*2.1/3);
+        params.topMargin = (int) (height*1.8/3);
         filterHoriList.setLayoutParams(params);
 
 //

@@ -73,7 +73,7 @@ public class SplashsScreen extends AppCompatActivity implements CommunicationInt
     public void onRequestCompleted(String method, final Response rr) {
 
         if (rr.isSuccess == false) {
-            Toast.makeText(this, rr.errorMessage, Toast.LENGTH_LONG).show();
+            retryDialog();
         }
 
 

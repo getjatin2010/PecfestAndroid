@@ -48,6 +48,7 @@
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".Activites.login"
+            android:theme="@style/EventsTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -70,6 +71,7 @@
         <activity
             android:name=".Activites.navverify"
             android:screenOrientation="portrait"
+            android:theme="@style/EventsTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Activites.SplashsScreen"
@@ -84,7 +86,10 @@
             android:name=".Activites.RegisteredEvents"
             android:screenOrientation="portrait"
             android:theme="@style/EventsTheme"></activity>
-        <activity android:name=".Activites.DrapYourCape"></activity>
+        <activity android:name=".Activites.DrapYourCape"
+            android:screenOrientation="portrait"
+            android:theme="@style/EventsTheme">
+        </activity>
     </application>
 
 </manifest>

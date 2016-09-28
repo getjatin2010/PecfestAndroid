@@ -42,6 +42,7 @@ NavigationView navigationview;
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Login");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         input= (TextView) findViewById(R.id.link_signup);

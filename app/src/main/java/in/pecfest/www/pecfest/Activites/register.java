@@ -64,16 +64,15 @@ public class register extends AppCompatActivity implements CommunicationInterfac
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Register");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
 
 
-        TextView actionBarTitle=(TextView)findViewById(R.id.registerText_Register);
         //TextView actionBarNotice=(TextView)findViewById(R.id.registrationActionBar);
         Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
         Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
-        actionBarTitle.getPaint().setShader(shader);
         //shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
         //actionBarNotice.getPaint().setShader(shader);
         //---------------------------------------------------------------------

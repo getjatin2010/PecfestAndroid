@@ -8,8 +8,8 @@ android {
         applicationId "in.pecfest.www.pecfest"
         minSdkVersion 12
         targetSdkVersion 23
-        versionCode 11
-        versionName "2.9"
+        versionCode 13
+        versionName "3.1"
     }
     buildTypes {
         release {

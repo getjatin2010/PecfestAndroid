@@ -61,7 +61,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void generateNotification(String title, String body, String photo, boolean collapse, String onClick){
         NotificationCompat.Builder mBuilder =
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_event)
+                        .setSmallIcon(R.drawable.notif_icon)
                         .setContentTitle(title)
                         .setDefaults(android.support.v4.app.NotificationCompat.DEFAULT_SOUND | android.support.v4.app.NotificationCompat.DEFAULT_VIBRATE);
 

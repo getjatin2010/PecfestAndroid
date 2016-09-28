@@ -29,7 +29,7 @@
             android:textColor="@color/black"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:id="@+id/navBarHeaderText"
-            android:textSize="15sp"/>
+            android:textSize="17sp"/>
 
 
     </LinearLayout>

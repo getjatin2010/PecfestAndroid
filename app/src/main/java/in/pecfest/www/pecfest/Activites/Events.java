@@ -35,6 +35,7 @@ public class Events extends AppCompatActivity {
     public static ArrayList<Event> globalEventsList;
     public static MegaResponse megaResponse;
     String title;
+    private boolean showDialog= true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,6 +205,7 @@ public class Events extends AppCompatActivity {
         protected void onPreExecute(){
             pd = new ProgressDialog(Events.this);
             pd.setMessage("Loading content...");
+            if(showDialog)
             pd.show();
         }
         @Override
@@ -258,7 +260,7 @@ public class Events extends AppCompatActivity {
         protected void onPostExecute(Void v){
             try {
                 pd.dismiss();
-
+                showDialog= false;
                 for (int i = 0; i < getSupportFragmentManager().getFragments().size(); i++)
                     ((DaysFragment) getSupportFragmentManager().getFragments().get(i)).notifyChanges();
             }

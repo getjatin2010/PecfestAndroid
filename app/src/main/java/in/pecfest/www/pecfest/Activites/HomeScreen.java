@@ -418,7 +418,7 @@ public class HomeScreen extends AppCompatActivity implements NavigationView.OnNa
 
         //Subscribe for notifications
         FirebaseMessaging.getInstance().subscribeToTopic("pecfest");
-        FirebaseMessaging.getInstance().subscribeToTopic("pecfestTest");
+        //FirebaseMessaging.getInstance().subscribeToTopic("pecfestTest");
         //animation changer initialize
         imageViewAnimatedChange=new ImageViewAnimatedChange();
 

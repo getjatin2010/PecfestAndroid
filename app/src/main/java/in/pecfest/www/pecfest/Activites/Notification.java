@@ -47,6 +47,7 @@ public class Notification extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Notifications");
 
         ArrayList<String> notifications = Utility.getNotifs(this);
 
@@ -77,12 +78,8 @@ public class Notification extends AppCompatActivity {
 
         sponsorInt=getIntent().getIntExtra("sponsorCurrentIndex",0);
 
-        TextView actionBarNotice=(TextView)findViewById(R.id.noticeText_notification);
-        Bitmap overlay= BitmapFactory.decodeResource(getResources(),R.drawable.title_overlay);
         //Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
         //actionBarTitle.getPaint().setShader(shader);
-        Shader shader=new BitmapShader(overlay,Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
-        actionBarNotice.getPaint().setShader(shader);
         //---------------------------------------------------------------------
 
 //recycleview-------------------------------------------------------------------

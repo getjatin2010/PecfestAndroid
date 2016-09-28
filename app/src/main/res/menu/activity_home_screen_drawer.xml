@@ -10,8 +10,8 @@
             android:title="Registered events" />
         <item
             android:id="@+id/filterNav"
-            android:icon="@drawable/verify"
-            android:title="Drap the Cape" />
+            android:icon="@drawable/camera"
+            android:title="Drape the Cape" />
         <item
             android:id="@+id/nav_verify"
             android:icon="@drawable/verify"

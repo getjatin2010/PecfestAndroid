@@ -68,49 +68,36 @@ public class contactus extends AppCompatActivity {
         return true;
     }
 
-    private ArrayList<Item> generateData(){
-            ArrayList<Item> items = new ArrayList<Item>();
-            items.add(new Item("Convener ","Prashant Sharma","9779898998"));
-            items.add(new Item("Co Convener ","Navdeep Singh Lathar","9041143100"));
-            items.add(new Item("Secretary ","Devanshu and Vaibhav","9815447755"));
-            items.add(new Item("Event Coordination ","Dhruv and Sakshi","9501461928"));
-            items.add(new Item("Infra ","Navi Joshi","9465588808"));
-            items.add(new Item("Public Relations ","Divija Rawat","9560813266"));
-            items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
-        items.add(new Item("Mega Shows  ","Vaibhav Sharma","9988634375"));
-        items.add(new Item("Online Publicity  ","Abhishek Singhal ","9646555234"));
-        items.add(new Item("Logistics  ","Nupur Arora","7814667022"));
-        items.add(new Item("Discipline  ","Tahir Sandhu","9779190230"));
-        items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
-        items.add(new Item("Publicity and Alumni Relations  ","Karandeep and Vrinda","8699176783"));
-        items.add(new Item("Hospitality  ","Kamal Chaudhary","7837229233"));
-        items.add(new Item("Marketing","Shishir Kumar","8591155276"));
-        items.add(new Item("Creative  ","Sahil Garg","9041370343"));
-        items.add(new Item("Finance  ","Shine and Asheem","9915324444"));
-        items.add(new Item("App Development Team ","Jatin Arora, Abhinandan, Devansh and Nishchit","9041092408"));
-            return items;
-        }
 
     private ArrayList<ContactsAdapter.Contact> generateContactData() {
         ArrayList<ContactsAdapter.Contact> items = new ArrayList<ContactsAdapter.Contact>();
         items.add(ContactsAdapter.makeObject("Convener","Prashant Sharma","9779898998","http://pecfest.in/img/ourTeam/prashant.png"));
         items.add(ContactsAdapter.makeObject("Co Convener","Navdeep Singh Lathar","9041143100","http://pecfest.in/img/ourTeam/navdeep.png"));
         items.add(ContactsAdapter.makeObject("Secretary","Devanshu Goenka","9815447755","http://pecfest.in/img/ourTeam/devanshu.png","Vaibhav Dhingra","9815447755","http://pecfest.in/img/ourTeam/vaibhavDhingra.png"));
-        items.add(ContactsAdapter.makeObject("Event Coord Cultural","Dhruv Chaudhary","9779898998","http://pecfest.in/img/ourTeam/dhruv.png", "Shrey Nagrath","498343","http://pecfest.in/img/ourTeam/shrey.png"));
-        items.add(ContactsAdapter.makeObject("Event Coord Technical","Sakshi Vohra","9779898998","http://pecfest.in/img/ourTeam/sakshi.png", "Vanshaj","498343","http://pecfest.in/img/ourTeam/vanshaj1.png"));
-        items.add(ContactsAdapter.makeObject("Public Relations","Divija Rawat","9779898998","http://pecfest.in/img/ourTeam/divija.png"));
-        items.add(ContactsAdapter.makeObject("Online Publicity","Abhishek","9779898998","http://pecfest.in/img/ourTeam/abhishek.png"));
-        items.add(ContactsAdapter.makeObject("Infrastructure","Divija Rawat","9779898998","http://pecfest.in/img/ourTeam/navi.png"));
-        items.add(ContactsAdapter.makeObject("Hospitality","Divija Rawat","9779898998","http://pecfest.in/img/ourTeam/kamal.png"));
+        items.add(ContactsAdapter.makeObject("Event Coord Cultural","Dhruv Chaudhary","9501461928","http://pecfest.in/img/ourTeam/dhruv.png", "Shrey Nagrath","7696805906","http://pecfest.in/img/ourTeam/shrey.png"));
+        items.add(ContactsAdapter.makeObject("Event Coord Technical","Sakshi Vohra","9501427933","http://pecfest.in/img/ourTeam/sakshi.png", "Vanshaj","9855881147","http://pecfest.in/img/ourTeam/vanshaj.png"));
+        items.add(ContactsAdapter.makeObject("Public Relations","Divija Rawat","9560813266","http://pecfest.in/img/ourTeam/divija.png"));
+        items.add(ContactsAdapter.makeObject("Online Publicity","Abhishek","9646555234","http://pecfest.in/img/ourTeam/abhishek.png"));
+        items.add(ContactsAdapter.makeObject("Infrastructure","Navi Joshi","9465588808","http://pecfest.in/img/ourTeam/navi.png"));
+        items.add(ContactsAdapter.makeObject("Hospitality","Kamal Chaudhary","7837229233","http://pecfest.in/img/ourTeam/kamal.png"));
+        items.add(ContactsAdapter.makeObject("Mega Shows","Vaibhav Sharma","9988634375","http://pecfest.in/img/ourTeam/vaibhavSharma.png"));
+        items.add(ContactsAdapter.makeObject("Logistics","Nupur Arora","7814667022","http://pecfest.in/img/ourTeam/nupur.png"));
+        items.add(ContactsAdapter.makeObject("Marketing","Shishir Kumar","8591155276","http://pecfest.in/img/ourTeam/shishir.png"));
+        items.add(ContactsAdapter.makeObject("Publicity","Karandeep Singh","8699176783","http://pecfest.in/img/ourTeam/karandeep.png"));
+        items.add(ContactsAdapter.makeObject("Finance","Shine Sharma","9915324444","http://pecfest.in/img/ourTeam/shine.png"));
+        items.add(ContactsAdapter.makeObject("Alumni Relations","Vrinda","9855943075","http://pecfest.in/img/ourTeam/vrinda.png"));
+        items.add(ContactsAdapter.makeObject("Discipline","Tahir Sandhu","9779190230","http://pecfest.in/img/ourTeam/tahir.png"));
+        items.add(ContactsAdapter.makeObject("Creative","Sahil Garg","9041370343","http://pecfest.in/img/ourTeam/sahil.png"));
+        items.add(ContactsAdapter.makeObject("Printing","Asheem Jinsi","8146957895","http://pecfest.in/img/ourTeam/asheem.png"));
 
         return items;
     }
 
     private void loadFooter(){
-        Utility.GetBitmap("http://pecfest.in/img/ourTeam/divija.png", (ImageView)footerView.findViewById(R.id.image1), false, 100, true, true);
-        Utility.GetBitmap("http://pecfest.in/img/ourTeam/shrey.png", (ImageView)footerView.findViewById(R.id.image2), false, 100, true, true);
-        Utility.GetBitmap("http://pecfest.in/img/ourTeam/navi.png", (ImageView)footerView.findViewById(R.id.image3), false, 100, true, true);
-        Utility.GetBitmap("http://pecfest.in/img/ourTeam/kamal.png", (ImageView)footerView.findViewById(R.id.image4), false, 100, true, true);
+        Utility.GetBitmap("http://developers.pecfest.in/img/jatin.png", (ImageView)footerView.findViewById(R.id.image1), false, 100, true, true);
+        Utility.GetBitmap("http://developers.pecfest.in/img/abhinandan.png", (ImageView)footerView.findViewById(R.id.image2), false, 100, true, true);
+        Utility.GetBitmap("http://developers.pecfest.in/img/nischit.png", (ImageView)footerView.findViewById(R.id.image3), false, 100, true, true);
+        Utility.GetBitmap("http://developers.pecfest.in/img/devansh.png", (ImageView)footerView.findViewById(R.id.image4), false, 100, true, true);
     }
 
     public void makeCall(View view){

@@ -78,9 +78,9 @@ public class EventDetails extends AppCompatActivity {
         bt1= (Button) findViewById(R.id.btn_event_register);
         bt2= (Button) findViewById(R.id.btn_event_submit);
 
-        event.imageUrl="http://pecfest.in/pecfestapi2016/posters/rsz_1rsz_6.jpg";
-        if(event.imageUrl.length()<10){
-            iv1.setMinimumHeight(80);
+
+        if(event.imageUrl ==null || event.imageUrl.length()<6){
+            iv1.setImageResource(R.drawable.as);
         }
         else
             Utility.GetBitmap(event.imageUrl, iv1, false, 500, true);

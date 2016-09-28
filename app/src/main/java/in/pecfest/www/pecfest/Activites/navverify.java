@@ -41,6 +41,7 @@ public class navverify extends AppCompatActivity implements CommunicationInterfa
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Verify");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bundle = getIntent().getExtras();
