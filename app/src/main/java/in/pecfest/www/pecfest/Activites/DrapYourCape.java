@@ -258,9 +258,10 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
                 Uri resultUri = result.getUri();
                 try {
                     croppedBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),resultUri);
+                    if(croppedBitmap.getHeight()>1500)
+                    croppedBitmap = scaleDown(croppedBitmap,1500,1500,true);
                     cropped.setImageBitmap(croppedBitmap);
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
@@ -337,9 +338,9 @@ public class DrapYourCape extends AppCompatActivity implements CommunicationInte
                             finalBitmap = overlay(croppedBitmap, filterBitmap);
                            cropped.setImageBitmap(finalBitmap);
                        } catch (InterruptedException e) {
-                           e.printStackTrace();
+                           Toast.makeText(DrapYourCape.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
                        } catch (ExecutionException e) {
-                           e.printStackTrace();
+               Toast.makeText(DrapYourCape.this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
                        }
 
                    }
